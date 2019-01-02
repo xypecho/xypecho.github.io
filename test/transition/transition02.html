@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+	<style type="text/css">
+		.top{
+			width: 100px;
+			height: 100px;
+			background: linear-gradient(red, blue);
+		}
+		.bottom{
+			width: 200px;
+			height: 200px;
+			background: linear-gradient(red, yellow);
+		}
+		.slider-enter-active, .slider-leave-active {
+		  transition: all .5s;
+		  .top,.bottom{
+		  	transition: all .5s cubic-bezier(0.86,0.18,0.82,1.32)
+		  }
+		}
+		.slider-enter, .slider-leave-to{
+		  opacity: 0;
+		  .top{
+		  	transform: translate3d(0,-100px,0)
+		  }
+		  .bottom{
+		  	transform: translate3d(0,100px,0)
+		  }
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<button @click="show = !show">
+		  Toggle
+		</button>
+		<transition name="slider">
+			<div v-show='show'>
+				<div class="top">
+					<p>等你下课</p>
+				</div>
+				<div class="bottom">
+					<p>周杰伦</p>
+				</div>
+			</div>
+		</transition>
+	</div>
+</body>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:'#app',
+			data:{
+				show:false
+			}
+		})
+	</script>
+</html>

@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            ES6知识点记录 | 
+        
+        小小切图仔也有大大的梦想
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/avatar.jpg">
+    <link rel="icon" href="/img/avatar.jpg">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="0、es6开发环境搭建建立工程目录：先建立一个项目的工程目录，并在目录下边建立两个文件夹：src和distsrc：书写ES6代码的文件夹，写的js程序都放在这里。dist：利用Babel编译成的ES5代码的文件夹，在HTML页面需要引入的时这里的js文件。
+初始化项目">
+    <meta name="keywords" content=",JS技巧,ES6">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="小小切图仔也有大大的梦想">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2018/01/12/ES6知识点记录/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="小小切图仔也有大大的梦想">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/avatar.jpg">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2018/01/12/ES6知识点记录/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="ES6知识点记录 | 小小切图仔也有大大的梦想">
+    <meta property="og:image" content="/img/avatar.jpg">
+    <meta property="og:description" content="0、es6开发环境搭建建立工程目录：先建立一个项目的工程目录，并在目录下边建立两个文件夹：src和distsrc：书写ES6代码的文件夹，写的js程序都放在这里。dist：利用Babel编译成的ES5代码的文件夹，在HTML页面需要引入的时这里的js文件。
+初始化项目">
+    <meta property="og:article:tag" content="JS技巧"> <meta property="og:article:tag" content="ES6"> 
+
+    
+        <meta property="article:published_time" content="Fri Jan 12 2018 20:17:25 GMT+0800">
+        <meta property="article:modified_time" content="Thu May 10 2018 23:42:00 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2018/01/12/ES6知识点记录/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2018/01/12/ES6知识点记录/index.html",
+    "headline": "ES6知识点记录",
+    "datePublished": "Fri Jan 12 2018 20:17:25 GMT+0800",
+    "dateModified": "Thu May 10 2018 23:42:00 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "很青的青蛙",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.jpg"
+        },
+        "description": "年轻无为，卖码糊口"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "小小切图仔也有大大的梦想",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/avatar.jpg"
+        }
+    },
+    "keywords": ",JS技巧,ES6",
+    "description": "0、es6开发环境搭建建立工程目录：先建立一个项目的工程目录，并在目录下边建立两个文件夹：src和distsrc：书写ES6代码的文件夹，写的js程序都放在这里。dist：利用Babel编译成的ES5代码的文件夹，在HTML页面需要引入的时这里的js文件。
+初始化项目",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#0、es6开发环境搭建"><span class="post-toc-number">1.</span> <span class="post-toc-text">0、es6开发环境搭建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建立工程目录："><span class="post-toc-number">1.1.</span> <span class="post-toc-text">建立工程目录：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#初始化项目"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">初始化项目</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#全局安装Babel-cli"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">全局安装Babel-cli</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#本地安装babel-preset-es2015-和-babel-cli"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">本地安装babel-preset-es2015 和 babel-cli</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#根目录新建-babelrc"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">根目录新建.babelrc</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、ES6中，给传递的参数设置默认值的方式为"><span class="post-toc-number">2.</span> <span class="post-toc-text">1、ES6中，给传递的参数设置默认值的方式为</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、let声明的变量只在自己的作用域里面有效即块级作用域-通俗的理解就是let的作用域在一对｛-｝花括号里面，出了花括号就是undefined"><span class="post-toc-number">3.</span> <span class="post-toc-text">2、let声明的变量只在自己的作用域里面有效即块级作用域(通俗的理解就是let的作用域在一对｛ ｝花括号里面，出了花括号就是undefined)</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3、使用let-声明变量时不能重复声明，否则会报语法错误"><span class="post-toc-number">4.</span> <span class="post-toc-text">3、使用let 声明变量时不能重复声明，否则会报语法错误</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、const-声明的常量的值无法被修改，否则会报错；const也是块级作用域"><span class="post-toc-number">5.</span> <span class="post-toc-text">4、const 声明的常量的值无法被修改，否则会报错；const也是块级作用域</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5、const声明常量时必须赋值，不然会报错"><span class="post-toc-number">6.</span> <span class="post-toc-text">5、const声明常量时必须赋值，不然会报错</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变"><span class="post-toc-number">7.</span> <span class="post-toc-text">6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#7、es6语法新增的赋值写法"><span class="post-toc-number">8.</span> <span class="post-toc-text">7、es6语法新增的赋值写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8、数组的解构赋值"><span class="post-toc-number">9.</span> <span class="post-toc-text">8、数组的解构赋值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#9、对象的解构赋值"><span class="post-toc-number">10.</span> <span class="post-toc-text">9、对象的解构赋值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#10、字符串的解构"><span class="post-toc-number">11.</span> <span class="post-toc-text">10、字符串的解构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#10、扩展运算符"><span class="post-toc-number">12.</span> <span class="post-toc-text">10、扩展运算符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#11、rest运算符"><span class="post-toc-number">13.</span> <span class="post-toc-text">11、rest运算符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#12、字符串查找，查看某段字符串里面是否含有某个字符"><span class="post-toc-number">14.</span> <span class="post-toc-text">12、字符串查找，查看某段字符串里面是否含有某个字符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#13、字符串的复制"><span class="post-toc-number">15.</span> <span class="post-toc-text">13、字符串的复制</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#14、ES6数字操作"><span class="post-toc-number">16.</span> <span class="post-toc-text">14、ES6数字操作</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#15、json转为数组"><span class="post-toc-number">17.</span> <span class="post-toc-text">15、json转为数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#16、数字和字符串转为数组"><span class="post-toc-number">18.</span> <span class="post-toc-text">16、数字和字符串转为数组</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#17、查找数组里面的字符"><span class="post-toc-number">19.</span> <span class="post-toc-text">17、查找数组里面的字符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#18、数组里面值的替换"><span class="post-toc-number">20.</span> <span class="post-toc-text">18、数组里面值的替换</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#19、es6的新的数组循环"><span class="post-toc-number">21.</span> <span class="post-toc-text">19、es6的新的数组循环</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#20、es6箭头函数"><span class="post-toc-number">22.</span> <span class="post-toc-text">20、es6箭头函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#21、对象的函数解构"><span class="post-toc-number">23.</span> <span class="post-toc-text">21、对象的函数解构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#22、查看对象里面是否有该键"><span class="post-toc-number">24.</span> <span class="post-toc-text">22、查看对象里面是否有该键</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#23、数组遍历的几种方式"><span class="post-toc-number">25.</span> <span class="post-toc-text">23、数组遍历的几种方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#24、key值的构建-目前尚不知道实际使用场景"><span class="post-toc-number">26.</span> <span class="post-toc-text">24、key值的构建//目前尚不知道实际使用场景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#25、ES6判断的数值是否严格相等"><span class="post-toc-number">27.</span> <span class="post-toc-text">25、ES6判断的数值是否严格相等</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#26、es6合并对象的方法"><span class="post-toc-number">28.</span> <span class="post-toc-text">26、es6合并对象的方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#27、新增的Set数据解构"><span class="post-toc-number">29.</span> <span class="post-toc-text">27、新增的Set数据解构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#28、WeakSet数据结构"><span class="post-toc-number">30.</span> <span class="post-toc-text">28、WeakSet数据结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#29、Map数据结构"><span class="post-toc-number">31.</span> <span class="post-toc-text">29、Map数据结构</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#30、用Proxy进行预处理"><span class="post-toc-number">32.</span> <span class="post-toc-text">30、用Proxy进行预处理</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                ES6知识点记录
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>很青的青蛙</strong>
+        <span>1月 12, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/ES6/">ES6</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/JS技巧/">JS技巧</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=ES6知识点记录&url=http://yoursite.com/2018/01/12/ES6知识点记录/index.html&pic=http://yoursite.com/img/avatar.jpg&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+        <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://yoursite.com/2018/01/12/ES6知识点记录/index.html&title=ES6知识点记录" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 LinkedIn
+            </li>
+        </a>
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=小小切图仔也有大大的梦想&title=ES6知识点记录&summary=小切图仔的前端生涯记录博客&pics=http://yoursite.com/img/avatar.jpg&url=http://yoursite.com/2018/01/12/ES6知识点记录/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h3 id="0、es6开发环境搭建"><a href="#0、es6开发环境搭建" class="headerlink" title="0、es6开发环境搭建"></a>0、es6开发环境搭建</h3><h4 id="建立工程目录："><a href="#建立工程目录：" class="headerlink" title="建立工程目录："></a>建立工程目录：</h4><p>先建立一个项目的工程目录，并在目录下边建立两个文件夹：src和dist<br><br>src：书写ES6代码的文件夹，写的js程序都放在这里。<br><br>dist：利用Babel编译成的ES5代码的文件夹，在HTML页面需要引入的时这里的js文件。<br></p>
+<h4 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h4><a id="more"></a>
+<p>在安装Babel之前，需要用npm init先初始化我们的项目。打开终端或者通过cmd打开命令行工具，进入项目目录，输入下边的命令：</p>
+<pre><code>npm init -y
+</code></pre><h4 id="全局安装Babel-cli"><a href="#全局安装Babel-cli" class="headerlink" title="全局安装Babel-cli"></a>全局安装Babel-cli</h4><pre><code>npm install -g babel-cli
+</code></pre><h4 id="本地安装babel-preset-es2015-和-babel-cli"><a href="#本地安装babel-preset-es2015-和-babel-cli" class="headerlink" title="本地安装babel-preset-es2015 和 babel-cli"></a>本地安装babel-preset-es2015 和 babel-cli</h4><pre><code>npm install --save-dev babel-preset-es2015 babel-cli
+</code></pre><h4 id="根目录新建-babelrc"><a href="#根目录新建-babelrc" class="headerlink" title="根目录新建.babelrc"></a>根目录新建.babelrc</h4><pre><code>type null&gt;.babelrc //如果创建文件提示请输入文件名，就用这个命令
+</code></pre><p>这个文件我们建立完成后，现在可以在终端输入的转换命令了，这次ES6成功转化为ES5的语法。</p>
+<pre><code>babel src/index.js -o dist/index.js
+</code></pre><h3 id="1、ES6中，给传递的参数设置默认值的方式为"><a href="#1、ES6中，给传递的参数设置默认值的方式为" class="headerlink" title="1、ES6中，给传递的参数设置默认值的方式为"></a>1、ES6中，给传递的参数设置默认值的方式为</h3><pre><code>    function print(text=&quot;hello world&quot;){
+        console.log(text);   //这种写法可以在参数设置默认值
+    }
+
+
+
+    function add(a,b=1){
+        return a+b;
+    }
+    add(1,2);//2会取代设备的b的默认值1
+    add(1);//b会启用默认值1
+</code></pre><!--more-->
+<h3 id="2、let声明的变量只在自己的作用域里面有效即块级作用域-通俗的理解就是let的作用域在一对｛-｝花括号里面，出了花括号就是undefined"><a href="#2、let声明的变量只在自己的作用域里面有效即块级作用域-通俗的理解就是let的作用域在一对｛-｝花括号里面，出了花括号就是undefined" class="headerlink" title="2、let声明的变量只在自己的作用域里面有效即块级作用域(通俗的理解就是let的作用域在一对｛ ｝花括号里面，出了花括号就是undefined)"></a>2、let声明的变量只在自己的作用域里面有效即块级作用域(通俗的理解就是let的作用域在一对｛ ｝花括号里面，出了花括号就是undefined)</h3><pre><code>    function test(){
+        for(let i=1;i&lt;3;i++){
+            console.log(i);//输出结果为1，2
+        }
+            console.log(i);//报错Reference Error 引用错误i is not defined
+    }
+    test();
+    &lt;!--下面的var的例子--&gt;
+    var a=&#39;hello&#39;;
+    {
+        var a=&quot;hello world&quot;;
+    }
+    console.log(a);//hello world ,var定义的为全局变量，在代码块里面也会覆盖前面的赋值
+</code></pre><h3 id="3、使用let-声明变量时不能重复声明，否则会报语法错误"><a href="#3、使用let-声明变量时不能重复声明，否则会报语法错误" class="headerlink" title="3、使用let 声明变量时不能重复声明，否则会报语法错误"></a>3、使用let 声明变量时不能重复声明，否则会报语法错误</h3><pre><code>    let a=1;
+    let a=2; //Syntax Error 语法错误，
+</code></pre><h3 id="4、const-声明的常量的值无法被修改，否则会报错；const也是块级作用域"><a href="#4、const-声明的常量的值无法被修改，否则会报错；const也是块级作用域" class="headerlink" title="4、const 声明的常量的值无法被修改，否则会报错；const也是块级作用域"></a>4、const 声明的常量的值无法被修改，否则会报错；const也是块级作用域</h3><pre><code>    function test(){
+        const PI=3.1415;
+        PI=123;
+        console.log(PI);
+    }
+    test();//TypeError 类型错误，
+</code></pre><h3 id="5、const声明常量时必须赋值，不然会报错"><a href="#5、const声明常量时必须赋值，不然会报错" class="headerlink" title="5、const声明常量时必须赋值，不然会报错"></a>5、const声明常量时必须赋值，不然会报错</h3><pre><code>    function test(){
+        const a;
+        a=1;
+    }
+
+    test(); //语法错误Uncaught SyntaxError: Missing initializer in const declaration
+</code></pre><h3 id="6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变"><a href="#6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变" class="headerlink" title="6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变"></a>6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变</h3><pre><code>    function test(){
+        const k={
+            a:1
+        }
+        k.b=2;
+        console.log(k);输出为{a: 1, b: 2}
+    }
+
+    test();
+</code></pre><h3 id="7、es6语法新增的赋值写法"><a href="#7、es6语法新增的赋值写法" class="headerlink" title="7、es6语法新增的赋值写法"></a>7、es6语法新增的赋值写法</h3><pre><code>    {
+        let a,b,reset;
+        [a,b]=[1,2];
+        console.log(a,b); //输出为1 2
+    }
+</code></pre><h3 id="8、数组的解构赋值"><a href="#8、数组的解构赋值" class="headerlink" title="8、数组的解构赋值"></a>8、数组的解构赋值</h3><pre><code>    {
+        let a,b,c;
+        [a,b,...c]=[1,2,3,4,5,6,7];
+        console.log(a,b,c);//1 2  [3, 4, 5, 6, 7]
+    }
+    {
+        let [a,b,c]=[1,2,3];//这种写法需要键值对应
+        console.log(a,b,c);//1,2,3
+
+
+        //给b设置默认值
+        let [a,b=&#39;3&#39;,c]=[1,,3];//逗号不能省略
+        console.log(a,b,c);//1,&#39;3&#39;,3
+    }
+    &lt;!--上面的写法相当于es5的下面的写法--&gt;
+    &quot;use strict&quot;;
+
+    var a = 1,
+        b = 2,
+        c = 3;
+
+    console.log(a, b, c);
+
+
+    //使用场景，交互值
+    let a,b;
+    a=1;
+    b=2;
+    [a,b]=[b,a]
+
+    //解构赋值使用场景，去除json数据
+    {
+        let jsondata={
+            title:&quot;test&quot;,
+            test:[
+                {
+                    name:&quot;mytest&quot;,
+                    desc:&quot;this is a test&quot;
+                }
+            ]
+        }
+        let {title:data1,test:[{name:data2}]}=jsondata;
+        console.log(data1,data2); //输出为test mytest
+    }
+
+    var jsonData = {
+     id: 42,
+     status: &quot;OK&quot;,
+     data: [867, 5309]
+    };
+    let { id, status, data: number } = jsonData;
+    console.log(id, status, number);
+    // 42, &quot;OK&quot;, [867, 5309]
+</code></pre><h3 id="9、对象的解构赋值"><a href="#9、对象的解构赋值" class="headerlink" title="9、对象的解构赋值"></a>9、对象的解构赋值</h3><pre><code>let {bar,foo}={foo:&#39;123&#39;,bar:&quot;jack&quot;};
+console.log(bar,foo); //对象的解构赋值只需要键值对应，顺序不影响赋值
+
+let bar;
+{bar}={bar:&quot;123&quot;};//这样写会报错，因为先赋值了再解构必然会报错
+({bar}={bar:&quot;123&quot;}) ;//正确的写法应该在外面加个圆括号,一个小技巧，单引号比双引号编译快
+</code></pre><h3 id="10、字符串的解构"><a href="#10、字符串的解构" class="headerlink" title="10、字符串的解构"></a>10、字符串的解构</h3><pre><code>    let [a,b,c,d,e]=&#39;hello&#39;;
+    console.log(a,b,c,d,e); //输出h e l l o
+</code></pre><h3 id="10、扩展运算符"><a href="#10、扩展运算符" class="headerlink" title="10、扩展运算符"></a>10、扩展运算符</h3><pre><code>//扩展运算符就是 ... 三个点，后面加一个自定义的变量
+//使用场景，声明一个方法，不确定参数个数的时候
+function test(...arg){
+    console.log(arg[0]);
+    console.log(arg[1]);
+    console.log(arg[2]);
+    console.log(arg[3]);
+};
+test(1,2,3);//1,2,3,undefined  
+
+
+//实例
+let arr1=[&#39;www&#39;,&#39;xypecho&#39;,&#39;com&#39;];
+let arr2=arr1;
+arr2.push(&#39;cn&#39;);
+console.log(arr1);//输出 [&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;, &quot;cn&quot;]，因为这个let arr2=arr1;并没有开辟新的内存空间给arr2，所以arr1和arr2是同一个内存空间
+
+//修正写法应该为
+let arr1=[&#39;www&#39;,&#39;xypecho&#39;,&#39;com&#39;];
+let arr2=[...arr1];
+arr2.push(&#39;cn&#39;);
+console.log(arr1); //[&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;]
+console.log(arr2); //[&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;, &quot;cn&quot;]
+</code></pre><h3 id="11、rest运算符"><a href="#11、rest运算符" class="headerlink" title="11、rest运算符"></a>11、rest运算符</h3><pre><code>//rest英文有剩余的意思
+//值得注意的是rest参数之后不能再有其他参数（只能是最后一个参数）否则会报错
+//函数的length属性不包括rest参数。
+function test(first_arg,...arg){
+    for(let val of arg){
+        console.log(val);
+    }
+}
+test(1,2,3,4,5); //输出为2，3，4，5
+</code></pre><h3 id="12、字符串查找，查看某段字符串里面是否含有某个字符"><a href="#12、字符串查找，查看某段字符串里面是否含有某个字符" class="headerlink" title="12、字符串查找，查看某段字符串里面是否含有某个字符"></a>12、字符串查找，查看某段字符串里面是否含有某个字符</h3><pre><code>let a=&#39;非常高兴你能看到这篇文章，我是你的老朋友&#39;;
+let b=&#39;老朋友&#39;;
+console.log(a.includes(b)); //输出true，b里面的‘老朋友’加上空格的话，即输出false
+console.log(a.startsWith(b));//输出false；表示参数字符串是否在源字符串的头部
+console.log(a.endssWith(b));//输出false；表示参数字符串是否在源字符串的尾部。
+</code></pre><h3 id="13、字符串的复制"><a href="#13、字符串的复制" class="headerlink" title="13、字符串的复制"></a>13、字符串的复制</h3><pre><code>let a=&#39;demo123&#39;;
+console.log(a.repeat(3)); //repeat()里面的参数代表复制的次数
+</code></pre><h3 id="14、ES6数字操作"><a href="#14、ES6数字操作" class="headerlink" title="14、ES6数字操作"></a>14、ES6数字操作</h3><pre><code>//创建一个二进制数字，binary
+let a=0B010101;
+console.log(a); //21
+//创建一个八进制数字,octal
+let b=0O666;
+console.log(b);//438,ps第二个字符是大写的字母O
+
+//判断是否是数字
+let a=0B010101;
+console.log(Number.isFinite(a)); //true
+console.log(Number.isFinite(NaN)); //false
+console.log(Number.isFinite(&#39;hello&#39;));//false
+
+//判断是否是NaN
+console.log(Number.isNaN(NaN)); //true
+console.log(Number.isNaN(123));//false
+
+//判断数字是否为整数
+console.log(Number.isInteger(123));//true
+console.log(Number.isInteger(12.3));//false
+
+//把数字转为整型
+let num=123.1;
+console.log(Number.parseInt(num)); //123
+
+//把数字转成浮点类型
+let num1=123;
+console.log(Number.parseFloat(num1));
+
+//数组取整
+console.log(Math.trunc(4.1)); //输出4
+console.log(Math.trunc(4.9)); //输出4
+
+//判断是正数负数还是0
+console.log(Math.sign(4)); //输出1
+console.log(Math.sign(-3));//输出-1
+console.log(Math.trunc(0));//输出0
+</code></pre><h3 id="15、json转为数组"><a href="#15、json转为数组" class="headerlink" title="15、json转为数组"></a>15、json转为数组</h3><pre><code>//原生js并没有什么直接内置好的函数去将json数据转化为数组，es6有方法可以实现
+let json={
+    &#39;0&#39;:&#39;www&#39;,
+    &#39;1&#39;:&#39;xypecho&#39;,
+    &#39;2&#39;:&#39;com&#39;,
+    length:3
+}
+console.log(json);//{0: &quot;www&quot;, 1: &quot;xypecho&quot;, 2: &quot;com&quot;, length: 3}
+console.log(Array.from(json));// [&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;]
+</code></pre><h3 id="16、数字和字符串转为数组"><a href="#16、数字和字符串转为数组" class="headerlink" title="16、数字和字符串转为数组"></a>16、数字和字符串转为数组</h3><pre><code>console.log(Array.of(1,2,3,4));// [1, 2, 3, 4]
+console.log(Array.of(&#39;javascript&#39;));//[&quot;javascript&quot;]
+</code></pre><h3 id="17、查找数组里面的字符"><a href="#17、查找数组里面的字符" class="headerlink" title="17、查找数组里面的字符"></a>17、查找数组里面的字符</h3><pre><code>//find()为示例方法,value为需要查找的值，index为索引，arr为源数组
+//数组实例的find方法，用于找出第一个符合条件的数组成员。它的参数是一个回调函数，所有数组成员依次执行该回调函数，直到找出第一个返回值为true的成员，然后返回该成员。如果没有符合条件的成员，则返回undefined。
+let arr=[1,2,3,4,5,6];
+console.log(arr.find(function(value,index,arr){
+        return value&gt;5;
+    }));
+
+
+let arr=[1,2,3,4,5,6];
+console.log(arr.findIndex(function(value,index,arr){
+        return value&gt;5;
+    }));
+//查找满足条件的值的索引
+</code></pre><h3 id="18、数组里面值的替换"><a href="#18、数组里面值的替换" class="headerlink" title="18、数组里面值的替换"></a>18、数组里面值的替换</h3><pre><code>let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+//arr.fill(&#39;text&#39;,1,2); //第一个参数是用来替换的变量，第二个是开始位置，第三个是结束位置
+arr.fill(&#39;text&#39;); //不加起始位置则全部替换
+console.log(arr);
+</code></pre><h3 id="19、es6的新的数组循环"><a href="#19、es6的新的数组循环" class="headerlink" title="19、es6的新的数组循环"></a>19、es6的新的数组循环</h3><pre><code>let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+for(let item of arr){
+    console.log(item);//www,xyp,com
+}
+
+//要输出下标的话可以这样
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+for(let item of arr.keys()){
+    console.log(item); //0,1,2
+}
+
+//如果要下标和值一起输出的话可以这样
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+for(let item of arr.entries()){
+    console.log(item); // [0, &quot;www&quot;]  [1, &quot;xyp&quot;]  [2, &quot;com&quot;]
+}
+
+
+//键值分开输出
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+for(let [key,val] of arr.entries()){
+    console.log(key,val);
+    //0 &quot;www&quot;
+    //1 &quot;xyp&quot;
+    //2 &quot;com&quot;
+}
+
+//手动循环输出数组
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+let list=arr.entries();
+console.log(list.next().value);
+console.log(&#39;----------&#39;);
+console.log(list.next().value);
+console.log(&#39;----------&#39;);
+console.log(list.next().value);
+console.log(&#39;----------&#39;);
+//(2) [0, &quot;www&quot;]
+//-------
+// [1, &quot;xyp&quot;]
+//-------
+// [2, &quot;com&quot;]
+//--------
+</code></pre><h3 id="20、es6箭头函数"><a href="#20、es6箭头函数" class="headerlink" title="20、es6箭头函数"></a>20、es6箭头函数</h3><pre><code>//获取需要传递的参数数量
+function add(a,b){
+    return a+b;
+}
+console.log(add.length);//2
+
+//需要注意的是如果参数设置了默认值，则不会计入length
+function add(a,b=1){
+    return a+b;
+}
+console.log(add.length); //1
+
+
+//箭头函数
+let add=(a,b)=&gt;a+b;
+console.log(add(1,2)); //3
+
+//上面的函数相当于es5的
+&quot;use strict&quot;;
+
+var add = function add(a, b) {
+    return a + b;
+};
+console.log(add(1, 2));
+
+
+//函数作用域问题
+let a=&#39;hello&#39;;
+function test(a,b=a){
+    console.log(a,b); //world world
+}
+test(&#39;world&#39;);
+
+
+let a=&#39;hello&#39;;
+function test(c,b=a){
+    console.log(c,b); //world hello
+}
+test(&#39;world&#39;);
+
+
+
+//没有参数的箭头函数写法
+let arrow=()=&gt;&#39;hello world&#39;;
+console.log(arrow());//hello world
+</code></pre><h3 id="21、对象的函数解构"><a href="#21、对象的函数解构" class="headerlink" title="21、对象的函数解构"></a>21、对象的函数解构</h3><pre><code>//这个方法适应于操作后台返回的json数据时
+let json={
+    name:&#39;jack&#39;,
+    id:666
+}
+let test=({name,id})=&gt;{
+    console.log(name,id); //jack 666
+}
+test(json);
+
+
+//下面是数组的函数解构
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+let foo=(a,b,c)=&gt;{
+    console.log(a,b,c);//www xyp com
+}
+foo(...arr);
+</code></pre><h3 id="22、查看对象里面是否有该键"><a href="#22、查看对象里面是否有该键" class="headerlink" title="22、查看对象里面是否有该键"></a>22、查看对象里面是否有该键</h3><pre><code>let json={
+    name:&#39;jack&#39;,
+    id:666
+};
+console.log(&#39;name&#39; in json);//true 查看对象里面是否有该键
+</code></pre><h3 id="23、数组遍历的几种方式"><a href="#23、数组遍历的几种方式" class="headerlink" title="23、数组遍历的几种方式"></a>23、数组遍历的几种方式</h3><pre><code>//1、forEach()循环遍历
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+arr.forEach((val,idx)=&gt;console.log(val,idx)); //www 0   xyp 1  com 2
+
+//2、filter循环
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+arr.filter(x=&gt;console.log(x));//www,xyp,com
+
+//3、some循环
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];
+arr.some(x=&gt;console.log(x));//www,xyp,com
+</code></pre><h3 id="24、key值的构建-目前尚不知道实际使用场景"><a href="#24、key值的构建-目前尚不知道实际使用场景" class="headerlink" title="24、key值的构建//目前尚不知道实际使用场景"></a>24、key值的构建//目前尚不知道实际使用场景</h3><pre><code>let kill=&#39;test&#39;;
+let obj={
+    [kill]:&#39;web&#39;
+};
+console.log(obj); //{test: &quot;web&quot;}
+</code></pre><h3 id="25、ES6判断的数值是否严格相等"><a href="#25、ES6判断的数值是否严格相等" class="headerlink" title="25、ES6判断的数值是否严格相等"></a>25、ES6判断的数值是否严格相等</h3><pre><code>Object.is(&#39;foo&#39;, &#39;foo&#39;);     // true
+Object.is(window, window);   // true
+
+Object.is(&#39;foo&#39;, &#39;bar&#39;);     // false
+Object.is([], []);           // false
+
+var test = { a: 1 };
+Object.is(test, test);       // true
+
+Object.is(null, null);       // true
+
+// 特例
+Object.is(0, -0);            // false
+Object.is(-0, -0);           // true
+Object.is(NaN, 0/0);         // true
+</code></pre><h3 id="26、es6合并对象的方法"><a href="#26、es6合并对象的方法" class="headerlink" title="26、es6合并对象的方法"></a>26、es6合并对象的方法</h3><pre><code>//Object.assign方法用于对象的合并，将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）。
+//Object.assign方法的第一个参数是目标对象，后面的参数都是源对象。
+let target = { a: 1 };  
+let source1 = { b: 2 };  
+let source2 = { c: 3 };  
+console.log(Object.assign(target,source1,source2));//{a: 1, b: 2, c: 3}
+console.log(Object.assign(target,source2,source1));//{a: 1, b: 2, c: 3}
+</code></pre><h3 id="27、新增的Set数据解构"><a href="#27、新增的Set数据解构" class="headerlink" title="27、新增的Set数据解构"></a>27、新增的Set数据解构</h3><pre><code>let setArr=new Set();
+let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];//定义的时候重复的数据也不会被重复加进去，这个特性可以用来给数组去重
+arr.forEach((val)=&gt;{
+    setArr.add(val); //set增加数据的方式为add(),ps重复的数据不会被加进去，
+    })
+console.log(setArr);//Set(3) {&quot;www&quot;, &quot;xyp&quot;, &quot;com&quot;}
+
+//Array.from方法可以将 Set 结构转为数组。
+Array.from(setArr);
+
+//查找set里面是否有某个变量
+console.log(setArr.has(&#39;www&#39;)); //has()方法返回true/false
+
+//删除set里面所有数据
+setArr.clear();
+console.log(setArr); //Set(0) {} 输出空
+
+//删除set里面指定的数据
+setArr.delete(&#39;www&#39;);//delete()里面放参数
+console.log(setArr);//输出Set(2) {&quot;xyp&quot;, &quot;com&quot;}
+
+//遍历set里面的元素之for..of
+for(let a of setArr){
+    console.log(a);//www xyp com
+}
+
+//遍历set里面的元素之forEach
+setArr.forEach((val)=&gt;{
+    console.log(val);//www xyp com
+    })
+
+//巧用扩展运算符进行遍历
+let set1 = new Set([&#39;red&#39;, &#39;green&#39;, &#39;blue&#39;]);
+let arr1 = [...set1];
+console.log(arr1);//[&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]
+
+//获取set里面元素的数量方法
+console.log(setArr.size); //3,size不会计入重复的数据的数量
+
+//扩展运算符和 Set 结构相结合，就可以去除数组的重复成员。
+let arr = [3, 5, 2, 2, 5, 5];
+let unique = [...new Set(arr)];
+console.log(unique);//[3, 5, 2]
+
+更多demo看[阮一峰老师的教程](http://es6.ruanyifeng.com/#docs/set-map)
+</code></pre><h3 id="28、WeakSet数据结构"><a href="#28、WeakSet数据结构" class="headerlink" title="28、WeakSet数据结构"></a>28、WeakSet数据结构</h3><pre><code>//WeakSet与Set不同的地方在于，WeakSet可以放对象
+let weakarr=new WeakSet();
+let obj={name:&#39;jack&#39;,id:&#39;666&#39;};
+weakarr.add(obj);
+console.log(weakarr);//value: {name: &quot;jack&quot;, id: &quot;666&quot;}
+
+//如果两个不同的变量值相同，赋值给WeakSet，会输出两个相同的值，解决方法，把两个对象合为一个
+let weakarr=new WeakSet();
+let obj={name:&#39;jack&#39;,id:&#39;666&#39;};
+let obj1={name:&#39;jack&#39;,id:&#39;666&#39;};
+weakarr.add(obj);
+weakarr.add(obj1);
+console.log(weakarr);//value1: {name: &quot;jack&quot;, id: &quot;666&quot;};value2: {name: &quot;jack&quot;, id: &quot;666&quot;} //会把两个都输出
+</code></pre><h3 id="29、Map数据结构"><a href="#29、Map数据结构" class="headerlink" title="29、Map数据结构"></a>29、Map数据结构</h3><pre><code>//往Map里面增加数据
+let json={
+    name:&#39;test&#39;,
+    user_id:&#39;321&#39;,
+    password:&#39;123456a&#39;
+};
+console.log(json);
+let maparr=new Map();
+maparr.set(json,&#39;jspang&#39;,);//set方法为往Map里面加数据；前面是key，后面是value
+console.log(maparr);
+
+//查看增加的数据
+let json={
+    name:&#39;test&#39;,
+    user_id:&#39;321&#39;,
+    password:&#39;123456a&#39;
+};
+let maparr=new Map();
+maparr.set(json,&#39;jspang&#39;,);//set方法为往Map里面加数据；前面是key，后面是value
+console.log(maparr.get(json));//jspang
+
+//删除里面所有数据
+maparr.clear();
+
+//删除指定数据
+maparr.delete(json);
+
+//查找是否存在某个变量
+maparr.has(&#39;www&#39;);//false
+
+//Map的数量也用.size
+</code></pre><h3 id="30、用Proxy进行预处理"><a href="#30、用Proxy进行预处理" class="headerlink" title="30、用Proxy进行预处理"></a>30、用Proxy进行预处理</h3><blockquote>
+<p>Proxy用于修改某些操作的默认行为，等同于在语言层面做出修改，所以属于一种“元编程”（meta programming），即对编程语言进行编程。<br>```<br>//get方法，读取pro里面属性时会执行<br>let obj={<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>};<br>let pro=new Proxy({<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>},{<br>    get:function(target,key,property){//target：得到的目标值  key：目标的key值，相当于对象的属性<br>        console.log(‘我先执行了’);<br>    }<br>});//声明变量,前面的花括号里面是对象主体，后面的花括号是需要预处理的函数<br>console.log(pro.name);//我先执行了;打印pro.name是因为pro读取属性时才会执行预处理函数执行</p>
+</blockquote>
+<p>//set方法，改变Proxy属性值时，执行的函数<br>let obj={<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>};<br>let pro=new Proxy({<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>},{<br>    get:function(target,key,property){//target：得到的目标值  key：目标的key值，相当于对象的属性<br>        console.log(‘我先执行了’);<br>    },<br>    set:function(target,key,value,receiver){<br>        console.log(‘hello’);<br>    }<br>});<br>pro.name=’ppp’;<br>console.log(pro.name);</p>
+<p>//apply的用户，先mark，以后再看<br>let target=function(){<br>    console.log(‘this is target’);<br>}<br>let handler={<br>    apply(target,ctx,args){<br>        console.log(‘this is apply’);<br>        return Reflect.apply(…args);<br>    }<br>}<br>let pro=new Proxy(target,handler);<br>console.log(pro());</p>
+<pre><code>### 31、promise的语法
+&gt; ES6中的promise的出现给我们很好的解决了回调地狱的问题，在使用ES5的时候，在多层嵌套回调时，写完的代码层次过多，很难进行维护和二次开发，ES6认识到了这点问题，现在promise的使用，完美解决了这个问题。那我们如何理解promise这个单词在ES5中的作用那，你可以想象他是一种承诺，当它成功时执行一些代码，当它失败时执行一些代码。它更符合人类的行为思考习惯，而不在是晦涩难懂的冰冷语言。
+</code></pre><p>//以洗菜，做饭，吃饭为例<br>let ERR_OK=1;<br>function step1(reject,reject){<br>    console.log(‘1、准备开始洗菜’);<br>    if (ERR_OK==1) {<br>        reject(‘1、洗菜成功’);<br>    }else{<br>        reject(‘1、洗菜失败’);<br>    }<br>}<br>function step2(resolve,reject){<br>    console.log(‘2、准备开始做饭’);<br>    if (ERR_OK==1) {<br>        reject(‘2、做饭成功’);<br>    }else{<br>        reject(‘2、做饭失败’);<br>    }<br>}<br>function step3(resolve,reject){<br>    console.log(‘3、准备开始吃饭’);<br>    if (ERR_OK==1) {<br>        reject(‘3、吃饭成功’);<br>    }else{<br>        reject(‘3、吃饭失败’);<br>    }<br>}<br>new Promise(step1).then(function(val){<br>    console.log(val);//这边的val即为上面if判断后输出的值<br>    return new Promise(step2);<br>}).then(function(val){<br>    console.log(val);<br>    return new Promise(step3);<br>}).then(function(val){<br>    return val;<br>});</p>
+<pre><code>### 32、es6中的class
+</code></pre><p>class Coder{ //定义一个程序员类<br>    name(val){<br>        //console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>}<br>let forg=new Coder;//实例化类<br>forg.name(‘daidai’);//my name is daidai</p>
+<p>//里面写多个函数时<br>class Coder{ //定义一个程序员类<br>    name(val){<br>        console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>    skill(val){<br>        console.log(‘:skills’+val);<br>    }<br>}<br>let forg=new Coder;//实例化类<br>forg.name(‘daidai’);//my name is daidai<br>forg.skill(‘coding’);</p>
+<p>//类的传参<br>class Coder{ //定义一个程序员类<br>    name(val){<br>        console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>    skill(val){<br>        console.log(this.name+’:skills’+val);<br>    }<br>    constructor(a,b){<br>        this.a=a;<br>        this.b=b;<br>    }<br>    add(){<br>        return this.a+this.b;<br>    }<br>}<br>let forg=new Coder(1,4);//a.b在实例化的时候传进去<br>console.log(forg.add());//5</p>
+<p>//类的继承<br>class Coder{ //定义一个程序员类<br>    name(val){<br>        console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>    skill(val){<br>        console.log(this.name+’:skills’+val);<br>    }<br>    constructor(a,b){<br>        this.a=a;<br>        this.b=b;<br>    }<br>    add(){<br>        return this.a+this.b;<br>    }<br>}</p>
+<p>class htmler extends Coder{<br>    //htmler类里面继承了coder里面所有的属性和方法<br>}<br>let daidai=new htmler;<br>daidai.name(‘test’);//my name is test</p>
+<pre><code>### 33、模块化编程
+</code></pre><p>//export负责进行模块化，也是模块的输出。<br>//import引入模块</p>
+<p>//test.js<br>export var a = ‘jspang’;<br>//index.js<br>import {a} from ‘./test.js’;<br>console.log(a);</p>
+<p>执行<br>babel-node index.js<br>//输出jspang</p>
+<p>//输出多变量的话可以这样<br>var a=’hello’;<br>var b=’world’;<br>export {a,b};</p>
+<p>//函数的输出<br>export function add(a,b){<br>    return a+b;<br>}</p>
+<p>//将变量语义化输出<br>var a=’hello’;<br>var b=’world’;<br>export{<br>    name as a,<br>    skill as b<br>}<br>//引用可以这样<br>import {name,skill} from ‘./test.js’</p>
+<pre><code>### 34、正则新特性
+es5中正则的写法为
+</code></pre><pre><code>let regex=new RegExp(&#39;xyz&#39;,&#39;i&#39;);
+let regex2=new RegExp(/xyz/i);
+console.log(regex.test(&#39;xyz123&#39;),regex2.test(&#39;xyz12345&#39;)); //true,true
+</code></pre><pre><code>es6新特性
+</code></pre><pre><code>let regex3=new RegExp(/xyz/ig,&#39;i&#39;);//这段的意思是后面的修饰符来替代前面的修饰符
+console.log(regex3.flags); //输出i，flags是获取正则表达式修饰符的属性
+</code></pre><pre><code>### 35、字符串新特性
+</code></pre><p>console.log(‘1’.padStart(2,’0’));  //输出01，padStart的意思为向前面补白，2代表长度，0代表用0来补<br>console.log(‘1’.padEnd(2,’0’)); //输出10，向后面补白</p>
+<p>console.log(String.raw<code>hi/naaa</code>); //输出hi\naaa，这个api的作用是在反斜杠前面再加个反斜杠来转义<br>console.log(<code>hi/naaa</code>);//输出hi<br>                            aaa</p>
+<pre><code>### 36、数组新特性
+</code></pre><p>let arr =Array.of(‘test’,’i’,’am’,’mi’,1,2,3);<br>console.log(arr);  //[“test”, “i”, “am”, “mi”, 1, 2, 3]，把任意字符转成数组类型</p>
+<p>console.log(Array.from([1,2,3],(item) =&gt;{return item *2;}));//可以转化为数组的同时遍历里面数据并修改数据</p>
+<p>let arr=[‘www’,’xyp’,’com’];<br>arr.fill(‘text’,1,2); //第一个参数是用来替换的变量，第二个是开始位置，第三个是结束位置<br>arr.fill(‘text’); //不加起始位置则全部替换,输出为[‘text’,’text’,’text’]<br>console.log(arr);</p>
+<p>let arr=[1,2,3,4,5];<br>for(let [key,val] of arr.entries()){<br>    console.log(key,val);<br>}//遍历输出数组里面的键值</p>
+<p>const arr1 = [‘a’, ‘b’, ‘c’, ‘d’, ‘e’, ‘f’, ‘g’, ‘h’, ‘i’, ‘j’, ‘k’, NaN];<br>console.log(arr1.includes(NaN));//查看数组里面是否包含某个值，有返回true，没有则返回false</p>
+<pre><code>### 37、函数新特性
+</code></pre><p>//函数作用域问题<br>let a=’hello’;<br>function test(a,b=a){<br>    console.log(a,b);<br>}<br>test(‘world’); //输出为world world</p>
+<p>let a=’hello’;<br>function test(a,b=a){<br>    console.log(a,b);<br>}<br>test();//输出为undefined undefined</p>
+<p>let a=’hello’;<br>function test(c,b=a){<br>    console.log(c,b);<br>}<br>test(‘world’);//输出为world hello</p>
+<p>//箭头函数<br>let fun = a =&gt;  a*a;<br>console.log(fun(2)); //输出4</p>
+<p>//如果函数没有参数可以这么写<br>let test =()=&gt;’hello world’;<br>console.log(test()); //hello world</p>
+<pre><code>### 38、Object新增方法
+</code></pre><p>//对象中有方法<br>let es5_methods={<br>    hello:function(){<br>        console.log(‘hello world’);<br>    }<br>}//es5的写法<br>let es6_methods={<br>    hello(){<br>        console.log(‘hello world’);<br>    }<br>}//es6里面的写法</p>
+<p>//判断两个值是否相同<br>console.log(Object.is(‘aaa’,’aaa’));  //Object.is和 === 相同</p>
+<p>//对象合并<br>let arr=[1,2,3];<br>let brr=[‘a’,’b’,’c’];</p>
+<p>let crr=Object.assign({},arr,brr);//花括号叫目标对象，后面的arr、brr是源对象。对象合并是指：将源对象里面的属性添加到目标对象中去，若两者的属性名有冲突，后面的将会覆盖前面的<br>console.log(crr);</p>
+<p>//将对象分成数组<br>let test ={name:’jack’,age:’18’};<br>for(let [key,val] of Object.entries(test)){<br>    console.log([key,val]);// [“name”, “jack”],[“age”, “18”]<br>}</p>
+<pre><code>### 39、symbol数据类型
+&gt;ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。
+
+### 40、set-map数据结构
+</code></pre><p>let setArr=new Set();<br>setArr.add(‘a’); //set解构往里面新增值用add方法<br>console.log(setArr.size);//获取set里面的长度用size</p>
+<p>//Array.from方法可以将 Set 结构转为数组。<br>Array.from(setArr);</p>
+<p>//set的遍历<br>let arr=[‘add’,’delete’,’has’,’clear’];<br>let setArr=new Set(arr);<br>for(let key of setArr){<br>    console.log(key); //输出为’add’,’delete’,’has’,’clear’<br>}</p>
+<p>setArr.forEach((val)=&gt;{<br>    console.log(val);//输出为’add’,’delete’,’has’,’clear’<br>})</p>
+<pre><code>### 41、set和array对比
+</code></pre><p>let arr=new Array;<br>let map=new Map();<br>//增<br>arr.push({‘t’:1});<br>map.set(‘t’,1);<br>console.log(arr);<br>console.log(map);<br>//删<br>let idx=arr.findIndex(item=&gt;item.t);<br>arr.splice(idx,1);<br>map.delete(‘t’);<br>console.log(arr);<br>console.log(map);<br>//改<br>arr.forEach(item=&gt;item.t?item.t=2:’’);<br>map.set(‘t’,2);<br>console.log(arr);<br>console.log(map);<br>//查<br>let m=map.has(‘t’);<br>let a=arr.find(item=&gt;item.t);<br>console.log(m);<br>console.log(a);</p>
+<pre><code>### 42、类和对象
+基本定义和生成实例
+</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>}<br>let child =new Parent();<br>console.log(child.name);//hello world</p>
+<p>let obj=new Parent(‘ppp’);<br>console.log(obj.name);//ppp</p>
+<pre><code>继承
+</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>}<br>class child extends Parent{<br>    constructor(name=’child_name’){<br>        super(name);//子类要想修改父类值需要调用super方法，方面里面写修改的属性<br>        this.type=’child_type’;//子类新增属性<br>    }<br>}<br>console.log(new child());//child {name: “child_name”, type: “child_type”}</p>
+<pre><code>get和set操作
+</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>    get longName(){<br>        return <code>这是get操作${this.name}</code>;<br>    }<br>    set longName(val){<br>        this.name=val;<br>    }<br>}<br>let test = new Parent();<br>//console.log(test.longName);//这是get操作hello world<br>test.longName=’呆呆’;<br>console.log(test.longName);//这是get操作’呆呆’</p>
+<pre><code>静态方法(只能通过类来调用而不是通过类的实例来调用)
+</code></pre><p>//错误示范<br>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>    static say(){<br>        console.log(this.name);<br>    }<br>}<br>let test = new Parent();<br>test.say(); //报错，test.say is not a function</p>
+<p>//正确写法<br>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>    static say(){<br>        console.log(this.name);<br>    }<br>}<br>Parent.say();//输出Parent</p>
+<pre><code>静态方法
+</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>}<br>Parent.sex=’boy’;<br>console.log(Parent.sex);//boy</p>
+<pre><code>### 43、模块化编程
+</code></pre><p>//这是a.js里面<br>let a=123;<br>let foo =function(){<br>    console.log(‘hello’);<br>}<br>class hello{<br>    test(){<br>        alert(123);<br>    }<br>}<br>export default{<br>    a,<br>    foo,<br>    hello<br>}</p>
+<p>//这是b.js<br>import xxx(此处可以随便起名字) from a.js<br>console.log(xxx.a);<br>console.log(xxx.hello());<br>```</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/01/16/图片在div垂直水平居中的方法-持续更新/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/01/11/记第一次处理移动端滑动事件/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="很青的青蛙's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        xypecho@163.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:xypecho@163.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">14</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/BUG集锦/">BUG集锦<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/BUG集锦/vue-js/">vue.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/">CSS相关<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/排版/">排版<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/">JS技巧<span class="sidebar_archives-count">21</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/BUG集锦/">BUG集锦<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/CSS相关/">CSS相关<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/ES6/">ES6<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/H5新特性/">H5新特性<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/break用法/">break用法<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/原型/">原型<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/">图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/jquery图片懒加载/">jquery图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/性能优化/">性能优化<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/">移动端<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/左右滑动事件/">左右滑动事件<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JavaScript权威指南/">JavaScript权威指南<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/RegExp/">RegExp<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/git/">git<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/http/">http<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/">mysql<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/数据库/">数据库<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/npm/">npm<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/package-json/">package.json<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/">vue.js<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/axios/">axios<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/性能优化/">性能优化<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/杂谈/">杂谈<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/杂谈/转行一周年纪念/">转行一周年纪念<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/">项目部署<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/linux/">linux<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">label</i>
+                
+                标签
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">57</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>小小切图仔也有大大的梦想
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+            <!--
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+            -->
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+        <script>lsloader.load("sm_js","/js/smoothscroll.js?lOy/ACj5suSNi7ZVFVbpFQ==", true)</script>
+    
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

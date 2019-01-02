@@ -1,0 +1,1293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title>vue项目打包优化</title>
+      <link href="/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/"/>
+      <url>/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/</url>
+      <content type="html"><![CDATA[<blockquote><p>前段时间腾讯云有优惠，买了个1核1G的云主机来放练手的项目，经过一波操作终于部署成功了，but首屏打开贼慢，于是来一波性能优化之旅。</p></blockquote><p>首先看看项目加载了哪些文件<br><img src="/2018/10/24/vue项目打包优化/TIM图片20181024212254.png"><br>打马的部分是服务器的公网ip，我们发现加载最耗时的主要是两个文件一个是首屏的大图，另一个是<code>vendor.2b23f6448b79423c7a25.js</code>这个文件。下面我们来着手优化:</p><h3 id="1、vue路由懒加载"><a href="#1、vue路由懒加载" class="headerlink" title="1、vue路由懒加载"></a>1、vue路由懒加载</h3><blockquote><p>当打包构建应用时，Javascript 包会变得非常大，影响页面加载。如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了。</p></blockquote><p>路由懒加载是优化效果最明显的,因为路由的懒加载意味着<strong>当路由被访问的时候才加载对应组件，当构建的项目比较大的时候，懒加载可以分割代码块，提高页面的初始加载效率</strong>，我们先来优化路由，我们之前的路由都是下面这样的写法，这样的写法会造成进入首页时，需要加载的内容过多，时间过长，首屏长时间空白。</p><pre><code>export default new Router({  routes: [    {      path: &#39;/&#39;,      redirect: &#39;/recommend&#39;    },    {      path: &#39;/recommend&#39;,      component: recommend    },    {      path: &#39;/singer&#39;,      component: singer,      children: [        {          path: &#39;:id&#39;,          component: singerDetail        }      ]    }  ]})</code></pre><p>我们应当使用懒加载的写法，如下</p><pre><code>export const normalRouter = [  {    path: &#39;/&#39;,    component: login  },  {    path: &#39;/index&#39;,    component: resolve =&gt; require([&#39;@/pages/index/index&#39;], resolve),    redirect: &#39;/home&#39;,    name: &#39;首页&#39;,    children: [      {        path: &#39;/home&#39;,        component: resolve =&gt; require([&#39;@/pages/home/home&#39;], resolve),        name: &#39;工作台&#39;,        icon: &#39;el-icon-menu&#39;      },      {        path: &#39;/404&#39;,        component: resolve =&gt; require([&#39;@/components/404/404&#39;], resolve),        name: &#39;404&#39;,        icon: &#39;el-icon-menu&#39;      }    ]  },  {    path: &#39;*&#39;,    redirect: &#39;/404&#39;  }];</code></pre><p>配置完路由后，执行<code>npm run build</code>就会发现不同路由对应的组件分割成不同的代码块</p><img src="/2018/10/24/vue项目打包优化/TIM图片20181024220419.png"><h3 id="2、代码压缩-gzip"><a href="#2、代码压缩-gzip" class="headerlink" title="2、代码压缩(gzip)"></a>2、代码压缩(gzip)</h3><p>这个是除了路由懒加载之外，优化效果其次明显的。我们找到nginx的配置文件<code>nginx.conf</code>,在http对象中加上以下代码</p><pre><code>    gzip on;     gzip_comp_level 5;     gzip_types text/plain application/javascript application/x-javascript text/javascript text/xml text/css;</code></pre><img src="/2018/10/24/vue项目打包优化/TIM图片20181025211556.png"><p><strong>对比最开始的图，首屏加载时间从25.89s优化到12.64s，整整快了13s</strong></p><h3 id="3、禁止vue打包生产map文件"><a href="#3、禁止vue打包生产map文件" class="headerlink" title="3、禁止vue打包生产map文件"></a>3、禁止vue打包生产map文件</h3><blockquote><p>map文件的作用：项目打包后，代码都是经过压缩加密的，如果运行时报错，输出的错误信息无法准确得知是哪里的代码报错。有了map就可以像未加密的代码一样，准确的输出是哪一行哪一列有错。</p></blockquote><p>找到vue项目下的<code>config/index.js</code>文件，搜索到<code>productionSourceMap</code>,把后面的值改成false</p><img src="/2018/10/24/vue项目打包优化/TIM图片20181025220637.png"><p><strong>首屏加载时间从12.64s到6.97s</strong></p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+          <category> 性能优化 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+            <tag> 性能优化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>nodeJs项目部署腾讯云完整流程</title>
+      <link href="/2018/10/03/nodeJs%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/"/>
+      <url>/2018/10/03/nodeJs%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E8%85%BE%E8%AE%AF%E4%BA%91%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B/</url>
+      <content type="html"><![CDATA[<p>国庆死宅在家时看到腾讯云搞活动,云主机8块钱一个月，正好前段时间写了个node的后台管理系统，于是就买了3个月正好可以自己熟悉一下项目部署的全部过程。<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181003143442.png"></p><h3 id="0、登陆服务器"><a href="#0、登陆服务器" class="headerlink" title="0、登陆服务器"></a>0、登陆服务器</h3><p>如果你买的主机的系统不是<code>centos 7.2</code>的话，可以跟着<a href="https://cloud.tencent.com/document/product/213/5435" target="_blank" rel="noopener">腾讯云的文档</a>来一步步走，如果你是和我一样的小白，买服务器的时候用的默认配置即操作系统是<code>centos 7.2</code>的话，可以参考<a href="https://cloud.tencent.com/document/product/213/5436?" target="_blank" rel="noopener">这个文档</a>进行登录。<br>(ps:最开始我一直不能用windows的远程桌面登录我还一直以为是我电脑的问题，直到我提交了工单，才发现<code>centos 7.2</code>无法使用window远程桌面进行登录)</p><h3 id="1、部署node环境"><a href="#1、部署node环境" class="headerlink" title="1、部署node环境"></a>1、部署node环境</h3><pre><code>// 使用 wget 安装方式wget https://nodejs.org/dist/v6.10.3/node-v6.10.3-linux-x64.tar.xz// 解压tar xvJf node-v6.10.3-linux-x64.tar.xz// 将解压的 Node.js 目录移动到 /usr/local 目录下mv node-v6.10.3-linux-x64 /usr/local/nodeln -s /usr/local/node/bin/node /bin/node// 配置和使用 npmln -s /usr/local/node/bin/npm /bin/npm// 配置环境变量echo &#39;export PATH=/usr/local/node/bin:$PATH&#39; &gt;&gt; /etc/profile// 生效环境变量source /etc/profile</code></pre><p>然后使用命令<code>node -v</code>来测试是否安装成功,如果出现以下输出，那么恭喜你，成功配置了node环境！<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181003151922.png"></p><h4 id="1-1升级node版本"><a href="#1-1升级node版本" class="headerlink" title="1.1升级node版本"></a>1.1升级node版本</h4><p>目前我们安装的node是6.x版本的，那么我们如何在linux下升级node呢？</p><pre><code>// 安装node版本管理工具 nnpm install -g n// 进入该文件进行编辑vim ~/.bash_profile// 将下面两行代码插入到文件末尾 export N_PREFIX=/usr/localexport PATH=$N_PREFIX/bin:$PATH// 按下esc，然后输入 :wq// 执行source使修改生效source ~/.bash_profile// 执行n模版的升级命令n stable</code></pre><p>执行node -v看看，有没有成功升级<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181003181802.png"></p><h3 id="2、部署Nginx"><a href="#2、部署Nginx" class="headerlink" title="2、部署Nginx"></a>2、部署Nginx</h3><p><code>Nginx</code>可能很多搞前端的小伙伴没怎么接触过(其实我也没怎么接触过…)，但是你一定经常看到这个<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181005142352.png"></p><p><a href="https://juejin.im/post/5bacbd395188255c8d0fd4b2?utm_source=gold_browser_extension" target="_blank" rel="noopener">Nginx与前端开发</a>这篇文章应该是一个很好的读物，介绍了Nginx。</p><pre><code>// 添加CentOS 7 Nginx yum资源库rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm// 安装nginxyum install -y nginx// 启动Nginxsystemctl start nginx.service</code></pre><p>如果你的服务器一切正常的话，你应该会看到这个页面<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181005155318.png"></p><h4 id="2-1部署vue前端项目"><a href="#2-1部署vue前端项目" class="headerlink" title="2.1部署vue前端项目"></a>2.1部署vue前端项目</h4><p>接上文，我们发现nginx的首页即上图的路径是在<code>usr/share/nginx/html</code>下，于是我们把打包后的vue项目用ftp上传至该目录下。直接用ip访问试试看<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181022205104.jpg"><br>perfect，我们完成了第一步，接下来我们来把后端代码也部署到服务器。</p><h4 id="2-2部署node后端项目"><a href="#2-2部署node后端项目" class="headerlink" title="2.2部署node后端项目"></a>2.2部署node后端项目</h4><h5 id="2-2-1ftp上传项目"><a href="#2-2-1ftp上传项目" class="headerlink" title="2.2.1ftp上传项目"></a>2.2.1ftp上传项目</h5><p>我们需要使用ftp把后端项目上传到服务器，首先在<code>/usr/local/</code>路径下新建一个<code>deployment</code>文件夹里面用来存放后端项目。</p><h5 id="2-2-2安装pm2并启动nodejs项目"><a href="#2-2-2安装pm2并启动nodejs项目" class="headerlink" title="2.2.2安装pm2并启动nodejs项目"></a>2.2.2安装pm2并启动nodejs项目</h5><pre><code>npm install -g pm2 // 全局安装pm2cd /usr/local/deployment  //进入刚刚存放后端项目的文件pm2 start app.js // 启动服务</code></pre><p>由于我的后端项目是运行在8081端口的，首先要去腾讯云开放8081端口，<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181023203734.png"></p><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181023203903.png"><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181023204152.png"><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181023204240.png"><p>端口开放成功后，执行<code>pm2 restart all</code> 来重新启动后端项目，然后访问网站的8081端口<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181023204444.png"><br>nice，后端也成功部署上去了，接下来就是安装mysql了。</p><h3 id="3、安装mysql"><a href="#3、安装mysql" class="headerlink" title="3、安装mysql"></a>3、安装mysql</h3><p>依次执行以下命令</p><pre><code>wget http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm // 下载mysql的源yum localinstall -y mysql57-community-release-el7-7.noarch.rpm // 安装yum库yum install -y mysql-community-server // 安装MySQLsystemctl start mysqld.service // 启动MySQL服务</code></pre><p>MySQL5.7加强了root用户的安全性，因此在第一次安装后会初始化一个随机密码，以下为查看初始随机密码的方式</p><pre><code>grep &#39;temporary password&#39; /var/log/mysqld.log</code></pre><p>修改mysql密码方式</p><pre><code>alter user user() identified by &quot;123456&quot;;</code></pre><p>but,这样的密码肯定是不符合mysql的密码规则的，但是我们又不想设置多复杂的密码，那么执行以下命令就可以解决了</p><pre><code>set global validate_password_policy=0;   // 这是在mysql里面执行的哦</code></pre><p>然后执行如下命令授权远程链接</p><pre><code>GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;your password&#39; WITH GRANT OPTION;</code></pre><h3 id="4、部署后端接口"><a href="#4、部署后端接口" class="headerlink" title="4、部署后端接口"></a>4、部署后端接口</h3><p>在本地下载navicat,然后连接mysql<br><img src="/2018/10/03/nodeJs项目部署腾讯云完整流程/TIM图片20181023213926.png">,这边不会的可以看看<a href="https://blog.csdn.net/fenfei12138/article/details/49661879" target="_blank" rel="noopener">这篇文章</a></p><p>然后打开网站发现…终于部署上去了。</p>]]></content>
+      
+      <categories>
+          
+          <category> 项目部署 </category>
+          
+          <category> node.js </category>
+          
+          <category> linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 项目部署 </tag>
+            
+            <tag> node.js </tag>
+            
+            <tag> linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>数组对象如何去重</title>
+      <link href="/2018/09/27/%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E5%A6%82%E4%BD%95%E5%8E%BB%E9%87%8D/"/>
+      <url>/2018/09/27/%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E5%A6%82%E4%BD%95%E5%8E%BB%E9%87%8D/</url>
+      <content type="html"><![CDATA[<p>好久没更新博客，因为自从跳槽到现在的公司一直很忙，最关键技术栈竟然变成了jquery + bootstrap！！！很多代码封装无力，做了很多重复的活！！！<br>好了，不吐槽了，转到今天的主题，如何给数组对象去重,举个栗子:</p><pre><code>[    {name:&#39;test&#39;,age:12},    {name:&#39;test1&#39;,age:13},    {name:&#39;test2&#39;,age:14},    {name:&#39;test&#39;,age:12}]// 需要将上面的数组对象去重</code></pre><h3 id="0、利用Lodash中的uniqWith方法去重"><a href="#0、利用Lodash中的uniqWith方法去重" class="headerlink" title="0、利用Lodash中的uniqWith方法去重"></a>0、利用Lodash中的uniqWith方法去重</h3><p><a href="https://www.lodashjs.com/" target="_blank" rel="noopener">Lodash</a>是一套工具库，内部封装了很多字符串、数组、对象等常见数据类型的处理函数。</p><pre><code>let arr = [    { name: &#39;test&#39;, age: 12 },    { name: &#39;test1&#39;, age: 13 },    { name: &#39;test2&#39;, age: 14 },    { name: &#39;test2&#39;, age: 15 },    { name: &#39;test&#39;, age: 12 }];console.log(arr);console.log(_.uniqWith(arr, _.isEqual));//[{ name: &#39;test&#39;, age: 12 },{ name: &#39;test1&#39;, age: 13 },{ name: &#39;test2&#39;, age: 14 },{ name: &#39;test2&#39;, age: 15 }];</code></pre><h3 id="1、for循环去重"><a href="#1、for循环去重" class="headerlink" title="1、for循环去重"></a>1、for循环去重</h3><p>这个应该是最基础的，也是很多人最先想到的给数组对象去重的方法</p><pre><code>let arr = [    { name: &#39;test&#39;, age: 12 },    { name: &#39;test1&#39;, age: 13 },    { name: &#39;test2&#39;, age: 14 },    { name: &#39;test2&#39;, age: 15 },    { name: &#39;test&#39;, age: 12 }];let newArr = [];for (let i = 0; i &lt; arr.length; i++) {    let tag = true;    for (let j = 0; j &lt; newArr.length; j++) {        if (arr[i].name == newArr[j].name &amp;&amp; arr[i].age == newArr[j].age) {            tag = false;        }    }    if (tag) {        newArr.push(arr[i]);    }}console.log(newArr); // [{ name: &#39;test&#39;, age: 12 },{ name: &#39;test1&#39;, age: 13 },{ name: &#39;test2&#39;, age: 14 },{ name: &#39;test2&#39;, age: 15 }];</code></pre><h3 id="2、利用JSON-stringify这个方法来字符串化数组里面的值，从而比较字符串来实现去重"><a href="#2、利用JSON-stringify这个方法来字符串化数组里面的值，从而比较字符串来实现去重" class="headerlink" title="2、利用JSON.stringify这个方法来字符串化数组里面的值，从而比较字符串来实现去重"></a>2、利用JSON.stringify这个方法来字符串化数组里面的值，从而比较字符串来实现去重</h3><p>经过测试发现JSON.stringify后的<code>{ name: &#39;test&#39;, age: 12 }</code>,<code>{ age: 12, name: &#39;test&#39; }</code>值虽然不同，但显然他们是一样的对象，所以这个方法有bug，慎用！！！</p><pre><code>let arr = [    { name: &#39;test&#39;, age: 12 },    { name: &#39;test1&#39;, age: 13 },    { name: &#39;test2&#39;, age: 14 },    { name: &#39;test2&#39;, age: 15 },    { name: &#39;test&#39;, age: 12 }];let reduceRepeat = (arr) =&gt; {    let newArr = [];    arr.forEach(item =&gt; {        newArr[JSON.stringify(item)] = item;    });    arr = Object.keys(newArr).map(item =&gt; {        return JSON.parse(item);    })    return arr;};reduceRepeat(arr);// [{ name: &#39;test&#39;, age: 12 },{ name: &#39;test1&#39;, age: 13 },{ name: &#39;test2&#39;, age: 14 },{ name: &#39;test2&#39;, age: 15 }];</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>mysql中的一些常用语句</title>
+      <link href="/2018/07/23/mysql%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5/"/>
+      <url>/2018/07/23/mysql%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5/</url>
+      <content type="html"><![CDATA[<h3 id="1、四大操作语句——增删改查"><a href="#1、四大操作语句——增删改查" class="headerlink" title="1、四大操作语句——增删改查"></a>1、四大操作语句——增删改查</h3><p>此处的示例表名字为 test_table</p><h4 id="1-增"><a href="#1-增" class="headerlink" title="1.增"></a>1.增</h4><pre><code>INSERT INTO test_table (NAME,PASSWORD) VALUES (&#39;jack&#39;,123456) // 给test_table中的NAME,PASSWORD两个字段插入值</code></pre><h4 id="2-删"><a href="#2-删" class="headerlink" title="2.删"></a>2.删</h4><pre><code>DELETE from test_table // 删除test_table表中所有数据DELETE from test_table  WHERE ID = 1// 删除test_table表中ID字段值为1的数据</code></pre><h4 id="3-改"><a href="#3-改" class="headerlink" title="3.改"></a>3.改</h4><pre><code>UPDATE test_table SET PASSWORD = &#39;123456a&#39; WHERE id = 1; // 更新test_table中id为1的PASSWORD字段UPDATE test_table SET title=&#39;测试的title&#39;,description=&#39;测试的description&#39;,href=&#39;测试的href&#39; WHERE ID =1; //更新多个字段</code></pre><h4 id="4-查"><a href="#4-查" class="headerlink" title="4.查"></a>4.查</h4><pre><code>SELECT * FROM test_table  // 搜索test_table表中所有字段SELECT Title,Src FROM test_table // 搜索test_table表中的Title和Src两个字段</code></pre><h3 id="2、子句"><a href="#2、子句" class="headerlink" title="2、子句"></a>2、子句</h3><h4 id="1-WHERE-子句"><a href="#1-WHERE-子句" class="headerlink" title="1.WHERE 子句"></a>1.WHERE 子句</h4><blockquote><p>WHERE 子句用于过滤记录。</p></blockquote><pre><code>SELECT * FROM test_table WHERE ID = 1; //搜索test_table表中id为1的数据SELECT * FROM test_table WHERE AGE&gt;18; // 搜索test_table表中AGE大于18的数据SELECT * FROM test_table WHERE AGE&lt;=18; // 搜索test_table表中AGE小于等于18的数据SELECT * FROM test_table WHERE AGE&gt;=18 AND NAME = &#39;jack&#39;; // 搜索test_table表中AGE大于等于18并且NAME等于‘jack’的数据SELECT * FROM test_table WHERE AGE&gt;=18 OR NAME = &#39;jack&#39;; // 搜索test_table表中AGE大于等于18或者NAME等于‘jack’的数据</code></pre><h4 id="2-ORDER-子句"><a href="#2-ORDER-子句" class="headerlink" title="2.ORDER 子句"></a>2.ORDER 子句</h4><blockquote><p>ORDER 子句负责排序</p></blockquote><pre><code>SELECT * FROM test_table ORDER BY age ASC; // 从test_table表中搜索所有数据按age升序SELECT * FROM test_table ORDER BY age DESC; // 从test_table表中搜索所有数据按age降序SELECT * FROM test_table ORDER BY age ASC,id DESC; // 从test_table表中搜索所有数据按age升序,如果age相同，则按id降序排序</code></pre><h4 id="3-GROUP-子句"><a href="#3-GROUP-子句" class="headerlink" title="3.GROUP 子句"></a>3.GROUP 子句</h4><blockquote><p>GROUP聚类 ，即合并相同的数据</p></blockquote><pre><code>SELECT COUNT(*) FROM test_table; // 获取test_table表中所有数据的条数SELECT * FROM test_table GROUP BY age; // 合并相同age的数据，即显示所有age不相同的数据SELECT age,COUNT(age) FROM test_table GROUP BY age; // 获取所有的age，以及对应的age出现的次数SELECT class,AVG(score) FROM test_table GROUP BY class; // 算各个班级的平均分SELECT class,MAX(score),MIN(score) FROM test_table GROUP BY class; // 获取各个班级里面最高分和最低分SELECT class,SUM(score) FROM test_table GROUP BY class; // 获取班级总分SELECT class,SUM(score) FROM score GROUP BY class ORDER BY score ASC; // 获取班级总分并按照分钟竟然升序</code></pre><h4 id="4-LIMIT-子句"><a href="#4-LIMIT-子句" class="headerlink" title="4.LIMIT 子句"></a>4.LIMIT 子句</h4><blockquote><p>主要作用是限制输出</p></blockquote><pre><code>SELECT * FROM test_table LIMIT 10; // 获取test_table中的前10条数据SELECT * FROM test_table LIMIT 3,8; // 从第三条开始获取8条数据(起始数字为0)//分页demo，每页20条数据SELECT * FROM test_table LIMIT 0,20;//第一页 SELECT * FROM test_table LIMIT 20,20;//第二页 SELECT * FROM test_table LIMIT 40,20;//第三页 SELECT * FROM test_table LIMIT (N-1)*20,20;//第N页</code></pre><h3 id="3、-综合语句"><a href="#3、-综合语句" class="headerlink" title="3、 综合语句"></a>3、 综合语句</h3><pre><code>SELECT class,COUNT(class) FROM test_table WHERE score &gt; 60 GROUP BY class ORDER BY COUNT(class) ASC LIMIT 2;//从所有班级里面获取分数60分以上的人数，并按照人数排序，最后输出人数最少的两个班级</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> mysql </category>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>浅谈深拷贝与浅拷贝</title>
+      <link href="/2018/07/02/%E6%B5%85%E8%B0%88%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/"/>
+      <url>/2018/07/02/%E6%B5%85%E8%B0%88%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/</url>
+      <content type="html"><![CDATA[<p>一开始看到深拷贝与浅拷贝我是完全一脸懵逼的，之前只在掘金的热门文章看到过，不过当时也没深究。<br>最近项目有个需求才让我真正认识深拷贝，项目需求是这样的，有一个用来存储element多选下拉框选中的值的数组，传往后台是后台需要字符串，于是机智的我立马加上一个<code>join(&#39;,&#39;)</code>然后这边传往后台，万万没想到，因为我用了element的<code>rules</code>来验证表单是否非空的，将数组改成字符串之后验证就不通过了，因为element的验证还会验证数据的类型。然后我就准备用一个临时变量来存储表单数据，然后修改临时变量里面的数组(将其变成字符串),改好后准备再次提交时，又验证失败了，当时又一脸懵逼了，为什么这样也报错。于是百度了一翻知道了深拷贝。</p><h2 id="1、-为什么修改临时变量form表单的数据也会修改？"><a href="#1、-为什么修改临时变量form表单的数据也会修改？" class="headerlink" title="1、 为什么修改临时变量form表单的数据也会修改？"></a>1、 为什么修改临时变量form表单的数据也会修改？</h2><p>下面来一个demo</p><pre><code>let arr = [1, 2, 3, 4];let arr1 = arr;arr1[0] = &#39;a&#39;;console.log(arr);console.log(arr1);</code></pre><p>看到这个例子，大多数人的答案肯定是arr是<code>[1, 2, 3, 4]</code>,arr1是<code>[&quot;a&quot;, 2, 3, 4]</code>,然而情况确是<br><img src="/2018/07/02/浅谈深拷贝与浅拷贝/TIM图片20180702210628.png"><br>再来一个demo</p><pre><code>    let a = 1;    let b = a;    b=2;    console.log(a)    console.log(b)</code></pre><p>有了上面例子的经验，机智的小伙伴们一定以为输出的都是2，然而<br><img src="/2018/07/02/浅谈深拷贝与浅拷贝/TIM图片20180702211042.png"><br>下面的讲解部分:</p><h3 id="1-1数据类型"><a href="#1-1数据类型" class="headerlink" title="1.1数据类型"></a>1.1数据类型</h3><p>javascript中有基本类型和引用类型两种数据类型</p><blockquote><p>5种基本类型分别为Undefined、Null、Boolean、Number 和 String，变量是直接按值存放的，存放在栈内存中的简单数据段，可以直接访问。</p><p>引用类型为Function,Array,Object，是存放在堆内存中的对象，变量保存的是一个指针，这个指针指向另一个位置。当需要访问引用类型（如对象，数组等）的值时，首先从栈中获得该对象的地址指针，然后再从堆内存中取得所需的数据。</p></blockquote><p>所以赋值时，基本类型是直接复制了一个新的变量，新旧两个变量之间没有关系；而引用类型也复制了新的变量，但这个变量是一个指针，新旧两个指针指向同一个对象，所以修改临时变量也会改动原有的form表单的数据</p><h2 id="2、如果想实现项目里面的那个需求的话要怎么做？"><a href="#2、如果想实现项目里面的那个需求的话要怎么做？" class="headerlink" title="2、如果想实现项目里面的那个需求的话要怎么做？"></a>2、如果想实现项目里面的那个需求的话要怎么做？</h2><h3 id="2-1深拷贝的实现"><a href="#2-1深拷贝的实现" class="headerlink" title="2.1深拷贝的实现"></a>2.1深拷贝的实现</h3><h4 id="2-1-1利用JSON对象来实现最简单的深拷贝"><a href="#2-1-1利用JSON对象来实现最简单的深拷贝" class="headerlink" title="2.1.1利用JSON对象来实现最简单的深拷贝"></a>2.1.1利用JSON对象来实现最简单的深拷贝</h4><pre><code>let arr = [1, 2, 3, 4];let arr1 = JSON.parse(JSON.stringify(arr));arr1[0] = &#39;a&#39;;console.log(arr) console.log(arr1)</code></pre><p>输出为<img src="/2018/07/02/浅谈深拷贝与浅拷贝/TIM图片20180702212636.png"><br>这种方法使用较为简单，可以满足基本的深拷贝需求，而且能够处理JSON格式能表示的所有数据类型，但是对于正则表达式类型、函数类型等无法进行深拷贝(而且会直接丢失相应的值)。还有一点不好的地方是它会抛弃对象的constructor。也就是深拷贝之后，不管这个对象原来的构造函数是什么，在深拷贝之后都会变成Object。同时如果对象中存在循环引用的情况也无法正确处理。</p><pre><code>// 来一个JSON深拷贝的坑的示例const obj = {    arr: [111, 222],    obj: {key: &#39;对象&#39;},    a: () =&gt; {console.log(&#39;函数&#39;)},    date: new Date(),    reg: /正则/ig};let obj1 = JSON.parse(JSON.stringify(obj));console.log(obj);console.log(obj1);</code></pre><p>输出为<img src="/2018/07/02/浅谈深拷贝与浅拷贝/TIM图片20180702213352.png"><br>可以从中看出，obj中的普通对象和数组都能拷贝，然而date对象成了字符串，函数直接就不见了，正则成了一个空对象。</p><h4 id="2-1-2-for-in-实现深拷贝"><a href="#2-1-2-for-in-实现深拷贝" class="headerlink" title="2.1.2 for in 实现深拷贝"></a>2.1.2 for in 实现深拷贝</h4><pre><code>function deepClone(source){   if(!source || typeof source !== &#39;object&#39;){     throw new Error(&#39;数据不是引用类型&#39;);   }   var targetObj = source.constructor === Array ? [] : {};   for(var keys in source){      if(source.hasOwnProperty(keys)){         if(source[keys] &amp;&amp; typeof source[keys] === &#39;object&#39;){           targetObj[keys] = source[keys].constructor === Array ? [] : {};           targetObj[keys] = deepClone(source[keys]);         }else{           targetObj[keys] = source[keys];         }      }    }   return targetObj;}let arr = [1,2,3,4];let arr1 = deepClone(arr);arr1[0] = &#39;a&#39;;console.log(arr)console.log(arr1)</code></pre><p>输出为<img src="/2018/07/02/浅谈深拷贝与浅拷贝/TIM图片20180702214533.png"></p><h2 id="3、拓展，浅拷贝的实现"><a href="#3、拓展，浅拷贝的实现" class="headerlink" title="3、拓展，浅拷贝的实现"></a>3、拓展，浅拷贝的实现</h2><h3 id="3-1-最简单的浅拷贝"><a href="#3-1-最简单的浅拷贝" class="headerlink" title="3.1 最简单的浅拷贝"></a>3.1 最简单的浅拷贝</h3><pre><code>// 对象var o1 = {a: 1};var o2 = o1;console.log(o1 === o2);  // =&gt;trueo2.a = 2; console.log(o1.a); // =&gt; 2// 数组var o1 = [1,2,3];var o2 = o1;console.log(o1 === o2); // =&gt; trueo2.push(4);console.log(o1); // =&gt; [1,2,3,4]</code></pre><p>拷贝原对象的引用，这是最简单的浅拷贝。</p><h3 id="3-2-Object-assign"><a href="#3-2-Object-assign" class="headerlink" title="3.2 Object.assign()"></a>3.2 Object.assign()</h3><blockquote><p>Object.assign是ES6的新函数。Object.assign() 方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。但是 Object.assign() 进行的是浅拷贝，拷贝的是对象的属性的引用，而不是对象本身。</p></blockquote><pre><code>let arr = [1,2,3,4,5];let arr1 = Object.assign([], arr)arr1[0] = &#39;a&#39;console.log(arr) // [1, 2, 3, 4, 5]console.log(arr1) //  [&quot;a&quot;, 2, 3, 4, 5]</code></pre><h2 id="4、深拷贝与浅拷贝的区别"><a href="#4、深拷贝与浅拷贝的区别" class="headerlink" title="4、深拷贝与浅拷贝的区别"></a>4、深拷贝与浅拷贝的区别</h2><p>浅拷贝是和深拷贝比较的，深拷贝可以理解为递归进行浅拷贝。<br>深拷贝为了解决对象中依旧含有对象，例如</p><pre><code>let a = {  name: &#39;LiHua&#39;,  habits:  [&#39;a&#39;, &#39;b&#39;]}let b = a;b.habits[0] = &#39;aaa&#39;;console.log(a); console.log(b);</code></pre><p>普通的=赋值：b=a，b如果修改了b.name，那么a.name也会改变<br>浅拷贝，b，如果修改了b.name, a.name不会改变，但是修改b.habits数组中的值，a.habits的值也会改变<br>深拷贝，b的值改变，不会对a产生任何影响<br><img src="/2018/07/02/浅谈深拷贝与浅拷贝/TIM图片20180702220724.png"></p><p>参考资料：<br><a href="https://github.com/wengjq/Blog/issues/3" target="_blank" rel="noopener">javaScript中浅拷贝和深拷贝的实现</a><br><a href="https://segmentfault.com/a/1190000008637489" target="_blank" rel="noopener">JavaScript中的浅拷贝和深拷贝</a><br><a href="https://www.jb51.net/article/87751.htm" target="_blank" rel="noopener">再谈Javascript中的基本类型和引用类型(推荐)</a><br><a href="https://juejin.im/post/5b235b726fb9a00e8a3e4e88" target="_blank" rel="noopener">JavaScript深拷贝的一些坑</a></p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>解决v-for循环图片，地址没被编译的bug</title>
+      <link href="/2018/06/27/%E8%A7%A3%E5%86%B3v-for%E5%BE%AA%E7%8E%AF%E5%9B%BE%E7%89%87%EF%BC%8C%E5%9C%B0%E5%9D%80%E6%B2%A1%E8%A2%AB%E7%BC%96%E8%AF%91%E7%9A%84bug/"/>
+      <url>/2018/06/27/%E8%A7%A3%E5%86%B3v-for%E5%BE%AA%E7%8E%AF%E5%9B%BE%E7%89%87%EF%BC%8C%E5%9C%B0%E5%9D%80%E6%B2%A1%E8%A2%AB%E7%BC%96%E8%AF%91%E7%9A%84bug/</url>
+      <content type="html"><![CDATA[<p>最近项目里面有个导航栏，里面的每个导航标题前面有个icon图标，图标是存放在assets里面的,最开始的写法如下</p><pre><code>data(){    return {        nav: [            {                name: &#39;导航A&#39;,                icon: &#39;~assets/img/a.png&#39;            },            {                name: &#39;导航B&#39;,                icon: &#39;~assets/img/b.png&#39;            }        ]    }}</code></pre><p>但是这是遍历到dom里面，直接渲染为<code>&lt;img src =&#39;~assets/img/a.png&#39;&gt;</code>,于是换了一种写法换成了相对路径，</p><pre><code>data(){    return {        nav: [            {                name: &#39;导航A&#39;,                icon: &#39;../../assets/img/a.png&#39;            },            {                name: &#39;导航B&#39;,                icon: &#39;../../assets/img/b.png&#39;            }        ]    }}</code></pre><p>但是仍然不奏效，google了一翻解决了bug,正确的写法如下</p><pre><code>data(){    return {        nav: [            {                name: &#39;导航A&#39;,                icon: require(&#39;../../assets/img/a.png&#39;)            },            {                name: &#39;导航B&#39;,                icon: require(&#39;../../assets/img/b.png&#39;)            }        ]    }}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> BUG集锦 </category>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+            <tag> BUG集锦 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>计算代码执行时间</title>
+      <link href="/2018/06/04/%E8%AE%A1%E7%AE%97%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/"/>
+      <url>/2018/06/04/%E8%AE%A1%E7%AE%97%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%97%B6%E9%97%B4/</url>
+      <content type="html"><![CDATA[<blockquote><p>你可以启动一个计时器（timer）来跟踪某一个操作的占用时长。每一个计时器必须拥有唯一的名字，页面中最多能同时运行10,000个计时器。当以此计时器名字为参数调用 console.timeEnd() 时，浏览器将以毫秒为单位，输出对应计时器所经过的时间.</p></blockquote><p>示例：</p><pre><code>console.time(&quot;sort&quot;);let arr = [];for (var i = 0; i &lt; 10000000; i++) {  arr.push(i);}console.timeEnd(&quot;sort&quot;); //sort: 268.125ms</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> 性能优化 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> 性能优化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>理解JavaScript中的原型和原型链</title>
+      <link href="/2018/05/30/%E7%90%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/"/>
+      <url>/2018/05/30/%E7%90%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/</url>
+      <content type="html"><![CDATA[<h3 id="1、-什么是原型"><a href="#1、-什么是原型" class="headerlink" title="1、 什么是原型"></a>1、 什么是原型</h3><blockquote><p>每一个JavaScript对象(null除外)都和另一个对象相关联。’另一个’对象就是我们熟知的原型，每一个对象都从原型继承属性。</p></blockquote><a id="more"></a><p>从《JavaScript权威指南》中可以知道，每一个对象都有一个原型对象，那么怎么知道一个对象所对应的原型对象呢？<br>(ps:在es6中可以使用Object.getPrototypeOf()函数来插件到原型。)<br><strong>对象<code>__proto__</code>属性的值就是它所对应的原型对象：</strong></p><pre><code>let arr = [];console.log(arr); // 输出的结果见下图</code></pre><img src="/2018/05/30/理解JavaScript中的原型和原型链/TIM图片20180530152330.png"><img src="/2018/05/30/理解JavaScript中的原型和原型链/TIM图片20180530152817.png"><p>第二张图里面可以看到，不管我们给数组定义什么内容，它们总是有一些相同的方法和属性比如：map方法，length属性。<br><img src="/2018/05/30/理解JavaScript中的原型和原型链/TIM图片20180530154103.png"><br>上图说明一个对象所拥有的属性不仅仅是它本身拥有的属性，它还会从其他对象中继承一些属性。当js在一个对象中找不到需要的属性时，它会到这个对象的父对象上去找，以此类推，这就构成了<code>对象的原型链</code>。<br>简单来说，在 JavaScript 中每个对象都会有一个 <code>__proto__</code> 属性，当我们访问一个对象的属性时，如果这个对象内部不存在这个属性，那么他就会去 <code>__proto__</code> 里找这个属性，这个 <code>__proto__</code> 又会有自己的 <code>__proto__</code>，于是就这样一直找下去。</p><pre><code>// 来一个栗子深入理解下原型let person = function() {};person.prototype.say = function () {    console.log(&#39;hello world&#39;);}let littlePerson = new person();littlePerson.say(); // hello world//littlePerson里面是没有定义say方法的，当我们直接调用say方法时，littlePerson里面是获取不到的，于是就去littlePerson里面__proto__里面找，而我们在person.prototype.say里面定义的say方法，于是littlePerson在 person.prototype 中就找到了这个方法。</code></pre><img src="/2018/05/30/理解JavaScript中的原型和原型链/TIM图片20180530160525.png"><h3 id="2、什么是原型链"><a href="#2、什么是原型链" class="headerlink" title="2、什么是原型链"></a>2、什么是原型链</h3><p>上文已经提到了原型链，接下来看看《JavaScript权威指南》里面关于原型链的解释：</p><blockquote><p>所有的内置的构造函数(以及大部分的自定义构造函数)都具有一个继承自Object.prototype的原型。例如，Date.prototype的属性继承自Object.prototype,因此由new Date()创建的Date对象同时继承自Date.prototype和Object.prototype。这一系列链接的原型对象就是所谓的<code>原型链(prototype chain)</code></p></blockquote><h4 id="2-1-继承"><a href="#2-1-继承" class="headerlink" title="2.1 继承"></a>2.1 继承</h4><blockquote><p>假设要查询对象o的属性x，如果o中不存在x，那么将会继续在o的原型对象中查询属性x。如果原型对象中也没有x，但这个原型对象也有原型，那么继续在这个原型对象的原型上执行查询，直到找到x或者查找到一个原型是null的对象为止。可以看到，对象的原型属性构成了一个”链”，通过这个”链”可以实现属性的继承。</p></blockquote><p>下面来一个继承的demo：</p><pre><code>function inherit(p) {  if (p === null) {    throw TypeError(); // 因为原型链终点为null，所以不能输入null  }  if (Object.create) {    return Object.create(p); // Object.create是es6才有的方法，要判断浏览器是否支持该方法  }  // 如果浏览器不支持Object.create就用其他方法来创建新对象  if (typeof(p) !== &#39;object&#39; &amp;&amp; typeof(p) !== &#39;function&#39;) {    throw TypeError();   }  function foo(){};  foo.prototype = p;  return new foo();}let obj = {}; // obj从Object.prototype继承对象的方法obj.x = 1;let p = inherit(obj); // p继承obj和Object.prototypep.y = 2;let q = inherit(p); // q继承p，obj和Object.prototypeconsole.log(q.x + q.y); // 3</code></pre><h4 id="2-2-属性赋值"><a href="#2-2-属性赋值" class="headerlink" title="2.2 属性赋值"></a>2.2 属性赋值</h4><blockquote><p>属性赋值操作首先检查原型链，以此判断是否允许赋值操作。例如，如果o继承自一个只读属性x，那么赋值操作是不允许的。<br>如果允许属性赋值操作，它也总是在原始对象上创建属性或对已有的属性赋值。而不会去修改原型链。<br>在JS中，只有在查询属性时才会体会到继承的存在，而设置属性则和继承无关。这是JS的一个重要特征，该特征让程序员可以有选择地覆盖继承的属性。</p></blockquote><pre><code>function inherit(p) {  if (p === null) {    throw TypeError(); // 因为原型链终点为null，所以不能输入null  }  if (Object.create) {    return Object.create(p); // Object.create是es6才有的方法，要判断浏览器是否支持该方法  }  // 如果浏览器不支持Object.create就用其他方法来创建新对象  if (typeof(p) !== &#39;object&#39; &amp;&amp; typeof(p) !== &#39;function&#39;) {    throw TypeError();   }  function foo(){};  foo.prototype = p;  return new foo();}let obj = {name: &#39;呆呆&#39;};let new_obj = inherit(obj);new_obj.name = &#39;爱死比&#39;;console.log(obj); // {name: &quot;呆呆&quot;}</code></pre><h4 id="2-3-属性访问错误"><a href="#2-3-属性访问错误" class="headerlink" title="2.3 属性访问错误"></a>2.3 属性访问错误</h4><pre><code>let p = null;console.log(p.q.length); // Cannot read property &#39;length&#39; of null//在不能确定p属性有length属性前，不能这样写，可以试试下面的写法let len = p &amp;&amp; p.q &amp;&amp; p.q.length; // 这种写法可以避免类型错误异常</code></pre><h4 id="2-4-删除属性"><a href="#2-4-删除属性" class="headerlink" title="2.4 删除属性"></a>2.4 删除属性</h4><blockquote><p>delete运算符只能删除自有属性，不能删除继承属性（要删除继承属性必须从定义这个属性的原型对象上面删除它，而且这会影响到所有继承自这个原型<br>的对象）当delete表达式删除成功或没有任何副作用（比如删除不存在的属性）时，它返回true，如果delete后不是一个属性访问表达式，delete同样<br>返回true</p><pre><code>let p = {name: &#39;as&#39;};console.log(p); // {name: &quot;as&quot;}delete p.name;console.log(p); // {}</code></pre></blockquote><h4 id="2-5-检测是否存在某个属性"><a href="#2-5-检测是否存在某个属性" class="headerlink" title="2.5 检测是否存在某个属性"></a>2.5 检测是否存在某个属性</h4><blockquote><p>in运算符的左侧是属性名(字符串)，右侧是对象。如果对象的自有属性或继承属性中包含这个属性则返回true。</p></blockquote><pre><code>let obj = {name: &#39;aaa&#39;};console.log(&#39;name&#39; in obj); // true , 必须要用字符串，否则不管是否存在都会返回falseconsole.log(name in obj); // falseconsole.log(&#39;toString&#39; in obj); // true ,obj 继承了 Object.prototype里面的属性</code></pre><blockquote><p>对象的hasOwnProperty()方法用来检测给定的名字是否是对象的自有属性。对于继承属性则返回false。</p></blockquote><pre><code>let obj = {name: &#39;aaa&#39;};console.log(obj);console.log(obj.hasOwnProperty(&#39;name&#39;)); // true ,必须要用字符串，否则不管是否存在都会返回falseconsole.log(obj.hasOwnProperty(name)); // falseconsole.log(obj.hasOwnProperty(&#39;toString&#39;)); // false , toString是继承属性</code></pre><blockquote><p>propertyIsEnumerable()是hasOwnProperty()的增强版，只有检测到是自有属性且这个属性的可枚举性(enumerable attribute)为true时才返回true。</p></blockquote><pre><code>let obj = {name: &#39;aaa&#39;};console.log(obj);console.log(obj.propertyIsEnumerable(&#39;name&#39;)); // true ,obj有一个可枚举的自有属性 nameconsole.log(obj.propertyIsEnumerable(name)); // false ，不是字符串console.log(obj.propertyIsEnumerable(&#39;toString&#39;)); // false , toString是继承属性console.log(Object.prototype.propertyIsEnumerable(&#39;toString&#39;)); //false 因为不可枚举</code></pre><blockquote><p>除了使用in运算符之外，另一种更简便的方法就是使用’!==’判断一个属性是否是undefined</p></blockquote><pre><code>let obj = {name: &#39;aaa&#39;};console.log(obj.name !== undefined); // trueconsole.log(obj.age !== undefined); // falseconsole.log(obj.toString !== undefined); // true ,obj继承了Object.prototype里面的toString属性</code></pre><p><strong>一个只能用in的特殊案例</strong></p><pre><code>// in 可以区分不存在的属性和存在但是值为undefined的属性let obj = {name: undefined};console.log(&#39;name&#39; in obj); //trueconsole.log(obj.name !== undefined); // false , 属性存在，但是值为undefinedconsole.log(obj.hasOwnProperty(&#39;name&#39;)); // truedelete obj.name;console.log(&#39;name&#39; in obj); //false</code></pre><p>参考资料：<br><a href="https://blog.csdn.net/shi0090/article/details/45008595" target="_blank" rel="noopener">简单介绍javascript 中<code>__proto__</code>属性的原理</a><br><a href="https://zhuanlan.zhihu.com/p/22787302" target="_blank" rel="noopener">JS重点整理之JS原型链彻底搞清楚</a><br><a href="https://www.jianshu.com/p/116ea3be6ef5" target="_blank" rel="noopener">彻底理解js的原型链</a></p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> 原型 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> 原型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>package.json的理解与学习</title>
+      <link href="/2018/05/29/package-json%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AD%A6%E4%B9%A0/"/>
+      <url>/2018/05/29/package-json%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<h2 id="1、package-json是什么"><a href="#1、package-json是什么" class="headerlink" title="1、package.json是什么"></a>1、package.json是什么</h2><blockquote><p>1、每个项目的根目录下面，一般都有一个package.json文件，定义了这个项目所需要的各种模块，以及项目的配置信息（比如名称、版本、许可证等元数据）。npm install命令根据这个配置文件，自动下载所需的模块，也就是配置项目所需的运行和开发环境。<br>2、package.json文件可以手工编写，也可以使用npm init命令自动生成。</p></blockquote><p>下面是一个最简单package.json</p><pre><code>{  &quot;name&quot;: &quot;&quot;,  &quot;version&quot;: &quot;&quot;}// package.json文件就是一个JSON对象，该对象的每一个成员就是当前项目的一项设置。比如name就是项目名称，version是版本</code></pre><h2 id="2、详解package-json里面的各个字段"><a href="#2、详解package-json里面的各个字段" class="headerlink" title="2、详解package.json里面的各个字段"></a>2、详解package.json里面的各个字段</h2><h3 id="2-1-scripts字段"><a href="#2-1-scripts字段" class="headerlink" title="2.1 scripts字段"></a>2.1 scripts字段</h3><p>scripts指定了运行脚本命令的npm命令行缩写。</p><pre><code>npm run dev 执行了scripts字段里面的dev里面的内容&quot;scripts&quot;: {  &quot;dev&quot;: &quot;webpack-dev-server --inline --progress --config build/webpack.dev.conf.js&quot;,  &quot;start&quot;: &quot;npm run dev&quot;,  &quot;unit&quot;: &quot;jest --config test/unit/jest.conf.js --coverage&quot;,  &quot;e2e&quot;: &quot;node test/e2e/runner.js&quot;,  &quot;test&quot;: &quot;npm run unit &amp;&amp; npm run e2e&quot;,  &quot;lint&quot;: &quot;eslint --ext .js,.vue src test/unit/specs test/e2e/specs&quot;,  &quot;build&quot;: &quot;node build/build.js&quot;}</code></pre><h3 id="2-2-dependencies字段，devDependencies字段"><a href="#2-2-dependencies字段，devDependencies字段" class="headerlink" title="2.2 dependencies字段，devDependencies字段"></a>2.2 dependencies字段，devDependencies字段</h3><p>dependencies字段指定了项目运行所依赖的模块，devDependencies指定项目开发所需要的模块。<br>它们都指向一个对象。该对象的各个成员，分别由模块名和对应的版本要求组成，表示依赖的模块及其版本范围。<br>关于安装模块的版本需要注意下面几点：</p><pre><code>1、指定版本：例如&quot;vue&quot;: &quot;2.5.2&quot;,即执行npm install时只安装2.5.2版本的vue2、波浪号（tilde）+ 指定版本：例如&quot;vue&quot;: &quot;~2.5.2&quot;,即安装2.5.x里面的最新版本，不会安装2.6.x里面的版本3、插入号（caret）+ 指定版本：例如&quot;vue&quot;: &quot;^2.5.2&quot;,即安装2.x.x里面的最新版本，但不会安装3.x.x里面的版本4、latest：安装最新版本，例如：&quot;vue&quot;: latestps：版本号的3位数字分别对应 大版本，次要版本，小版本</code></pre><h2 id="3、engines-字段"><a href="#3、engines-字段" class="headerlink" title="3、engines 字段"></a>3、engines 字段</h2><p>engines字段指明了该模块运行的平台。</p><pre><code>&quot;engines&quot;: {  &quot;node&quot;: &quot;&gt;= 4.0.0&quot;, // 需要node的版本大于等于4.0  &quot;npm&quot;: &quot;&gt;= 3.0.0&quot; // 需要npm的版本大于等于3.0}</code></pre><h2 id="4、browserslist-字段"><a href="#4、browserslist-字段" class="headerlink" title="4、browserslist 字段"></a>4、browserslist 字段</h2><p>限制了浏览器或者客户端需要什么版本才可运行,一些插件例如<code>Autoprefixer</code>会读取里面配置的浏览器来自动加上css前缀。</p><pre><code>&quot;browserslist&quot;: [  &quot;&gt; 1%&quot;,  &quot;last 2 versions&quot;,  &quot;not ie &lt;= 8&quot;]</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> package.json </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> package.json </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>npm的一些常用命令</title>
+      <link href="/2018/05/18/npm%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+      <url>/2018/05/18/npm%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<h3 id="1、初始化项目"><a href="#1、初始化项目" class="headerlink" title="1、初始化项目"></a>1、初始化项目</h3><pre><code>npm init //初始化项目，生成package.json文件</code></pre><h3 id="2、安装模块"><a href="#2、安装模块" class="headerlink" title="2、安装模块"></a>2、安装模块</h3><pre><code>npm install // 用于下载package.json里面的模块npm install vue vuex vue-router -S // 同时下载多个包npm install -g express // 全局安装express模块，即在其他文件夹里面也可以require进来npm install –save-dev xxx // 表示将该模块写入devDependencies属性，可以简写为npm install  xxx -Dnpm install --save xxx // 表示将该模块写入dependencies属性,可以简写为npm install  xxx -S</code></pre><h3 id="3、查看某个包的所有版本"><a href="#3、查看某个包的所有版本" class="headerlink" title="3、查看某个包的所有版本"></a>3、查看某个包的所有版本</h3><pre><code>npm view &#39;xxx&#39; versions 例：npm view video.js versions</code></pre><h3 id="4、升级某个包"><a href="#4、升级某个包" class="headerlink" title="4、升级某个包"></a>4、升级某个包</h3><pre><code>npm update xxx例：npm update video.js //这种升级方式只能升级对应的版本里面的最高的，例：现在的版本的 6.0.1  用该指令最高只能手机到 6.9.x，不能升级到7.0以后的</code></pre><h3 id="5、卸载某个包"><a href="#5、卸载某个包" class="headerlink" title="5、卸载某个包"></a>5、卸载某个包</h3><pre><code>npm uninstall -g xxx //删除xxx全局模块npm uninstall 模块：删除模块，但不删除模块留在package.json中的对应信息npm uninstall 模块 --save 删除模块，同时删除模块留在package.json中dependencies下的对应信息npm uninstall 模块 --save-dev 删除模块，同时删除模块留在package.json中devDependencies下的对应信息例：npm uninstall -g vue如果要卸载所有包，直接删除node_modules文件夹即可。。。</code></pre><h3 id="6、查看所有安装的包"><a href="#6、查看所有安装的包" class="headerlink" title="6、查看所有安装的包"></a>6、查看所有安装的包</h3><pre><code>npm ls</code></pre><h3 id="7、查看全局安装过的包"><a href="#7、查看全局安装过的包" class="headerlink" title="7、查看全局安装过的包"></a>7、查看全局安装过的包</h3><pre><code>npm list -g --depth 0</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> npm </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> npm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>常见的Http状态显示</title>
+      <link href="/2018/05/17/%E5%B8%B8%E8%A7%81%E7%9A%84Http%E7%8A%B6%E6%80%81%E6%98%BE%E7%A4%BA/"/>
+      <url>/2018/05/17/%E5%B8%B8%E8%A7%81%E7%9A%84Http%E7%8A%B6%E6%80%81%E6%98%BE%E7%A4%BA/</url>
+      <content type="html"><![CDATA[<h3 id="1xx（临时响应）"><a href="#1xx（临时响应）" class="headerlink" title="1xx（临时响应）"></a>1xx（临时响应）</h3><p>表示临时响应并需要请求者继续执行操作的状态代码。</p><table><thead><tr><th style="text-align:left">代码</th><th style="text-align:left">说明  </th></tr></thead><tbody><tr><td style="text-align:left">100</td><td style="text-align:left">（继续） 请求者应当继续提出请求。 服务器返回此代码表示已收到请求的第一部分，正在等待其余部分。</td></tr><tr><td style="text-align:left">101</td><td style="text-align:left">（切换协议） 请求者已要求服务器切换协议，服务器已确认并准备切换 </td></tr></tbody></table><h3 id="2xx-（成功）"><a href="#2xx-（成功）" class="headerlink" title="2xx （成功）"></a>2xx （成功）</h3><p>表示成功处理了请求的状态代码。</p><table><thead><tr><th style="text-align:left">代码</th><th style="text-align:left">说明  </th></tr></thead><tbody><tr><td style="text-align:left">200</td><td style="text-align:left">（成功） 服务器已成功处理了请求。 通常，这表示服务器提供了请求的网页。</td></tr><tr><td style="text-align:left">201</td><td style="text-align:left">（已创建） 请求成功并且服务器创建了新的资源。</td></tr><tr><td style="text-align:left">202</td><td style="text-align:left">（已接受） 服务器已接受请求，但尚未处理。</td></tr><tr><td style="text-align:left">203</td><td style="text-align:left">（非授权信息） 服务器已成功处理了请求，但返回的信息可能来自另一来源。</td></tr><tr><td style="text-align:left">204</td><td style="text-align:left">（无内容） 服务器成功处理了请求，但没有返回任何内容。</td></tr><tr><td style="text-align:left">205</td><td style="text-align:left">（重置内容） 服务器成功处理了请求，但没有返回任何内容。</td></tr><tr><td style="text-align:left">206</td><td style="text-align:left">（部分内容） 服务器成功处理了部分 GET 请求。</td></tr></tbody></table><h3 id="3xx-（重定向）"><a href="#3xx-（重定向）" class="headerlink" title="3xx （重定向）"></a>3xx （重定向）</h3><p>表示要完成请求，需要进一步操作。 通常，这些状态代码用来重定向。</p><table><thead><tr><th style="text-align:left">代码</th><th style="text-align:left">说明  </th></tr></thead><tbody><tr><td style="text-align:left">300</td><td style="text-align:left">（多种选择） 针对请求，服务器可执行多种操作。 服务器可根据请求者 (user agent) 选择一项操作，或提供操作列表供请求者选择。</td></tr><tr><td style="text-align:left">301</td><td style="text-align:left">（永久移动） 请求的网页已永久移动到新位置。 服务器返回此响应（对 GET 或 HEAD 请求的响应）时，会自动将请求者转到新位置。</td></tr><tr><td style="text-align:left">302</td><td style="text-align:left">（临时移动） 服务器目前从不同位置的网页响应请求，但请求者应继续使用原有位置来进行以后的请求。</td></tr><tr><td style="text-align:left">303</td><td style="text-align:left">（查看其他位置） 请求者应当对不同的位置使用单独的 GET 请求来检索响应时，服务器返回此代码。</td></tr><tr><td style="text-align:left">304</td><td style="text-align:left">（未修改） 自从上次请求后，请求的网页未修改过。 服务器返回此响应时，不会返回网页内容。</td></tr><tr><td style="text-align:left">305</td><td style="text-align:left">（使用代理） 请求者只能使用代理访问请求的网页。 如果服务器返回此响应，还表示请求者应使用代理。</td></tr><tr><td style="text-align:left">307</td><td style="text-align:left">（临时重定向） 服务器目前从不同位置的网页响应请求，但请求者应继续使用原有位置来进行以后的请求。</td></tr></tbody></table><h3 id="4xx（请求错误）"><a href="#4xx（请求错误）" class="headerlink" title="4xx（请求错误）"></a>4xx（请求错误）</h3><p>这些状态代码表示请求可能出错，妨碍了服务器的处理。</p><table><thead><tr><th style="text-align:left">代码</th><th style="text-align:left">说明  </th></tr></thead><tbody><tr><td style="text-align:left">400</td><td style="text-align:left">（错误请求） 服务器不理解请求的语法。</td></tr><tr><td style="text-align:left">401</td><td style="text-align:left">（未授权） 请求要求身份验证。 对于需要登录的网页，服务器可能返回此响应。</td></tr><tr><td style="text-align:left">403</td><td style="text-align:left">（禁止） 服务器拒绝请求。</td></tr><tr><td style="text-align:left">404</td><td style="text-align:left">（未找到） 服务器找不到请求的网页。</td></tr><tr><td style="text-align:left">405</td><td style="text-align:left">（方法禁用） 禁用请求中指定的方法。</td></tr><tr><td style="text-align:left">406</td><td style="text-align:left">（不接受） 无法使用请求的内容特性响应请求的网页。</td></tr><tr><td style="text-align:left">407</td><td style="text-align:left">（需要代理授权） 此状态代码与 401（未授权）类似，但指定请求者应当授权使用代理。</td></tr><tr><td style="text-align:left">408</td><td style="text-align:left">（请求超时） 服务器等候请求时发生超时。</td></tr><tr><td style="text-align:left">409</td><td style="text-align:left">（冲突） 服务器在完成请求时发生冲突。 服务器必须在响应中包含有关冲突的信息。</td></tr><tr><td style="text-align:left">410</td><td style="text-align:left">（已删除） 如果请求的资源已永久删除，服务器就会返回此响应。</td></tr><tr><td style="text-align:left">411</td><td style="text-align:left">（需要有效长度） 服务器不接受不含有效内容长度标头字段的请求。</td></tr><tr><td style="text-align:left">412</td><td style="text-align:left">（未满足前提条件） 服务器未满足请求者在请求中设置的其中一个前提条件。</td></tr><tr><td style="text-align:left">413</td><td style="text-align:left">（请求实体过大） 服务器无法处理请求，因为请求实体过大，超出服务器的处理能力。</td></tr><tr><td style="text-align:left">414</td><td style="text-align:left">（请求的 URI 过长） 请求的 URI（通常为网址）过长，服务器无法处理。</td></tr><tr><td style="text-align:left">415</td><td style="text-align:left">（不支持的媒体类型） 请求的格式不受请求页面的支持。</td></tr><tr><td style="text-align:left">416</td><td style="text-align:left">（请求范围不符合要求） 如果页面无法提供请求的范围，则服务器会返回此状态代码。</td></tr><tr><td style="text-align:left">417</td><td style="text-align:left">（未满足期望值） 服务器未满足”期望”请求标头字段的要求。</td></tr></tbody></table><h3 id="5xx（服务器错误）"><a href="#5xx（服务器错误）" class="headerlink" title="5xx（服务器错误）"></a>5xx（服务器错误）</h3><p>这些状态代码表示服务器在尝试处理请求时发生内部错误。 这些错误可能是服务器本身的错误，而不是请求出错。</p><table><thead><tr><th style="text-align:left">代码</th><th style="text-align:left">说明  </th></tr></thead><tbody><tr><td style="text-align:left">500</td><td style="text-align:left">（服务器内部错误） 服务器遇到错误，无法完成请求。</td></tr><tr><td style="text-align:left">501</td><td style="text-align:left">（尚未实施） 服务器不具备完成请求的功能。 例如，服务器无法识别请求方法时可能会返回此代码。</td></tr><tr><td style="text-align:left">502</td><td style="text-align:left">（错误网关） 服务器作为网关或代理，从上游服务器收到无效响应。</td></tr><tr><td style="text-align:left">503</td><td style="text-align:left">（服务不可用） 服务器目前无法使用（由于超载或停机维护）。 通常，这只是暂时状态。</td></tr><tr><td style="text-align:left">504</td><td style="text-align:left">（网关超时） 服务器作为网关或代理，但是没有及时从上游服务器收到请求。</td></tr><tr><td style="text-align:left">505</td><td style="text-align:left">（HTTP 版本不受支持） 服务器不支持请求中所用的 HTTP 协议版本。</td></tr></tbody></table>]]></content>
+      
+      <categories>
+          
+          <category> http </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> http </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue里面如何监听键盘事件</title>
+      <link href="/2018/05/15/vue%E9%87%8C%E9%9D%A2%E5%A6%82%E4%BD%95%E7%9B%91%E5%90%AC%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6/"/>
+      <url>/2018/05/15/vue%E9%87%8C%E9%9D%A2%E5%A6%82%E4%BD%95%E7%9B%91%E5%90%AC%E9%94%AE%E7%9B%98%E4%BA%8B%E4%BB%B6/</url>
+      <content type="html"><![CDATA[<p>最近项目里面有个需求：点击小图全屏展示大图,然后用户点击右上角的<code>X</code>按钮或者直接按<code>ESC</code>退出大图模式。<br>点击小图全屏展示大图和按x关闭大图都很容易实现，但是监听esc的事件费了点事件，最开始是这么写的</p><pre><code class="javascript">&lt;div class=&quot;viewLargerImageContainer&quot; @keyup.27=&#39;escEvent&#39;&gt;  &lt;span class=&quot;el-icon-circle-close-outline close-icon&quot; @click=&quot;$emit(&#39;closeImg&#39;)&quot;&gt;&lt;/span&gt;  &lt;img :src=&quot;imgSrc&quot; ref=&#39;largerImg&#39;&gt;&lt;/div&gt;</code></pre><p>然而并没有奏效，因为<code>@keyup</code>这样的写法似乎只能在<code>input</code>这样的输入框里面执行，于是百度到<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent" target="_blank" rel="noopener">KeyboardEvent</a>,解决了问题。</p><pre><code>&lt;div class=&quot;viewLargerImageContainer&quot;&gt;  &lt;span class=&quot;el-icon-circle-close-outline close-icon&quot; @click=&quot;$emit(&#39;closeImg&#39;)&quot;&gt;&lt;/span&gt;  &lt;img :src=&quot;imgSrc&quot; ref=&#39;largerImg&#39;&gt;&lt;/div&gt;mounted() {  this.escEvent();},methods: {  escEvent() {    document.addEventListener(&#39;keyup&#39;, (event) =&gt; {      const keyName = event.key;      if (keyName === &#39;Escape&#39;) {        this.$emit(&#39;closeImg&#39;);      }    });  }}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>node.js学习笔记</title>
+      <link href="/2018/05/14/node-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <url>/2018/05/14/node-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<h2 id="0、nodeJs特征"><a href="#0、nodeJs特征" class="headerlink" title="0、nodeJs特征"></a>0、nodeJs特征</h2><p>单线程、非阻塞I/O、事件驱动</p><h2 id="1、node里面的全局对象"><a href="#1、node里面的全局对象" class="headerlink" title="1、node里面的全局对象"></a>1、node里面的全局对象</h2><blockquote><p>JavaScript有且仅有一个全局对象，在浏览器中，叫window对象。而在Node.js环境中，也有唯一的全局对象，但不叫window，而叫global</p></blockquote><pre><code class="javascript">console.log(__dirname); //输出F:\node学习\beginning    获取当前文件所在的路径console.log(__filename);//输出F:\node学习\beginning\test.js 获取当前文件路径</code></pre><h2 id="2、模块的引入"><a href="#2、模块的引入" class="headerlink" title="2、模块的引入"></a>2、模块的引入</h2><blockquote><p>一个模块想要对外暴露变量（函数也是变量），可以用module.exports = variable;，一个模块要引用其他模块暴露的变量，用var ref = require(‘module_name’);就拿到了引用模块的变量。</p></blockquote><h3 id="2-1-单个函数的export"><a href="#2-1-单个函数的export" class="headerlink" title="2.1 单个函数的export"></a>2.1 单个函数的export</h3><pre><code>//这是count.jsfunction counter(arr){    console.log(`the lenght of arr is ${arr.length}`);}module.exports = counter;//这是test.jsvar counter = require(&#39;./count.js&#39;); //引入模块const arr = [1,2,3,4,5,6,7];counter(arr);node test.js //输出 the lenght of arr is 7</code></pre><h3 id="2-2-export多个函数或者变量"><a href="#2-2-export多个函数或者变量" class="headerlink" title="2.2 export多个函数或者变量"></a>2.2 export多个函数或者变量</h3><pre><code>// 这是count.jsfunction counter(arr){    console.log(`the lenght of arr is ${arr.length}`);}function test(){    console.log(&#39;hello world&#39;);}const a = 10;module.exports.counter = counter;module.exports.test = test;module.exports.a = a;ps: 此处可以简写为module.exports = {    counter,    test,    a}//这是test.jsvar shuffle = require(&#39;./count.js&#39;);console.log(shuffle.a);shuffle.test();node test.js //输出 10 &#39;hello world&#39;//test.js里面的require可以直接引入需要的函数或者数值var a = require(&#39;./count.js&#39;).a;console.log(a);// 10</code></pre><h3 id="2-3模块化编程思想"><a href="#2-3模块化编程思想" class="headerlink" title="2.3模块化编程思想"></a>2.3模块化编程思想</h3><pre><code>//这是server.jslet http = require(&#39;http&#39;);let fs = require(&#39;fs&#39;);function server(){    let server = http.createServer((request, response) =&gt; {        response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/html&#39;});//设置响应头        let data = fs.createReadStream(__dirname + &#39;/transition01.html&#39;,&#39;utf8&#39;);        data.pipe(response);    });    server.listen(3000);    console.log(&#39;server start at localhost:3000&#39;);}exports.server = server;//这是app.jsvar server = require(&#39;./server.js&#39;);server.server(); //输出 &#39;hello world&#39;</code></pre><h3 id="2-4-require的各种写法"><a href="#2-4-require的各种写法" class="headerlink" title="2.4 require的各种写法"></a>2.4 require的各种写法</h3><p>直接require文件名字</p><pre><code>const foo = require(&#39;foo.js&#39;);  // 这种写法将直接从node_modules文件夹中查找对于的文件</code></pre><p>直接require一个文件夹(即没有文件后缀)</p><pre><code>const foo = require(&#39;foo&#39;);  //  直接从node_modules中找到foo文件夹执行里面的index.js//如果foo文件夹里面没有index.js则必须要有package.json文件，里面指定了入口文件{    &#39;name&#39; : &#39;foo&#39;,    &#39;version&#39; : &#39;1.1.1&#39;,    &#39;main&#39; : &#39;xxx.js&#39;  // 必须要有main这个字段，里面对应的值是执行文件的文件名字 }</code></pre><h4 id="如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块"><a href="#如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块" class="headerlink" title="如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块"></a>如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块</h4><h2 id="3、events-事件"><a href="#3、events-事件" class="headerlink" title="3、events (事件)"></a>3、events (事件)</h2><pre><code>let events = require(&#39;events&#39;); //引入事件库var myEvents = new events.EventEmitter(); //创建一个EventEmitter实例myEvents.on(&#39;someEvent&#39;,function(data){ //someEvent是指某个事件例如click ，data是传入的数据    console.log(data); })myEvents.emit(&#39;someEvent&#39;, &#39;hello world&#39;); //手动触发函数</code></pre><h2 id="4、文件系统"><a href="#4、文件系统" class="headerlink" title="4、文件系统"></a>4、文件系统</h2><h3 id="4、1读取文件内容"><a href="#4、1读取文件内容" class="headerlink" title="4、1读取文件内容"></a>4、1读取文件内容</h3><pre><code>//同步读取文件let fs = require(&#39;fs&#39;); // 引入文件库let txt = fs.readFileSync(&#39;./file.txt&#39;,&#39;utf-8&#39;); //readFileSync接受两个参数，第一个是文件路径，第二个是文件的编码格式console.log(txt); //输出‘hello world’//这是file.txt里面的内容hello world//异步读取文件let fs = require(&#39;fs&#39;);fs.readFile(&#39;aaa.txt&#39;,&#39;utf-8&#39;,(err,data) =&gt; {    console.log(err); //null    console.log(data); // &#39;hello worldd&#39;});console.log(&#39;读取文件成功&#39;);输出为读取文件成功nullhello world</code></pre><h3 id="4、2创建文件并写入内容"><a href="#4、2创建文件并写入内容" class="headerlink" title="4、2创建文件并写入内容"></a>4、2创建文件并写入内容</h3><pre><code>//同步创建文件let fs = require(&#39;fs&#39;);let txt = fs.readFileSync(&#39;./file.txt&#39;);fs.writeFileSync(&#39;aaa.txt&#39;,txt); //把file.txt里面的内容写入到新建的aaa.txt里面//异步创建文件fs.writeFile(&#39;aaa.txt&#39;,data,() =&gt; {    console.log(&#39;txt file has been created&#39;);});</code></pre><h3 id="4、3删除文件"><a href="#4、3删除文件" class="headerlink" title="4、3删除文件"></a>4、3删除文件</h3><pre><code>//同步删除let fs = require(&#39;fs&#39;);fs.unlinkSync(&#39;server.js&#39;);//异步删除let fs = require(&#39;fs&#39;);fs.unlink(&#39;aaa.txt&#39;,() =&gt; {    console.log(&#39;删除成功&#39;);});console.log(&#39;finished&#39;);输出finished删除成功</code></pre><h3 id="4、4创建文件夹和删除文件夹"><a href="#4、4创建文件夹和删除文件夹" class="headerlink" title="4、4创建文件夹和删除文件夹"></a>4、4创建文件夹和删除文件夹</h3><pre><code>//同步创建let fs = require(&#39;fs&#39;);fs.mkdirSync(&#39;aaa&#39;);//异步创建let fs = require(&#39;fs&#39;);fs.mkdir(&#39;test&#39;, () =&gt; {    console.log(&#39;创建成功&#39;);});//同步删除文件夹let fs = require(&#39;fs&#39;);fs.rmdirSync(&#39;aaa&#39;);//异步删除let fs = require(&#39;fs&#39;);fs.rmdir(&#39;test&#39;,() =&gt; {    console.log(&#39;删除成功&#39;);});//demo，创建文件夹，并在里面新建文件let fs = require(&#39;fs&#39;);fs.mkdir(&#39;test&#39;,() =&gt; {    fs.writeFile(&#39;test/aaa.txt&#39;,&#39;hello world&#39;,() =&gt; {        console.log(&#39;成功创建文件夹和文件&#39;);    });});</code></pre><h3 id="4-5-获取文件的详细信息"><a href="#4-5-获取文件的详细信息" class="headerlink" title="4.5 获取文件的详细信息"></a>4.5 获取文件的详细信息</h3><blockquote><p>如果我们要获取文件大小，创建时间等信息，可以使用fs.stat()，它返回一个Stat对象，能告诉我们文件或目录的详细信息：</p></blockquote><pre><code>let fs = require(&#39;fs&#39;);fs.stat(&#39;./test.txt&#39;,((err,data) =&gt; {    console.log(data);}))//输出以下内容Stats {  dev: 563682,  mode: 33206,  nlink: 1,  uid: 0,  gid: 0,  rdev: 0,  blksize: undefined,  ino: 1688849860428397,  size: 23,  blocks: undefined,  atimeMs: 1526475120655.8008,  mtimeMs: 1526475270067.3467,  ctimeMs: 1526475270067.3467,  birthtimeMs: 1526475120655.8008,  atime: 2018-05-16T12:52:00.656Z,  mtime: 2018-05-16T12:54:30.067Z,  ctime: 2018-05-16T12:54:30.067Z,  birthtime: 2018-05-16T12:52:00.656Z }</code></pre><h3 id="4-6-获取一个文件夹里面所有文件-包括文件夹里面的文件夹"><a href="#4-6-获取一个文件夹里面所有文件-包括文件夹里面的文件夹" class="headerlink" title="4.6 获取一个文件夹里面所有文件(包括文件夹里面的文件夹)"></a>4.6 获取一个文件夹里面所有文件(包括文件夹里面的文件夹)</h3><pre><code>const http = require(&#39;http&#39;);const fs = require(&#39;fs&#39;);http.createServer((req, res) =&gt; {    if (req.url === &#39;/favicon.ico&#39;) {        return;    }    fs.readdir(&#39;../1、http模块&#39;, (err, data) =&gt; {        console.log(data); // 返回的data是个数组    });    res.end(&#39;success&#39;);}).listen(3000, &#39;127.0.0.1&#39;);</code></pre><h2 id="5、stream-流"><a href="#5、stream-流" class="headerlink" title="5、stream (流)"></a>5、stream (流)</h2><blockquote><p>什么是流？流是一种抽象的数据结构。想象水流，当在水管中流动时，就可以从某个地方（例如自来水厂）源源不断地到达另一个地方（比如你家的洗手池）。我们也可以把数据看成是数据流，比如你敲键盘的时候，就可以把每个字符依次连起来，看成字符流。这个流是从键盘输入到应用程序，实际上它还对应着一个名字：标准输入流（stdin）。如果应用程序把字符一个一个输出到显示器上，这也可以看成是一个流，这个流也有名字：标准输出流（stdout）。流的特点是数据是有序的，而且必须依次读取，或者依次写入，不能像Array那样随机定位。</p></blockquote><h3 id="5-1-读取流"><a href="#5-1-读取流" class="headerlink" title="5.1 读取流"></a>5.1 读取流</h3><pre><code>let fs = require(&#39;fs&#39;);let myFile = fs.createReadStream(__dirname + &#39;/test.txt&#39;);myFile.on(&#39;data&#39;,(res) =&gt; { // &#39;data&#39;,代表是接受收据时执行的函数    console.log(res); //&lt;Buffer 69 6e 70 75 74 20 69 6e 70 75 74 20 69 6e 70 75 74 20 69 6e 70 75 74&gt;});</code></pre><h3 id="5-2-写入流"><a href="#5-2-写入流" class="headerlink" title="5.2 写入流"></a>5.2 写入流</h3><pre><code>let fs = require(&#39;fs&#39;);let myReadFile = fs.createReadStream(__dirname + &#39;/test.txt&#39;);myReadFile.setEncoding(&#39;utf8&#39;);let myWriteFile = fs.createWriteStream(__dirname + &#39;/new.txt&#39;);myReadFile.on(&#39;data&#39;,(res) =&gt; {    myWriteFile.write(res);});//利用管道写入流let fs = require(&#39;fs&#39;);let readStream = fs.createReadStream(__dirname + &#39;/count.js&#39;);let writeStream = fs.createWriteStream(__dirname + &#39;/a.js&#39;);readStream.pipe(writeStream);</code></pre><h2 id="6、http模块"><a href="#6、http模块" class="headerlink" title="6、http模块"></a>6、http模块</h2><h3 id="6-0-get和post请求区别"><a href="#6-0-get和post请求区别" class="headerlink" title="6.0 get和post请求区别"></a>6.0 get和post请求区别</h3><p>get请求数据在URL中，post请求数据不在URL中<br>post接收数据比get大很多</p><h3 id="6-1-创建web服务器"><a href="#6-1-创建web服务器" class="headerlink" title="6.1 创建web服务器"></a>6.1 创建web服务器</h3><pre><code>//初体验// 引用模块let http = require(&#39;http&#39;);//创建一个服务器，回调函数表示收到请求后做的事，request是请求，response是响应let server = http.createServer((request, response) =&gt; {    console.log(`服务器已经打开${request.url}`);        response.end(&#39;完毕&#39;);//必须要有end，不然一直在加载})server.listen(3000, &#39;127.0.0.1&#39;);let http = require(&#39;http&#39;); //引入http模块let server = http.createServer((request, response) =&gt; {    response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/plain&#39;});//设置响应头    response.write(&#39;hello from application&#39;);    response.end(&#39;end&#39;);}); //创建server服务器server.listen(3000);//监听3000端口console.log(&#39;server start at localhost:3000&#39;);</code></pre><h3 id="6-2-响应JSON"><a href="#6-2-响应JSON" class="headerlink" title="6.2 响应JSON"></a>6.2 响应JSON</h3><pre><code>let http = require(&#39;http&#39;);let server = http.createServer((request, response) =&gt; {    response.writeHead(200, {&#39;Content-Type&#39;: &#39;application/json&#39;});//设置响应头    let data = {        name: &#39;xyp&#39;,        sex: &#39;man&#39;,        age: 25,        job: &#39;developer&#39;    }    response.end(JSON.stringify(data));});server.listen(3000);console.log(&#39;server start at localhost:3000&#39;);</code></pre><p>输出为<img src="/2018/05/14/node-js学习笔记/TIM图片20180516220031.png"></p><h3 id="6-3-响应HTML页面"><a href="#6-3-响应HTML页面" class="headerlink" title="6.3 响应HTML页面"></a>6.3 响应HTML页面</h3><pre><code>//直接把html写在变量里面let http = require(&#39;http&#39;);let server = http.createServer((request, response) =&gt; {    response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/html&#39;});//设置响应头    let data = `&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;title&gt;&lt;/title&gt;&lt;/head&gt;&lt;body&gt;    &lt;p&gt;hello world&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;`;    response.end(data);});server.listen(3000);console.log(&#39;server start at localhost:3000&#39;);</code></pre><p>输出为 <img src="/2018/05/14/node-js学习笔记/TIM图片20180516222743.png"></p><pre><code>//读取外部文件let http = require(&#39;http&#39;);let fs = require(&#39;fs&#39;);let server = http.createServer((request, response) =&gt; {    response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/html&#39;});//此处设置为‘text/plain’的话，浏览器将不会解析为html，会变成纯文本输出    let data = fs.createReadStream(__dirname + &#39;/transition01.html&#39;,&#39;utf8&#39;);    data.pipe(response);});server.listen(3000);console.log(&#39;server start at localhost:3000&#39;);</code></pre><h2 id="7、路由"><a href="#7、路由" class="headerlink" title="7、路由"></a>7、路由</h2><h3 id="7-1-实现一个简单的路由"><a href="#7-1-实现一个简单的路由" class="headerlink" title="7.1 实现一个简单的路由"></a>7.1 实现一个简单的路由</h3><pre><code>//app.jsvar startServer = require(&#39;./server.js&#39;);startServer.startServer();//server.jsvar http = require(&#39;http&#39;);var fs = require(&#39;fs&#39;);function startServer() {    var onRequest = function(request, response) {        console.log(request.url); //输出的是localhost:3000/admin ，3000后面的内容，例如本例输出的是‘/admin’        if (request.url === &#39;/&#39; || request.url === &#39;/home&#39;) {            response.writeHead(200, { &#39;Content-Type&#39;: &#39;text/html&#39; });            fs.createReadStream(__dirname + &#39;/index.html&#39;, &#39;utf8&#39;).pipe(response);        } else if (request.url === &#39;/review&#39;) {            response.writeHead(200, { &#39;Content-Type&#39;: &#39;text/html&#39; });            fs.createReadStream(__dirname + &#39;/review.html&#39;, &#39;utf8&#39;).pipe(response);        } else if (request.url === &#39;/api/v1/records&#39;) {            response.writeHead(200, { &#39;Content-Type&#39;: &#39;application/json&#39; });            var jsonObj = {                name: &quot;hfpp2012&quot;            };            response.end(JSON.stringify(jsonObj));        } else {            response.writeHead(404, { &#39;Content-Type&#39;: &#39;text/html&#39; });            fs.createReadStream(__dirname + &#39;/404.html&#39;, &#39;utf8&#39;).pipe(response);        }    }    var server = http.createServer(onRequest);    server.listen(3000, &#39;127.0.0.1&#39;);    console.log(&#39;Server started on localhost port 3000&#39;);}exports.startServer = startServer;</code></pre><h2 id="8、express框架的使用"><a href="#8、express框架的使用" class="headerlink" title="8、express框架的使用"></a>8、express框架的使用</h2><h3 id="8-1-express创建web服务"><a href="#8-1-express创建web服务" class="headerlink" title="8.1 express创建web服务"></a>8.1 express创建web服务</h3><pre><code>const express = require(&#39;express&#39;);let server = express();server.use(&#39;/a.html&#39;, (req, res) =&gt; {    res.send(&#39;hello world&#39;);    res.end();}) // 用use处理请求server.listen(&#39;8080&#39;);</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> node.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> node.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>解决span标签内意外出现的空格</title>
+      <link href="/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/"/>
+      <url>/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/</url>
+      <content type="html"><![CDATA[<p>今天下午实现一个保留用户换行的功能的时候意外的遇到的一个bug<br><img src="/2018/05/12/解决span标签内意外出现的空格/TIM图片20180512163926.png"><br>上图是输入的内容，希望展示的时候能够带有换行，于是机智的我给span加上了一个css属性<code>white-space: pre</code><br>然后打开页面看效果却发现<br><img src="/2018/05/12/解决span标签内意外出现的空格/TIM图片20180512164136.png"><br>什么鬼？？？为什么会出现了首行的空格，于是各种debug无果之后…</p><pre><code class="javascript">  &lt;span style=&quot;white-space: pre;&quot;&gt;{{ qa_comment }}&lt;/span&gt;</code></pre><p>发现把span写在一行竟然神奇的解决了bug…<br><img src="/2018/05/12/解决span标签内意外出现的空格/TIM图片20180512164358.png"><br>记录一下，防止以后再遇到不知道怎么解决…</p>]]></content>
+      
+      <categories>
+          
+          <category> BUG集锦 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> BUG集锦 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>改变浏览器滚动条样式</title>
+      <link href="/2018/05/11/%E6%94%B9%E5%8F%98%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1%E6%A0%B7%E5%BC%8F/"/>
+      <url>/2018/05/11/%E6%94%B9%E5%8F%98%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1%E6%A0%B7%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<blockquote><p>当块级内容区域超出块级元素范围的时候，就会以滚动条的形式展示，你可以滚动里面的内容，里面的内容不会超出块级区域范围。<br>有时候我们需要自定义滚动条的样式，比如一开始就它显示，比如想改变滚动条的颜色，设置轨道的样式等</p></blockquote><h2 id="认识chrome下的滚动条"><a href="#认识chrome下的滚动条" class="headerlink" title="认识chrome下的滚动条"></a>认识chrome下的滚动条</h2><img src="/2018/05/11/改变浏览器滚动条样式/1254557929-5a570728e504b_articlex.png">  <pre><code class="css">//设置scrollbar的为CSS伪元素，对应上图的数字::-webkit-scrollbar              { /* 1 */ } //滚动条整体部分::-webkit-scrollbar-button       { /* 2 */ } //滚动条两端的按钮::-webkit-scrollbar-track        { /* 3 */ } // 外层轨道::-webkit-scrollbar-track-piece  { /* 4 */ } //内层轨道，滚动条中间部分（除去）::-webkit-scrollbar-thumb        { /* 5 */ } //滚动条里面可以拖动的那个::-webkit-scrollbar-corner       { /* 6 */ } //边角::-webkit-resizer                { /* 7 */ } //定义右下角拖动块的样式::-webkit-scrollbar {  width: 0;  height: 0;}//实现chrome下，隐藏滚动条但是仍然可以滚动的功能</code></pre><p>点击这边查看<a href="https://xypecho.github.io/test/scrollbar.html" target="_blank" rel="noopener">demo</a></p><h2 id="修改firefox下的滚动条样式"><a href="#修改firefox下的滚动条样式" class="headerlink" title="修改firefox下的滚动条样式"></a>修改firefox下的滚动条样式</h2><p>火狐本身没办法通过CSS来自定义滚动条，但是可以通过一些JS库来模拟，例如<a href="https://github.com/utatti/perfect-scrollbar" target="_blank" rel="noopener">perfect-scrollbar</a><br>perfect-scrollbar的使用方法很简单  </p><pre><code>import PerfectScrollbar from &#39;perfect-scrollbar&#39;; //引入包mounted() {  this.$nextTick(() =&gt; {    this.PerfectScrollbar = new PerfectScrollbar(&#39;#nav_wrapper&#39;); //nav_wrapper是需要滚动的容器的id  });},</code></pre><p>点击这里查看<a href="https://xypecho.github.io/test/scrollBar/fireFoxBar.html" target="_blank" rel="noopener">deno</a></p><h2 id="修改IE下的滚动条样式"><a href="#修改IE下的滚动条样式" class="headerlink" title="修改IE下的滚动条样式"></a>修改IE下的滚动条样式</h2><p>如果你们公司还没放弃IE的话…<a href="https://www.cnblogs.com/koleyang/p/5484922.html" target="_blank" rel="noopener">这里</a>或许有你想要的</p>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>axios使用说明</title>
+      <link href="/2018/05/11/axios%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/"/>
+      <url>/2018/05/11/axios%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+      <content type="html"><![CDATA[<h2 id="为什么转用axios"><a href="#为什么转用axios" class="headerlink" title="为什么转用axios"></a>为什么转用axios</h2><p>由于vue的作者尤雨溪大大说了，vue2.0以后的版本已经不再维护<code>vue-resource</code>了，推荐大家使用axios；一番摸索之后，发现axios的使用和ajax极其相似但也有很多不同的地方，于是记下来方面以后回顾<br><a id="more"></a></p><h2 id="对比ajax和axios的使用方法"><a href="#对比ajax和axios的使用方法" class="headerlink" title="对比ajax和axios的使用方法"></a>对比ajax和axios的使用方法</h2><p>在使用axios之前先回顾下如何用jquery的ajax来进行请求:</p><pre><code class="javascript">$.ajax({    type: &#39;POST&#39;, //此处也可以说是GET    url: url,    data: data,    dataType: dataType,    success: function(res, status){        console.log(res);    },    error: function(err){        console.log(err);    }})</code></pre><p>在vue、react等MVVM等框架兴起之前，jquery基本是前端的必备工具，而jquery基于原生XHR的封装的ajax更成为了前后端交互的主要方式，而现在jquery明显有些过时了，下面展示下如何用axios进行数据请求</p><pre><code class="javascript">//get请求axios.get(url, {    params: {      ID: 12345    }  })  .then(function (response) {    console.log(response);  })  .catch(function (error) {    console.log(error);  });//post请求axios.post(url, {    firstName: &#39;Fred&#39;,    lastName: &#39;Flintstone&#39;  })  .then(function (response) {    console.log(response);  })  .catch(function (error) {    console.log(error);  });//</code></pre><h2 id="vue项目里面使用axios使用"><a href="#vue项目里面使用axios使用" class="headerlink" title="vue项目里面使用axios使用"></a>vue项目里面使用axios使用</h2><h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><pre><code>npm install axios</code></pre><h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><p>目前vue里面使用axios大抵是如下两种方式</p><h5 id="1、和vue-resource使用类似"><a href="#1、和vue-resource使用类似" class="headerlink" title="1、和vue-resource使用类似"></a>1、和vue-resource使用类似</h5><p>在main.js里面引入</p><pre><code>import axios from &quot;axios&quot;;//与很多第三方模块不同的是，axios不能使用use方法，转而应该进行如下操作Vue.prototype.$axios = axios;//然后就可以在vue的组件里面使用了this.$axios.get(&quot;/seller&quot;,{&quot;id&quot;:123}).then(res=&gt;{  console.log(res);});</code></pre><h5 id="2、在需要的模块或者组件里面使用"><a href="#2、在需要的模块或者组件里面使用" class="headerlink" title="2、在需要的模块或者组件里面使用"></a>2、在需要的模块或者组件里面使用</h5><pre><code class="javascript">import axios from &#39;axios&#39;;axios.post(&#39;/user&#39;, {    firstName: &#39;Fred&#39;,    lastName: &#39;Flintstone&#39;  })  .then(function (response) {    console.log(response);  })  .catch(function (error) {    console.log(error);  });</code></pre><h2 id="如何利用axios来实现跨域"><a href="#如何利用axios来实现跨域" class="headerlink" title="如何利用axios来实现跨域"></a>如何利用axios来实现跨域</h2><p>此处以获取QQ音乐的歌词为例，首先打开build文件夹下面的<code>webpack.dev.conf.js</code></p><pre><code>var express = require(&#39;express&#39;) //需要npm install expressvar axios = require(&#39;axios&#39;)var app = express();var apiRoutes = express.Router();app.use(&#39;/api&#39;, apiRoutes)</code></pre><p>然后在devWebpackConfig里面的devServer这边写代码如下图：<br><img src="/2018/05/11/axios使用说明/TIM图片20180511224508.png"><br>主要代码就是before里面的这段。<br>然后在src下面新建一个api文件夹<br><img src="/2018/05/11/axios使用说明/TIM图片20180511225348.png">  </p><pre><code class="javascript">import axios from &#39;axios&#39;; //首先引入axiosexport function getLyrics(mid) {  const url = &#39;/api/lyric&#39;; //这边是在webpack.dev.conf.js中设置的接口的别名  const param = {    g_tk: 1928093487,    inCharset: &#39;utf-8&#39;,    outCharset: &#39;utf-8&#39;,    notice: 0,    format: &#39;json&#39;,    songmid: mid,    platform: &#39;yqq&#39;,    hostUin: 0,    needNewCode: 0,    categoryId: 10000000,    pcachetime: +new Date()  }; //此处是正常获取数据需要传递的参数  return axios.get(url, {    params:param  }).then((res) =&gt; {  return Promise.resolve(res.data);}) //开始获取数据}</code></pre><p>在想要获取刚刚得到数据的地方引入<code>getLyrics</code></p><pre><code class="javascript">import {getLyrics} from &#39;src/api/lyrics&#39;;getLyrics(mid).then((res) =&gt; {  console.log(res);});</code></pre><p>上面这些就是axios的基本使用方法,更多详细信息可以移步<a href="https://www.kancloud.cn/yunye/axios/234845" target="_blank" rel="noopener">这里</a></p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+          <category> axios </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+            <tag> axios </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>获取两个数字之间的随机数以及如何打乱数组</title>
+      <link href="/2018/05/03/%E8%8E%B7%E5%8F%96%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0/"/>
+      <url>/2018/05/03/%E8%8E%B7%E5%8F%96%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0/</url>
+      <content type="html"><![CDATA[<p>Math.random()可以获取到0到1之间的随机数，但是要获取指定值之间的任意数值的话就需要一定的数学计算了，下面是代码存档</p><pre><code>function test(min,max) {  document.writeln(Math.floor(Math.random() * (max - min + 1) +min));};setInterval(() =&gt; {  test(1,100);},100);</code></pre><p>点击<a href="https://xypecho.github.io/test/random.html" target="_blank" rel="noopener">这里</a>查看demo</p><h3 id="拓展1、-高效打乱数组的方法"><a href="#拓展1、-高效打乱数组的方法" class="headerlink" title="拓展1、 高效打乱数组的方法"></a>拓展1、 高效打乱数组的方法</h3><pre><code>let arr = [];for (let i = 0; i &lt; 5; i++) {    arr.push(i);};arr.sort(() =&gt; 0.5 - Math.random());console.log(arr);</code></pre><a id="more"></a><h3 id="拓展2、-打乱数组的方法"><a href="#拓展2、-打乱数组的方法" class="headerlink" title="拓展2、 打乱数组的方法"></a>拓展2、 打乱数组的方法</h3><pre><code>function getRandom(min, max) {    return Math.floor(Math.random() * (max - min + 1) +min);}function shuffle(arr) {    for (let i = 0; i &lt; arr.length; i++) {        let temp = getRandom(0, i);        let t = arr[i];        arr[i] = arr[temp];        arr[temp] = t;    }    return arr;}let arr = [];for (var i = 0; i &lt;= 10; i++) {    arr[i] = i;}console.log(shuffle(arr));</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>css实现保留返回数据的回车符</title>
+      <link href="/2018/04/18/css%E5%AE%9E%E7%8E%B0%E4%BF%9D%E7%95%99%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE%E7%9A%84%E5%9B%9E%E8%BD%A6%E7%AC%A6/"/>
+      <url>/2018/04/18/css%E5%AE%9E%E7%8E%B0%E4%BF%9D%E7%95%99%E8%BF%94%E5%9B%9E%E6%95%B0%E6%8D%AE%E7%9A%84%E5%9B%9E%E8%BD%A6%E7%AC%A6/</url>
+      <content type="html"><![CDATA[<p>对于一般的从后端拿的数据中包含换行符的，要么是使用正则来匹配替换，要么是用’pre’这个标签来实现.<br>但是在用vue+element项目中的表格里面时字段都是用props传进去的，用formatter格式也很复杂，这时就需要一个css的黑科技属性了</p><blockquote><p>white-space: pre (空白会被浏览器保留。其行为方式类似 HTML 中的 pre 标签)</p></blockquote><pre><code>&lt;el-table-column  class-name=&#39;command&#39;  min-width=&#39;120&#39;  prop=&quot;command&quot;  label=&quot;命令&amp;响应&quot;&gt;&lt;/el-table-column&gt;.command  .cell    white-space: pre;</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>JS实现查找关键词高亮显示</title>
+      <link href="/2018/04/13/JS%E5%AE%9E%E7%8E%B0%E6%9F%A5%E6%89%BE%E5%85%B3%E9%94%AE%E8%AF%8D%E9%AB%98%E4%BA%AE%E6%98%BE%E7%A4%BA/"/>
+      <url>/2018/04/13/JS%E5%AE%9E%E7%8E%B0%E6%9F%A5%E6%89%BE%E5%85%B3%E9%94%AE%E8%AF%8D%E9%AB%98%E4%BA%AE%E6%98%BE%E7%A4%BA/</url>
+      <content type="html"><![CDATA[<p>用搜索工具搜索问题的时候，一般会把搜索出来的答案的关键词高亮，例如下图:<br><img src="/2018/04/13/JS实现查找关键词高亮显示/企业微信截图_15236114695192.png"><br>然后最近项目里面也有搜索这个功能，就想着JS能不能也实现这样的功能：‘把用户搜索的关键词在搜索结果里面高亮显示’<br><a id="more"></a><br>下面是代码</p><pre><code>&lt;script type=&quot;text/javascript&quot;&gt;    const pcontent = document.querySelector(&#39;#word&#39;).innerHTML;//文章内容    const input = document.getElementById(&#39;inp&#39;);//搜索框    const button = document.querySelector(&#39;button&#39;);//按钮    button.onclick = function(){        const input_value = input.value;//搜索框里面的内容        const key_words = pcontent.split(input_value);        document.querySelector(&#39;#word&#39;).innerHTML = key_words.join(`&lt;span style=&#39;color:red&#39;&gt;${input_value}&lt;/span&gt;`)    }&lt;/script&gt;</code></pre><p>点击<a href="https://xypecho.github.io/test/highLightSearchWords.html" target="_blank" rel="noopener">这里</a>看demo</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>解决子组件获取不到父组件传值问题</title>
+      <link href="/2018/04/07/%E8%A7%A3%E5%86%B3%E5%AD%90%E7%BB%84%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC%E9%97%AE%E9%A2%98/"/>
+      <url>/2018/04/07/%E8%A7%A3%E5%86%B3%E5%AD%90%E7%BB%84%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>最近自己在用vue仿写QQ音乐是遇到一个问题：父组件往子组件里面传了3个值，前两个在子组件里面能获取到，最后一个怎么都获取不到。<br><img src="/2018/04/07/解决子组件获取不到父组件传值问题/TIM图片20180407205309.png"><br>(上图这是父组件往子组件传的三个值)<br><a id="more"></a><br><img src="/2018/04/07/解决子组件获取不到父组件传值问题/TIM图片20180407210049.png"><br>(这是父组件里面获取song这个字段的方式)<br>在百度之后才知道 <font color="red">异步从接口里取的，那这个组件在任何生命周期里都取不到，而应该在接口调取后取到。</font><br>但是如果在子组件再调一次接口虽然能解决问题，但明显很不优雅，于是有了如下两个解决方案</p><ul><li>在组件上加上v-if=”song.length”，可以确保song有值后调用，然后你就可以在生命周期created里面取到值了。</li><li>可以参考<a href="https://cn.vuejs.org/v2/guide/components.html#%E5%BC%82%E6%AD%A5%E7%BB%84%E4%BB%B6" target="_blank" rel="noopener">vue官方文档-异步组件</a>这一块 Vue.js-异步组件 来实现。</li></ul><p>下面是第一种解决方案的代码：  </p><pre><code>&lt;template&gt;  &lt;transition name=&#39;slider&#39;&gt;    &lt;div class=&quot;singerDetail&quot;&gt;      &lt;musicList :avater=&#39;singer.avater&#39; :title=&#39;singer.name&#39; :songList=&#39;song&#39; v-if=&#39;song.length&#39;&gt; //加上v-if确保song有值      &lt;/musicList&gt;    &lt;/div&gt;  &lt;/transition&gt;&lt;/template&gt;</code></pre><p>第二中解决方案异步组件暂时还没研究懂，这个坑等我研究懂了再填…</p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>css实现渐变色</title>
+      <link href="/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/"/>
+      <url>/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/</url>
+      <content type="html"><![CDATA[<img src="/2018/04/02/css实现渐变色/企业微信截图_152264566613.png">  <p>这是要实现的效果图,经常能看到这样一种效果，最初以为是用ps实现的后来发现了css3的一个关于背景图的属性<em>background-clip</em>,下面上实现的代码</p><pre><code>.demo-1 {  margin: 40px auto;  width: 200px;  height: 40px;  border-radius: 20px;  line-height: 40px;  text-align: center;  color: white;  background-image: linear-gradient(                    90deg,                    #7e40ee 0,                    #63d9ee 100%    );}&lt;div class=&quot;demo-1&quot;&gt;  按钮&lt;/div&gt;</code></pre><p>点击<a href="https://xypecho.github.io/test/GradientColor.html" target="_blank" rel="noopener">这里</a>看渐变色demo<br>参考链接<a href="https://juejin.im/post/5abdf558518825557e7880bd?utm_source=gold_browser_extension" target="_blank" rel="noopener">#每日一记#让我们玩起流行的渐变色</a></p>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>开源中国愚人节特效存档</title>
+      <link href="/2018/04/01/%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD%E6%84%9A%E4%BA%BA%E8%8A%82%E7%89%B9%E6%95%88%E5%AD%98%E6%A1%A3/"/>
+      <url>/2018/04/01/%E5%BC%80%E6%BA%90%E4%B8%AD%E5%9B%BD%E6%84%9A%E4%BA%BA%E8%8A%82%E7%89%B9%E6%95%88%E5%AD%98%E6%A1%A3/</url>
+      <content type="html"><![CDATA[<p>OSC愚人节首页的特效存档<a id="more"></a></p><pre><code>//主要的css样式.shake{display:inherit;transform-origin:center center;animation-name:shake;animation-duration:8s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}@keyframes shake{2%{transform:translate(-2px,10px) rotate(0.5deg)}4%{transform:translate(-8px,-1px) rotate(-2.5deg)}6%{transform:translate(0px,-2px) rotate(-2.5deg)}8%{transform:translate(-8px,-5px) rotate(2.5deg)}10%{transform:translate(-4px,-3px) rotate(1.5deg)}12%{transform:translate(-8px,10px) rotate(1.5deg)}14%{transform:translate(3px,10px) rotate(1.5deg)}16%{transform:translate(7px,9px) rotate(-1.5deg)}18%{transform:translate(-9px,2px) rotate(0.5deg)}20%{transform:translate(7px,5px) rotate(-1.5deg)}22%{transform:translate(-8px,4px) rotate(-2.5deg)}24%{transform:translate(-2px,9px) rotate(-0.5deg)}26%{transform:translate(-3px,-9px) rotate(-2.5deg)}28%{transform:translate(-1px,-6px) rotate(3.5deg)}30%{transform:translate(-2px,10px) rotate(0.5deg)}32%{transform:translate(7px,3px) rotate(-2.5deg)}34%{transform:translate(3px,-6px) rotate(-1.5deg)}36%{transform:translate(5px,-7px) rotate(1.5deg)}38%{transform:translate(8px,10px) rotate(3.5deg)}40%{transform:translate(-3px,-1px) rotate(2.5deg)}42%{transform:translate(-7px,8px) rotate(1.5deg)}44%{transform:translate(-6px,-2px) rotate(3.5deg)}46%{transform:translate(-4px,8px) rotate(3.5deg)}48%{transform:translate(-6px,-5px) rotate(1.5deg)}50%{transform:translate(10px,5px) rotate(-2.5deg)}52%{transform:translate(-2px,-9px) rotate(-2.5deg)}54%{transform:translate(5px,-7px) rotate(-1.5deg)}56%{transform:translate(10px,-6px) rotate(-0.5deg)}58%{transform:translate(-3px,8px) rotate(2.5deg)}60%{transform:translate(7px,-6px) rotate(2.5deg)}62%{transform:translate(-8px,6px) rotate(-2.5deg)}64%{transform:translate(10px,6px) rotate(-1.5deg)}66%{transform:translate(-2px,-1px) rotate(3.5deg)}68%{transform:translate(9px,5px) rotate(-1.5deg)}70%{transform:translate(-5px,6px) rotate(-0.5deg)}72%{transform:translate(-1px,9px) rotate(0.5deg)}74%{transform:translate(5px,0px) rotate(3.5deg)}76%{transform:translate(7px,-8px) rotate(-0.5deg)}78%{transform:translate(-3px,-5px) rotate(1.5deg)}80%{transform:translate(-2px,9px) rotate(1.5deg)}82%{transform:translate(7px,6px) rotate(3.5deg)}84%{transform:translate(8px,-2px) rotate(-1.5deg)}86%{transform:translate(-5px,-6px) rotate(1.5deg)}88%{transform:translate(9px,0px) rotate(-0.5deg)}90%{transform:translate(7px,3px) rotate(-0.5deg)}92%{transform:translate(-9px,-7px) rotate(-0.5deg)}94%{transform:translate(10px,10px) rotate(-1.5deg)}96%{transform:translate(-1px,6px) rotate(-2.5deg)}98%{transform:translate(-2px,1px) rotate(1.5deg)}0%,100%{transform:translate(0,0) rotate(0)}}.fool-day{display:none;position:fixed;z-index:9999999;background:rgba(0,0,0,.5);top:0;left:0;right:0;bottom:0}.fool-day img{position:fixed;display:block;top:50%;left:50%;transform:translate(-50%,-50%);margin: 0;}</code></pre><p>戳<a href="https://xypecho.github.io/test/0sc4_1.html" target="_blank" rel="noopener">这里</a>看demo</p>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>JS调换数组元素位置</title>
+      <link href="/2018/03/30/JS%E8%B0%83%E6%8D%A2%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E4%BD%8D%E7%BD%AE/"/>
+      <url>/2018/03/30/JS%E8%B0%83%E6%8D%A2%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E4%BD%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<p>项目上遇到一个需求，需要调换/批量调换数组元素的位置，记录一下解决方案</p><p>### </p><pre><code>例1：a,b两个元素位置互换arr1 = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;];arr1[1]=arr1.splice(0,1,arr1[1])[0];输出[&quot;b&quot;, &quot;a&quot;, &quot;c&quot;, &quot;d&quot;]例2：d的位置跳到第一位arr2 = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;];arr2.splice(3,1);arr2.unshift(&#39;d&#39;);输出[&quot;d&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;]例3：a的位置移到最后一位arr3 = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;];arr3.splice(0,1);arr3.push(&#39;a&#39;);输出[&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;a&#39;];例4：把cd的位置往前移动一位arr4 = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;];let idx = [2,3];arr4.forEach((val,index) =&gt; {  idx.forEach((item) =&gt; {    if (index == item) {      arr4[index-1]=arr4.splice(index,1,arr4[index-1])[0];    }  });});输出[&quot;a&quot;, &quot;c&quot;, &quot;d&quot;, &quot;b&quot;]例5：把ab的位置往后移动一位arr5 = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;];let idx = [0,1];arr5.forEach((val) =&gt; {    //马克，现在没思路})</code></pre><p>点击<a href="https://xypecho.github.io/test/arrsort.html" target="_blank" rel="noopener">这里</a>看demo</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue里面transition动画集结</title>
+      <link href="/2018/03/28/vue%E9%87%8C%E9%9D%A2transition%E5%8A%A8%E7%94%BB%E9%9B%86%E7%BB%93/"/>
+      <url>/2018/03/28/vue%E9%87%8C%E9%9D%A2transition%E5%8A%A8%E7%94%BB%E9%9B%86%E7%BB%93/</url>
+      <content type="html"><![CDATA[<h3 id="1、从右出来（类似翻页效果）"><a href="#1、从右出来（类似翻页效果）" class="headerlink" title="1、从右出来（类似翻页效果）"></a>1、从右出来（类似翻页效果）</h3><pre><code>.slider-enter-active, .slider-leave-active {  transition: all .5s;}.slider-enter, .slider-leave-to  {  transform: translate3d(100%,0,0)}</code></pre><p>戳这里看<a href="https://xypecho.github.io/test/transition/transition01.html" target="_blank" rel="noopener">demo</a></p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue里面动态更新echarts数据</title>
+      <link href="/2018/03/28/vue%E9%87%8C%E9%9D%A2%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0echarts%E6%95%B0%E6%8D%AE/"/>
+      <url>/2018/03/28/vue%E9%87%8C%E9%9D%A2%E5%8A%A8%E6%80%81%E6%9B%B4%E6%96%B0echarts%E6%95%B0%E6%8D%AE/</url>
+      <content type="html"><![CDATA[<p>/<em>先占坑，有机会在填</em>/<br>前几天项目上用个功能，要用图表来动态显示传入的数据，看到这个需要一下子就想到了<a href="http://echarts.baidu.com/" target="_blank" rel="noopener">echarts</a>,<br>于是开始鼓捣起来。<br>由于是第一次使用echarts，只能把文档里面的demo在vue里面展示出来不知道怎么往图表里面动态传数据，百度之后发现基本全是写的死数据，自己折腾了半天终于搞起来了，下面上代码:<br><a id="more"></a></p><pre><code>initCharts() {  this.echartData = this.historyTempData; //从后端获取的获取  if (this.chart) {    this.chart.clear();  } else {    this.chart = echarts.init(document.getElementById(&#39;temperChart&#39;));  }  let tZeroData;  let tOneData;  let bedData;  let chamberData;  if (this.echartData.t0) {    tZeroData = this.echartData.t0.map((val) =&gt; [val.time, val.current, val.machine_id]);  } else {    tZeroData = [];  }  console.log(tZeroData);  if (this.echartData.t1) {    tOneData = this.echartData.t1.map((val) =&gt; [val.time, val.current, val.machine_id]);  } else {    tOneData = [];  }  if (this.echartData.bed) {    bedData = this.echartData.bed.map((val) =&gt; [val.time, val.current, val.machine_id]);  } else {    bedData = [];  }  if (this.echartData.chamber) {    chamberData = this.echartData.chamber.map((val) =&gt; [val.time, val.current, val.machine_id]);  } else {    chamberData = [];  }  const colors = [&#39;#e60012&#39;, &#39;#00b7ee&#39;, &#39;#80c269&#39;, &#39;#fff100&#39;];  this.chart.setOption({    color: colors,    legend: {      left: &#39;center&#39;,      data: [&#39;喷头一&#39;, &#39;喷头二&#39;, &#39;腔体&#39;, &#39;底板&#39;]    },    toolbox: {      feature: {        saveAsImage: {},        dataView: {          optionToContent: function(opt) {            const axisData = opt.series;            const series = opt.series;            let table = &#39;&lt;table border=&quot;1px&quot; style=&quot;width:100%;text-align:center;font-size:15px;border-collapse:collapse&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&#39; +                        &#39;&lt;td style=&quot;width:20%&quot;&gt;时间&lt;/td&gt;&#39; +                        &#39;&lt;td style=&quot;width:20%&quot;&gt;&#39; + series[0].name + &#39;&lt;/td&gt;&#39; +                        &#39;&lt;td style=&quot;width:20%&quot;&gt;&#39; + series[1].name + &#39;&lt;/td&gt;&#39; +                        &#39;&lt;td style=&quot;width:20%&quot;&gt;&#39; + series[2].name + &#39;&lt;/td&gt;&#39; +                        &#39;&lt;td style=&quot;width:20%&quot;&gt;&#39; + series[3].name + &#39;&lt;/td&gt;&#39; +                        &#39;&lt;/tr&gt;&#39;;            for (let i = 0, l = axisData[0].data.length; i &lt; l; i++) {              table += &#39;&lt;tr&gt;&#39; +                        &#39;&lt;td&gt;&#39; + axisData[0].data[i][0] + &#39;&lt;/td&gt;&#39; +                        &#39;&lt;td&gt;&#39; + axisData[0].data[i][1] + &#39;度&lt;/td&gt;&#39; +                        &#39;&lt;td&gt;&#39; + axisData[1].data[i][1] + &#39;度&lt;/td&gt;&#39; +                        &#39;&lt;td&gt;&#39; + axisData[2].data[i][1] + &#39;度&lt;/td&gt;&#39; +                        &#39;&lt;td&gt;&#39; + axisData[3].data[i][1] + &#39;度&lt;/td&gt;&#39; +                        &#39;&lt;/tr&gt;&#39;;            }            table += &#39;&lt;/tbody&gt;&lt;/table&gt;&#39;;            return table;          } //数据视图时的格式        },        restore: {}      }    },    tooltip: {      show: true,      trigger: &#39;axis&#39;,      formatter: function(param) {        return `${param[0].seriesName}: ${param[0].data[0]}, ${Number(param[0].data[1]).toFixed(2)}度`;      },      axisPointer: {        animation: false      }    },    xAxis: {      type: &#39;time&#39;,      name: &#39;时间&#39;,      splitLine: {        show: false      },      data: []    },    yAxis: {      type: &#39;value&#39;,      name: &#39;温度&#39;,      max: function (val) {        return val.max + 50;      },      boundaryGap: [0, &#39;100%&#39;],      axisLabel: {        formatter: (value, index) =&gt; parseInt(value).toFixed(2)      },      splitLine: {        show: false      }    },    series: [      {        name: &#39;喷头一&#39;,        type: &#39;line&#39;,        showSymbol: false,        hoverAnimation: false,        data: tZeroData      },      {        name: &#39;喷头二&#39;,        type: &#39;line&#39;,        showSymbol: false,        hoverAnimation: false,        data: tOneData      },      {        name: &#39;腔体&#39;,        type: &#39;line&#39;,        showSymbol: false,        hoverAnimation: false,        data: chamberData      },      {        name: &#39;底板&#39;,        type: &#39;line&#39;,        showSymbol: false,        hoverAnimation: false,        data: bedData      }    ]  });}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>JavaScript权威指南笔记</title>
+      <link href="/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/"/>
+      <url>/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<h3 id="1、数据类型"><a href="#1、数据类型" class="headerlink" title="1、数据类型"></a>1、数据类型</h3><p>javascript的数据类型分为两类：原生类型(数字，字符串，布尔值)和对象类型;<br>另外还有两个特殊值：null 和 undefined</p><h3 id="2、构造函数"><a href="#2、构造函数" class="headerlink" title="2、构造函数"></a>2、构造函数</h3><blockquote><p>如果函数用来初始化(使用new运算符)一个新建对象，我们称之为构造函数(constructor).</p></blockquote><pre><code>例如：var now = new Date(); //获取当前的时间</code></pre><h3 id="3、变量作用域"><a href="#3、变量作用域" class="headerlink" title="3、变量作用域"></a>3、变量作用域</h3><blockquote><p>一个变量的作用域(scope)是程序源代码中定义这个变量的区域。全局变量拥有全局作用域，在javascript代码中任何地方都是有定义的。然而在函数内声明的变量只在函数体内有定义。</p></blockquote><h4 id="3-1、在函数体内，局部变量优先级高于全局变量"><a href="#3-1、在函数体内，局部变量优先级高于全局变量" class="headerlink" title="3.1、在函数体内，局部变量优先级高于全局变量"></a>3.1、在函数体内，局部变量优先级高于全局变量</h4><pre><code>var scope = &#39;global&#39;;function checkscope() {    var scope = &#39;local&#39;;    return scope;}checkscope(); //输出‘local’//下面是局部作用域嵌套的例子var scope = &#39;global&#39;;function checkScope() {    var scope = &#39;local&#39;;    function nested() {        var scope = &#39;nested scope&#39;;        return scope;    }    return nested();}checkScope(); //输出 &quot;nested scope&quot;</code></pre><h4 id="3-2-声明提前"><a href="#3-2-声明提前" class="headerlink" title="3.2 声明提前"></a>3.2 声明提前</h4><blockquote><p>JavaScript的函数作用域是指函数内声明的所有变量在函数体内始终是可见的。有意思的是，这意味着变量在声明之前甚至已经可用。JavaScript的这个特性被非正式的称为<code>声明提前（hoisting）</code>，即JavaScript函数里声明的所有变量都被提前至函数体的顶部。</p></blockquote><pre><code>var scope = &#39;global&#39;;function f() {    console.log(scope); //输出undefined    var scope = &#39;local&#39;; //变量在这里赋值，但在函数体内均有定义    console.log(scope); //输出local}</code></pre><p>上面例子里的f函数，第一行的<code>console.log(scope)</code>没有输出’global’是因为函数作用域的特性，局部变量在整个函数体始终是有定义的，也就是说，在函数体内的局部变量覆盖了同名的全局变量。<br>没有输出’local’是因为只有在函数执行到var语句的时候，局部变量才会被真正赋值。<br>上面的例子等价于：</p><pre><code>function f() {    var scope; //在函数顶部声明了局部变量    console.log(scope); //输出undefined，是因为变量存在，但没有赋值    scope = &#39;local&#39;;//这里将其初始化并赋值    console.log(scope); //输出local}</code></pre><h3 id="4、表达式和运算符"><a href="#4、表达式和运算符" class="headerlink" title="4、表达式和运算符"></a>4、表达式和运算符</h3><h4 id="4-1-属性访问表达式"><a href="#4-1-属性访问表达式" class="headerlink" title="4.1 属性访问表达式"></a>4.1 属性访问表达式</h4><pre><code>expression.identifier //一个表达式跟随一个句点和标识符，表达式指定对象，标识符指定需要访问的属性的名称expression[expression] //这种方式适用于对象和数组，指定要访问的属性的名称或者要访问数组的元素的索引</code></pre><h4 id="4-2-运算符"><a href="#4-2-运算符" class="headerlink" title="4.2 运算符"></a>4.2 运算符</h4><blockquote><p>当运算符在操作数之前，称为‘前增量’运算符，它对操作数进行增量运算，并返回计算后的值；<br>当运算符在操作数之后，称为‘后增量’运算符，它对操作数进行增量计算，但返回未做增量计算的值。</p></blockquote><pre><code>var i = 1;j = ++i; //i和j值都是2 var i = 1;j = i++; // i是2，j是1</code></pre><h4 id="4-3-for-in"><a href="#4-3-for-in" class="headerlink" title="4.3 for/in"></a>4.3 for/in</h4><p>for/in循环只遍历可枚举属性。</p><pre><code>var obj = {a:1, b:2, c:3};for (var prop in obj) {  console.log(prop); // a,b,c  console.log(obj[prop]); // 1, 2 ,3}</code></pre><h4 id="4-4-throw语句"><a href="#4-4-throw语句" class="headerlink" title="4.4 throw语句"></a>4.4 throw语句</h4><blockquote><p>throw语句用来抛出一个用户自定义的异常。当前函数的执行将被停止（throw之后的语句将不会执行），并且控制将被传递到调用堆栈中的第一个catch块。如果调用者函数中没有catch块，程序将会终止。</p></blockquote><pre><code>function add(num) {    if (num &lt; 0) {        throw new Error(&#39;num不能是负数&#39;);    }    for (let i = 0; i &lt; num; i++) {        console.log(i);    }}add(-1); // 报错</code></pre><img src="/2018/03/27/JavaScript权威指南笔记/TIM图片20180530094624.png"><p>当抛出异常时，JavaScript解释器会立即停止当前正在执行的逻辑，并跳转至就近的异常处理程序。</p><h4 id="4-5-try-catch-finally语句"><a href="#4-5-try-catch-finally语句" class="headerlink" title="4.5 try/catch/finally语句"></a>4.5 try/catch/finally语句</h4><pre><code>try {  // 需要被执行的语句。}catch (e) {  // 如果在try块里有异常被抛出时执行的语句。}finally {  // 无论是否有异常抛出或捕获这些语句都将执行。}</code></pre><pre><code>try{    let num = new Number(prompt(&#39;请输入一个正整数&#39;));    if (num &lt; 0) {        throw new Error(&#39;num不是正整数&#39;);    }    console.log(num * num);}catch(e){    console.log(e);}finally{    console.log(&#39;执行结束&#39;);}</code></pre><img src="/2018/03/27/JavaScript权威指南笔记/TIM图片20180530102003.png"><h4 id="4-6-with语句"><a href="#4-6-with语句" class="headerlink" title="4.6 with语句"></a>4.6 with语句</h4><blockquote><p>JavaScript查找某个未使用命名空间的变量时，会通过作用域链来查找，作用域链是跟执行代码的context或者包含这个变量的函数有关。’with’语句將某个对象添加的作用域链的顶部，如果在statement中有某个未使用命名空间的变量，跟作用域链中的某个属性同名，则这个变量将指向这个属性值。如果沒有同名的属性，则将拋出ReferenceError异常。</p></blockquote><pre><code>// 如果要获取一个表单里面的address字段的值，通常是这样 document.forms[0].address.value// 如果这种表达式在代码中多次出现，则可以使用with语句将form对象添加至作用域链的顶层：with(document.forms[0]){    name.value = &#39;&#39;;    age.value = &#39;&#39;;    sex.value = &#39;&#39;;}</code></pre><h3 id="5、-对象"><a href="#5、-对象" class="headerlink" title="5、 对象"></a>5、 对象</h3><h4 id="5-1-创建对象"><a href="#5-1-创建对象" class="headerlink" title="5.1 创建对象"></a>5.1 创建对象</h4><blockquote><p>可以通过对象直接量、关键字new和es6中的Object.create()函数来创建对象。</p></blockquote><pre><code>//对象直接量let obj = {};let arr = [];//new 方法let obj = new Object();let arr = new Array();let date = new Date();let reg = new RegExp(&#39;js&#39;); //定义了名为 reg 的 RegExp 对象，其模式是 &quot;js&quot;,当您使用该 RegExp 对象在一个字符串中检索时，将寻找的是字符 &quot;js&quot;。// Object.create()const person = {  isHuman: false,  printIntroduction: function () {    console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);  }};const me = Object.create(person);me.name = &quot;Matthew&quot;; // &quot;name&quot; is a property set on &quot;me&quot;, but not on &quot;person&quot;me.isHuman = true; // inherited properties can be overwrittenme.printIntroduction();// expected output: &quot;My name is Matthew. Am I human? true&quot;</code></pre><h4 id="5-2-属性getter和setter"><a href="#5-2-属性getter和setter" class="headerlink" title="5.2 属性getter和setter"></a>5.2 属性getter和setter</h4><blockquote><p>在es6中，属性值可以用一个或者两个方法替代，这两个方法就是getter和setter。由getter和setter定义的属性称做’存取器属性’(accessor property),它不同于’数据属性’(data property)，数据属性只有一个简单的值。</p></blockquote><p>下面是一个get的demo：</p><pre><code>let obj = {  x: 4, // x，y就是数据属性  y: 2,  get z() {    return this.x * this.y;  }}console.log(obj.z); // 8</code></pre><p>当程序查询存取器的属性值时，JavaScript代用getter方法（无参数），这个方法的返回值就是该属性存取表达式的值。当程序设置一个存取器属性值时，JavaScript调用setter方法，将赋值表达式右侧的值当作参数传入setter。从某种意义上来说，这个方法负责设置属性值，可以忽略该方法的返回值。</p><pre><code>&lt;button id=&quot;btn&quot;&gt;click it&lt;/button&gt;&lt;script type=&quot;text/javascript&quot;&gt;  let obj = {    //这个数据属性包含下一个序列号    //$符号暗示这个属性是一个私有属性    $n:0,    //返回当前值,然后自增    get next(){return this.$n++},    //给n设置新的值,但只有当它比当前值大时才设置成功    set next(n){      if(n&gt;=this.$n){        this.$n = n;      }      else{        throw &quot;序列号的值不能比当前值小&quot;;      }    }  };  document.getElementById(&#39;btn&#39;).onclick = function increase() {    console.log(obj.next);    obj.next = 10; // 报错，Uncaught 序列号的值不能比当前值小  }&lt;/script&gt;</code></pre><h3 id="6、-原型"><a href="#6、-原型" class="headerlink" title="6、 原型"></a>6、 原型</h3><p>原型以及原型链的部分见<a href="https://xypecho.github.io/2018/05/30/%E7%90%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" target="_blank" rel="noopener">这里</a></p><h3 id="7、数组"><a href="#7、数组" class="headerlink" title="7、数组"></a>7、数组</h3><h4 id="7-1-稀疏数组"><a href="#7-1-稀疏数组" class="headerlink" title="7.1 稀疏数组"></a>7.1 稀疏数组</h4><blockquote><p>稀疏数组就是包含从0开始的不连续索引的数组。通常，数组的length属性值代表数组中元素的个数。如果数组是稀疏的，length属性值大于元素的个数。</p></blockquote><h4 id="7-2-清空数组的小技巧"><a href="#7-2-清空数组的小技巧" class="headerlink" title="7.2 清空数组的小技巧"></a>7.2 清空数组的小技巧</h4><p>设置length属性为一个小于当前长度的非负整数n时，当前数组中那些索引值大于或等于n的元素将从中删除</p><pre><code>let arr = [1,2,3,4,5];console.log(arr); // [1, 2, 3, 4, 5]arr.length = 0;console.log(arr); // []</code></pre><p>还可以将数组的length属性值设置为大于其当前的长度。实际上并不会向数组中添加新的元素，它只是在数组尾部创建了一个空的区域。</p><pre><code>let arr = [1,2,3,4,5];console.log(arr); // [1, 2, 3, 4, 5]arr.length = 7;console.log(arr); // [1, 2, 3, 4, 5, empty × 2]</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JavaScript权威指南 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JavaScript权威指南 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue项目里面频繁打开组件数据异常问题</title>
+      <link href="/2018/03/23/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%A2%91%E7%B9%81%E6%89%93%E5%BC%80%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/"/>
+      <url>/2018/03/23/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%A2%91%E7%B9%81%E6%89%93%E5%BC%80%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>最近项目里面遇到的一个bug,<img src="/2018/03/23/vue项目里面频繁打开组件数据异常问题/TIM图片20180323125513.png">这样一个表格点击编辑选项，<a id="more"></a><br>里面会出现一个模态框<img src="/2018/03/23/vue项目里面频繁打开组件数据异常问题/TIM图片20180323125826.png">里面会展示该行的数据，但是点击下一行里面的编辑的时候经常会出现这样一个bug：<br>点第一行的编辑后，关闭模态框，然后点击第二行的编辑出现的模态框里面的数据仍然是第一行的。<br>解决方案</p><pre><code>//用vue里的watch钩子，观测点击编辑时传入的id，一旦id发生变化重新加载模态框里面的数据watch: {  id: function() {    this.getFilamentDetail();  }}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>js判断设备是pc还是移动</title>
+      <link href="/2018/03/21/js%E5%88%A4%E6%96%AD%E8%AE%BE%E5%A4%87%E6%98%AFpc%E8%BF%98%E6%98%AF%E7%A7%BB%E5%8A%A8/"/>
+      <url>/2018/03/21/js%E5%88%A4%E6%96%AD%E8%AE%BE%E5%A4%87%E6%98%AFpc%E8%BF%98%E6%98%AF%E7%A7%BB%E5%8A%A8/</url>
+      <content type="html"><![CDATA[<pre><code>function browserRedirect() {            var sUserAgent = navigator.userAgent.toLowerCase();            var bIsIpad = sUserAgent.match(/ipad/i) == &quot;ipad&quot;;            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == &quot;iphone os&quot;;            var bIsMidp = sUserAgent.match(/midp/i) == &quot;midp&quot;;            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == &quot;rv:1.2.3.4&quot;;            var bIsUc = sUserAgent.match(/ucweb/i) == &quot;ucweb&quot;;            var bIsAndroid = sUserAgent.match(/android/i) == &quot;android&quot;;            var bIsCE = sUserAgent.match(/windows ce/i) == &quot;windows ce&quot;;            var bIsWM = sUserAgent.match(/windows mobile/i) == &quot;windows mobile&quot;;            document.writeln(&quot;您的浏览设备为：&quot;);            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {                document.writeln(&quot;phone&quot;);            } else {                document.writeln(&quot;pc&quot;);            }        }        browserRedirect();</code></pre><p>点击这里看<a href="https://xypecho.github.io/test/judgeScreen.html" target="_blank" rel="noopener">demo</a></p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>JS实现复制功能</title>
+      <link href="/2018/03/21/JS%E5%AE%9E%E7%8E%B0%E5%A4%8D%E5%88%B6%E5%8A%9F%E8%83%BD/"/>
+      <url>/2018/03/21/JS%E5%AE%9E%E7%8E%B0%E5%A4%8D%E5%88%B6%E5%8A%9F%E8%83%BD/</url>
+      <content type="html"><![CDATA[<p>最近公司项目有一个需求，实现一键复制激活码功能；发现用document的execCommand方法可以实现复制功能，下面上代码</p><pre><code>&lt;body&gt;    &lt;input type=&quot;&quot; name=&quot;&quot; id=&quot;inp&quot;&gt;    &lt;button id=&#39;btn&#39; onclick=&#39;copytext()&#39;&gt;点击复制&lt;/button&gt;&lt;/body&gt;&lt;script type=&quot;text/javascript&quot;&gt;    let inp = document.getElementById(&#39;inp&#39;);    let btn = document.getElementById(&#39;btn&#39;);    function copytext(){        inp.select();        document.execCommand(&quot;copy&quot;);        alert(&quot;复制成功&quot;);    }&lt;/script&gt;</code></pre><a id="more"></a><p>您可以点击<a href="https://xypecho.github.io/test/copyInputDemo.html" target="_blank" rel="noopener">这里</a>看示例</p><h3 id="进阶篇"><a href="#进阶篇" class="headerlink" title="进阶篇"></a>进阶篇</h3><p>直接复制p标签之类的里面的文本</p><pre><code>&lt;body&gt;    &lt;p id=&quot;text&quot;&gt;这是被复制的文本&lt;/p&gt;    &lt;input type=&quot;text&quot; name=&quot;&quot; id=&quot;inp&quot; style=&quot;display: none&quot;&gt;    &lt;button id=&quot;btn&quot; onclick=&#39;copyText()&#39;&gt;点击复制p标签里面的内容&lt;/button&gt;    &lt;textarea placeholder=&quot;粘贴到这里试试&quot; rows=&quot;10&quot;&gt;&lt;/textarea&gt;&lt;/body&gt;&lt;script type=&quot;text/javascript&quot;&gt;    function copyText(){        let txt = document.getElementById(&#39;text&#39;).innerText;        let inp = document.getElementById(&#39;inp&#39;);        inp.value = txt;        inp.select();        document.execCommand(&#39;copy&#39;);        alert(&#39;复制成功&#39;);    }&lt;/script&gt;</code></pre><p>您可以点击<a href="https://xypecho.github.io/test/copyPdemo.html" target="_blank" rel="noopener">这里</a>看复制p标签的示例</p><h3 id="改良篇"><a href="#改良篇" class="headerlink" title="改良篇"></a>改良篇</h3><p>利用Range 对象和HTML5的Selection API</p><pre><code>function copy(el) {    var range = document.createRange();    var end = el.childNodes.length;    range.setStart(el,0);    range.setEnd(el,end);    var selection = window.getSelection();    selection.removeAllRanges();    selection.addRange(range);    document.execCommand(&quot;copy&quot;,false,null);    selection.removeRange(range);}</code></pre><blockquote><p>首先是利用<strong>document.createRange()</strong>创建一个 Range 对象 ,然后获取所需复制元素的子元素的长度大小，然后调用Range对象的setStart和setEnd方法设置选择区域的大小。<br>此时只是设置了选择区域的大小，实际上在window中并没有真正选中，所以还需要调用window.getSelection()生成一个 Selection 对象，在添加选区之前最好先调用selection.removeAllRanges()清除其他的选区，否则浏览器可能会发出下面的警告，然后再调用 Selection 对象的addRange方法，将上一步的 range 作为参数传入，即可将所需复制的元素真正设置为被选择区域。<br>现在就可以像平时选中文字后调用document.execCommand来实现将被选择区域的文字复制到剪贴板。<br>最后还需要调用 Selection 对象的removeRange方法将 Range 对象移除，保证被选择区域永远只有一个被选择的元素，否则某些浏览器在下次可能会因为有两个被选择元素而发出警告或者报错。</p></blockquote><p><a href="https://juejin.im/post/5ae1d75f6fb9a07aab298faf?utm_source=gold_browser_extension" target="_blank" rel="noopener">参考链接</a></p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue实现进度条</title>
+      <link href="/2018/03/14/vue%E5%AE%9E%E7%8E%B0%E8%BF%9B%E5%BA%A6%E6%9D%A1/"/>
+      <url>/2018/03/14/vue%E5%AE%9E%E7%8E%B0%E8%BF%9B%E5%BA%A6%E6%9D%A1/</url>
+      <content type="html"><![CDATA[<p>以前用jquery切图的时候就很好奇进度条要怎么写，一直没机会写。最近公司项目里面有个文件上传显示进度条的功能，用vue实现了一下，发现数据绑定作用下，进度条很简单就可以实现了。下面上代码</p><pre><code>&lt;div id=&quot;app&quot;&gt;    &lt;button @click=&#39;start&#39;&gt;start&lt;/button&gt;    &lt;div class=&quot;progress_wrapper&quot;&gt;        &lt;div class=&quot;progress&quot; :style=&#39;{width:`${percentage}%`}&#39;&gt;{{percentage}}%&lt;/div&gt;    &lt;/div&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot;&gt;    var app =new Vue({        el:&#39;#app&#39;,        data:{            percentage:0,        },        methods:{            start(){                setInterval(()=&gt;{                    if (this.percentage&lt;100) {                        this.percentage +=1;                    }                },100)            }        }    })&lt;/script&gt;</code></pre><a id="more"></a><p>您可以点击<a href="https://xypecho.github.io/test/progress.html" target="_blank" rel="noopener">这里</a>看demo</p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>es6实现图片全加载完再显示到网页</title>
+      <link href="/2018/03/08/es6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E5%85%A8%E5%8A%A0%E8%BD%BD%E5%AE%8C%E5%86%8D%E6%98%BE%E7%A4%BA%E5%88%B0%E7%BD%91%E9%A1%B5/"/>
+      <url>/2018/03/08/es6%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E5%85%A8%E5%8A%A0%E8%BD%BD%E5%AE%8C%E5%86%8D%E6%98%BE%E7%A4%BA%E5%88%B0%E7%BD%91%E9%A1%B5/</url>
+      <content type="html"><![CDATA[<h3 id="利用es6的promise的all方法来实现图片全加载好再显示到网页-下面上代码"><a href="#利用es6的promise的all方法来实现图片全加载好再显示到网页-下面上代码" class="headerlink" title="利用es6的promise的all方法来实现图片全加载好再显示到网页,下面上代码"></a>利用es6的promise的all方法来实现图片全加载好再显示到网页,下面上代码</h3><pre><code>function loadimg(src){    return new Promise(function(resolve,reject){        let img=document.createElement(&#39;img&#39;);        img.src=src;        img.onload=function(){            resolve(img);        }        img.onerror=function(err){            reject(err);        }    })}function showimg(imgs){    imgs.forEach(function(img){        document.body.appendChild(img);    })}Promise.all([loadimg(&#39;http://pic9.997788.com/pic_auction/00/09/38/10/au9381026e.jpg&#39;),loadimg(&#39;http://t-1.tuzhan.com/10da2b1e266a/up1/l/2010-03-20/13/timeroy.tuzhan.com_4899c11261d643d088bda1ac5f570e56.jpg&#39;),loadimg(&#39;http://img5.duitang.com/uploads/item/201212/14/20121214223133_jYzPn.jpeg&#39;)]).then(showimg);</code></pre><a id="more"></a><p>demo看<a href="https://xypecho.github.io/test/imgloading.html" target="_blank" rel="noopener">这里</a></p><h3 id="promise的race可以实现只有有一张加载完就显示到网页"><a href="#promise的race可以实现只有有一张加载完就显示到网页" class="headerlink" title="promise的race可以实现只有有一张加载完就显示到网页"></a>promise的race可以实现只有有一张加载完就显示到网页</h3><pre><code>function loadimg(src){    return new Promise(function(resolve,reject){        let img=document.createElement(&#39;img&#39;);        img.src=src;        img.onload=function(){            resolve(img);        }        img.onerror=function(err){            reject(err);        }    })}function showimg(imgs){        document.body.appendChild(imgs);}Promise.race([loadimg(&#39;http://pic9.997788.com/pic_auction/00/09/38/10/au9381026e.jpg&#39;),loadimg(&#39;http://t-1.tuzhan.com/10da2b1e266a/up1/l/2010-03-20/13/timeroy.tuzhan.com_4899c11261d643d088bda1ac5f570e56.jpg&#39;),loadimg(&#39;http://img5.duitang.com/uploads/item/201212/14/20121214223133_jYzPn.jpeg&#39;)]).then(showimg);</code></pre><p>点我看<a href="https://xypecho.github.io/test/imgrace.html" target="_blank" rel="noopener">demo</a></p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> ES6 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> ES6 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>收藏的一些正则</title>
+      <link href="/2018/03/08/%E6%94%B6%E8%97%8F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%AD%A3%E5%88%99/"/>
+      <url>/2018/03/08/%E6%94%B6%E8%97%8F%E7%9A%84%E4%B8%80%E4%BA%9B%E6%AD%A3%E5%88%99/</url>
+      <content type="html"><![CDATA[<h3 id="去除参数获取网站主机名"><a href="#去除参数获取网站主机名" class="headerlink" title="去除参数获取网站主机名"></a>去除参数获取网站主机名</h3><pre><code>const url = `${window.location.href.match(/(\w+):\/\/([^/:]+)(:\d*)?/)[0]}`;//例：输入http://www.w3school.com.cn/js/js_obj_regexp.asp，输出为http://www.w3school.com.cn</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> RegExp </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> RegExp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue-router实现全局路由跳转拦截</title>
+      <link href="/2018/03/06/vue-router%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%E6%8B%A6%E6%88%AA/"/>
+      <url>/2018/03/06/vue-router%E5%AE%9E%E7%8E%B0%E5%85%A8%E5%B1%80%E8%B7%AF%E7%94%B1%E8%B7%B3%E8%BD%AC%E6%8B%A6%E6%88%AA/</url>
+      <content type="html"><![CDATA[<p>公司项目里面遇到这样一个需求‘除了登录页面之外，所有页面需要登录才能显示’，由于是第一次遇到这种一翻搜索之后得到了解决方案，下面上代码<br>在vue脚手架生成的router文件夹下面的index.js里面,给需要拦截的组件新增里面meta属性</p><pre><code>{  path: &#39;/entry&#39;,  name: &#39;entry&#39;,  component: Entry,  meta: {    Auth: true // 需要登录  }</code></pre><a id="more"></a><p>在入口文件main.js里面  </p><pre><code>router.beforeEach((to, from, next) =&gt; {  if (to.matched[0].meta.Auth) { //判断是否需要拦截    if (!window.sessionStorage.user) { //成功登录会在sessionStorage里面设置一个uesr      next(&#39;/&#39;);    }  };  next();});</code></pre><p>以上就实现了全局路由拦截</p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>git的常用操作</title>
+      <link href="/2018/03/02/git%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
+      <url>/2018/03/02/git%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<h3 id="1、从远程仓库获取代码到本地"><a href="#1、从远程仓库获取代码到本地" class="headerlink" title="1、从远程仓库获取代码到本地"></a>1、从远程仓库获取代码到本地</h3><pre><code>git clone https://gitee.com/xxx/xxx.git  //直接克隆了默认的master分支下的代码git clone -b dev https://gitee.com/xxx/xxx.git //克隆dev分支下的代码，可把dev换成你想克隆的任意分支</code></pre><h3 id="2、添加远程仓库"><a href="#2、添加远程仓库" class="headerlink" title="2、添加远程仓库"></a>2、添加远程仓库</h3><p>该操作一般是fork项目后，想更新fork的项目时使用</p><pre><code>git remote -v //执行该命令后，会列出当前程序对应的所有远程版本仓库的信息，含仓库名和仓库地址git remote add xoxoxo https://gitee.com/xxx/xxx.git  //添加远程仓库，‘xoxoxo’代表该分支的名字（自己随便取），后面的分支的地址git pull xoxoxo dev //获取该远程项目下面dev分支的代码</code></pre><a id="more"></a><h3 id="3、代码提交"><a href="#3、代码提交" class="headerlink" title="3、代码提交"></a>3、代码提交</h3><pre><code>git add . git commit -m &#39;这里面写修改代码的备注&#39;git push origin master //提交到master分支git push origin dev // 提交到dev分支</code></pre><h3 id="4、撤销该文件的修改"><a href="#4、撤销该文件的修改" class="headerlink" title="4、撤销该文件的修改"></a>4、撤销该文件的修改</h3><pre><code>git checkout -- src/views/equip/equipStateHistory.vue  // -- 后面加文件的路径，即把文件恢复到没改之前的样子(相当于一直ctrl+z)git checkout . //撤销本地所有文件的修改</code></pre><h3 id="5、对比本地修改的内容与上次提交的内存的差异"><a href="#5、对比本地修改的内容与上次提交的内存的差异" class="headerlink" title="5、对比本地修改的内容与上次提交的内存的差异"></a>5、对比本地修改的内容与上次提交的内存的差异</h3><pre><code>git status //查看所有修改过的文件git diff //查看所有修改过的文件的具体内容git diff src/views/equip/components/MachineHome.vue //查看指定文件的修改内容，diff后面是文件路径</code></pre><h3 id="6、本地分支的相关操作"><a href="#6、本地分支的相关操作" class="headerlink" title="6、本地分支的相关操作"></a>6、本地分支的相关操作</h3><pre><code>git branch --all   // 查看本地所有分支git checkout -b test // 在本地新建一个test分支</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>新人写vue项目时需要注意的那些事(连载中)</title>
+      <link href="/2018/02/26/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91-%E8%BF%9E%E8%BD%BD%E4%B8%AD/"/>
+      <url>/2018/02/26/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91-%E8%BF%9E%E8%BD%BD%E4%B8%AD/</url>
+      <content type="html"><![CDATA[<h3 id="1、别名配置"><a href="#1、别名配置" class="headerlink" title="1、别名配置"></a>1、别名配置</h3><p>在build文件夹下面的webpack.base.conf.js文件里面可以配置别名来简单明了的引入各种组件</p><pre><code>resolve: {  extensions: [&#39;.js&#39;, &#39;.vue&#39;, &#39;.json&#39;],  alias: {    &#39;src&#39;: resolve(&#39;src&#39;),    &#39;common&#39;: resolve(&#39;src/common&#39;),    &#39;components&#39;: resolve(&#39;src/components&#39;),  }},</code></pre><p>配置完的demo如下:</p><pre><code>import mheader from &#39;components/m-header/m-header&#39;</code></pre><a id="more"></a><h3 id="2、在手机上打开vue项目"><a href="#2、在手机上打开vue项目" class="headerlink" title="2、在手机上打开vue项目"></a>2、在手机上打开vue项目</h3><p>首先需要手机和电脑在同一个wifi下，然后win+r输入cmd，输入命令‘ipconfig’获取到本机的ip地址后，在vue里面的package.json修改配置</p><pre><code>&quot;scripts&quot;: {  &quot;dev&quot;: &quot;webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 192.168.1.3&quot;, //ip写在这里  &quot;start&quot;: &quot;npm run dev&quot;,  &quot;lint&quot;: &quot;eslint --ext .js,.vue src&quot;,  &quot;build&quot;: &quot;node build/build.js&quot;},</code></pre><h3 id="3、路由配置"><a href="#3、路由配置" class="headerlink" title="3、路由配置"></a>3、路由配置</h3><p>首先在项目router文件夹下面的index.js里面引入组件  </p><pre><code>import Vue from &#39;vue&#39;import Router from &#39;vue-router&#39;import recommend from &#39;components/recommend/recommend&#39;import rank from &#39;components/rank/rank&#39;import search from &#39;components/search/search&#39;</code></pre><p>然后在下面的export default里面配置组件</p><pre><code>export default new Router({  routes: [      {      path:&#39;/&#39;,      redirect:&#39;/recommend&#39;                  },    {      path: &#39;/recommend&#39;,      component: recommend    },        {      path: &#39;/rank&#39;,      component: rank    },        {      path: &#39;/search&#39;,      component: search    }  ]})</code></pre><p>在导航栏的组件里面写路径的组件时应该这样写</p><pre><code>&lt;div class=&quot;tab&quot;&gt;    &lt;!-- 使用 router-link 组件来导航. --&gt;       &lt;!-- 通过传入 `to` 属性指定链接. --&gt;      &lt;!-- &lt;router-link&gt; 默认会被渲染成一个 `&lt;a&gt;` 标签,使用tag=&#39;div&#39;，会被渲染成div --&gt;    &lt;router-link tag=&#39;div&#39; to=&#39;/recommend&#39; class=&#39;tab_item&#39;&gt;        &lt;span class=&quot;tab_link&quot;&gt;推荐&lt;/span&gt;    &lt;/router-link&gt;    &lt;router-link tag=&#39;div&#39; to=&#39;/rank&#39; class=&#39;tab_item&#39;&gt;        &lt;span class=&quot;tab_link&quot;&gt;排行榜&lt;/span&gt;    &lt;/router-link&gt;    &lt;router-link tag=&#39;div&#39; to=&#39;/search&#39; class=&#39;tab_item&#39;&gt;        &lt;span class=&quot;tab_link&quot;&gt;搜索&lt;/span&gt;    &lt;/router-link&gt;&lt;/div&gt;</code></pre><p>在App.vue里面引入tab时记得加上路由出口</p><pre><code>&lt;template&gt;  &lt;div id=&quot;app&quot;&gt;    &lt;mheader&gt;&lt;/mheader&gt;    &lt;tab&gt;&lt;/tab&gt;    &lt;!-- 路由出口 --&gt;    &lt;!-- 路由匹配到的组件将渲染在这里 --&gt;    &lt;router-view&gt;&lt;/router-view&gt;   &lt;/div&gt;&lt;/template&gt;</code></pre><h3 id="4、vue里面使用normalize-css"><a href="#4、vue里面使用normalize-css" class="headerlink" title="4、vue里面使用normalize.css"></a>4、vue里面使用normalize.css</h3><pre><code>首先安装 npm i normalize.css --save-dev  然后在main.ja里面引入 import &#39;normalize.css&#39;  如果报错的话就安装 npm install css-loader style-loader</code></pre><h3 id="5、vue打包前需要做的事"><a href="#5、vue打包前需要做的事" class="headerlink" title="5、vue打包前需要做的事"></a>5、vue打包前需要做的事</h3><pre><code>找到config里的index.js,打开修改assetsPublicPath 为“./”</code></pre><h3 id="6、配置子路由"><a href="#6、配置子路由" class="headerlink" title="6、配置子路由"></a>6、配置子路由</h3><p>例如点击列表页面跳到详情页这样的操作时就需要配置子路由</p><pre><code>{  path:&#39;/singer&#39;,  component:singer, //这样父路由  children:[    {      path:&#39;:id&#39;,      component:singerDetail //这是子路由    }  ]}在router里面的index.js配置完路由后来到父路由组件&lt;template&gt;  &lt;div class=&quot;singer&quot;&gt;    //此处写父路由的页面    &lt;ul&gt;      &lt;li @click=&#39;select(item)&#39; v-for=&#39;item in items&#39;&gt;这是列表demo&lt;/li&gt;    &lt;/ul&gt;    &lt;router-view&gt;&lt;/router-view&gt; //给子路由一个router-view  &lt;/div&gt;&lt;/template&gt;然后在methods里面写个select方法select(item){  this.$router.push({    path:`/singer/${item.id}`    });},</code></pre><h3 id="7、vue里面的页面跳转"><a href="#7、vue里面的页面跳转" class="headerlink" title="7、vue里面的页面跳转"></a>7、vue里面的页面跳转</h3><pre><code>如果是直接写在template里面的话&lt;li @click=&quot;$router.push(`/entry/gcodeView?id=${scope.row.id}`)&quot;&gt;跳转&lt;/li&gt; //问号后面可以带参数写在script里面this.$router.push(`/entry/gcodeView?id=${data.gcode_id}`);</code></pre><h3 id="8、vue里面设置404页面"><a href="#8、vue里面设置404页面" class="headerlink" title="8、vue里面设置404页面"></a>8、vue里面设置404页面</h3><pre><code>{  path: &#39;/*&#39;,  name: &#39;noMatch&#39;,  component: noMatch}/* 可以匹配所有路由，如果没匹配到则跳转到这个页面</code></pre><h3 id="9、获取vue路由及去除参数"><a href="#9、获取vue路由及去除参数" class="headerlink" title="9、获取vue路由及去除参数"></a>9、获取vue路由及去除参数</h3><pre><code>this.$route.path; //可以不带参数的路由，例：http://localhost:8080/entry/errorMessage?machine_id=3 ，输出为/entry/errorMessagethis.$router.replace(this.$route.path);//去除路由后面的参数,例：http://localhost:8080/entry/errorMessage?machine_id=3 输出为http://localhost:8080/entry/errorMessage</code></pre><h3 id="10、触发dom的点击事件"><a href="#10、触发dom的点击事件" class="headerlink" title="10、触发dom的点击事件"></a>10、触发dom的点击事件</h3><pre><code>&lt;button ref=&#39;btn&#39;&gt;&lt;/button&gt;this.$refs.btn.click();</code></pre><h3 id="11、多个子路由的情况下，配置默认路由"><a href="#11、多个子路由的情况下，配置默认路由" class="headerlink" title="11、多个子路由的情况下，配置默认路由"></a>11、多个子路由的情况下，配置默认路由</h3><pre><code>{      path: &#39;/index&#39;,      component: index,      meta: [],      redirect: &#39;/home&#39;, // redirect重定向到home组件      children: [        {          path: &#39;/home&#39;,          component: resolve =&gt; require([&#39;@/pages/home/home&#39;], resolve)        },        {          path: &#39;/test&#39;,          component: resolve =&gt; require([&#39;@/components/test/test&#39;], resolve),          meta: [&#39;添加数据test&#39;]        }      ]},</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>转行整整一年了...</title>
+      <link href="/2018/02/20/%E8%BD%AC%E8%A1%8C%E6%95%B4%E6%95%B4%E4%B8%80%E5%B9%B4%E4%BA%86/"/>
+      <url>/2018/02/20/%E8%BD%AC%E8%A1%8C%E6%95%B4%E6%95%B4%E4%B8%80%E5%B9%B4%E4%BA%86/</url>
+      <content type="html"><![CDATA[<h3 id="当时为什么转行"><a href="#当时为什么转行" class="headerlink" title="当时为什么转行"></a>当时为什么转行</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;16年6月刚毕业后进入社会，没有一技之长的我一直在做销售，各种各样的销售，最开始的电话销售然后是一家互联网公司的市场专员再然后是推荐保健品的，最后从链家离职后就决定不再从事销售了。</p><h3 id="转行互联网自学？or培训？"><a href="#转行互联网自学？or培训？" class="headerlink" title="转行互联网自学？or培训？"></a>转行互联网自学？or培训？</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;或许是因为知乎刷多了？感觉互联网工资很高的样子(其实大牛的工资确实很高，不过似乎每个行业都是这样啊？…)然后就开始加各种技术群，当时还不知道程序员里面分很多语音和方向，就加了很多Java群(原谅我刚开始只知道Java…)，知道了还有培训这个东西，然后去人才市场找互联网相关工作的时候遇到了两个培训机构(ps:现在很多鸡贼的培训机构都打着招聘的名义在招学员)在招聘学员，去他们公司面试(其实是忽悠我去培训)<a id="more"></a><br>的时候知道了原来还有这样的操作？3个月的培训就可以月薪过万了？回家的路上想了想<br><img src="TIM图片20180220120350.png" style="height:500px;text-align: center;"><br>发现其实他们画的饼太不真实了，于是就开启了自学之路。</p><h3 id="为什么选择做前端，而不是后端呢？"><a href="#为什么选择做前端，而不是后端呢？" class="headerlink" title="为什么选择做前端，而不是后端呢？"></a>为什么选择做前端，而不是后端呢？</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;看到一个博客里面很有意思的话，感觉也挺符合我的情况，就拿过来了。  </p><blockquote><p>不是我选择了前端，而是前端选择了我。天降大任，身不由己。  </p></blockquote><p>&nbsp;&nbsp;&nbsp;&nbsp;17年10月底从链家辞职，然后回老家开启自学，首先去淘宝买了一大波培训班的Java视频自己在家跟着视频码代码，学了大概2个多月的样子然后过完年就去了苏州开始了找工作之路。<br>&nbsp;&nbsp;&nbsp;&nbsp;最开始是直接在智联招聘和拉钩上海投简历，发现基本都被回绝了。然后我就有了一个大胆的想法…由于我以前做过推销的工作我感觉是不是也可以像推销产品一样推销自己，于是我就在招聘网站上搜薪资要求2-3k的工作记下工作地点每天坐车上门去求面试机会。嗯，毫无悬念，虽然有了面试机会不过水平太菜了根本不能胜任工作…<br>&nbsp;&nbsp;&nbsp;&nbsp;转机发生在2月20号，这天我像往常一样去人才市场看工作机会，突然看到了网页制作这个岗位，或许我可以曲线入行？先找个互联网工作然后每天下班自学新技术再跳槽？于是和这家公司hr谈了下…然后说明天就可以来上班了，不过有试用期，试用期内需要完成2个企业站并且试用期内是没有工资的。然后就这样入了前端的坑。<br><img src="TIM图片20180220125835.png" style="height:500px;text-align: center;">  </p><h3 id="职业发展"><a href="#职业发展" class="headerlink" title="职业发展"></a>职业发展</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;在一家公司待的久了，发现技术上没有挑战性且薪水也不是很高的时候就可以选择跳槽了。2月21正式入行前端(其实只能叫切图仔)，大概做了十来个企业站后发现技术上已经没有可以学习的地方了于是在17年7月24提出离职，回到了老家在老家找了份前端工作。由于第一份工作是纯静态页面，刚入职第二家公司的时候如果没有师傅带着真的会走很多弯路，感谢一路走来遇到的两位带我的师傅，清楚了职业规划后，要做的就是不停的学习补充新知识。(希望可以早点从小切图仔蜕变为大前端)</p>]]></content>
+      
+      <categories>
+          
+          <category> 杂谈 </category>
+          
+          <category> 转行一周年纪念 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 杂谈 </tag>
+            
+            <tag> 转行一周年纪念 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>如何在vue里面使用icomoon</title>
+      <link href="/2018/02/18/%E5%A6%82%E4%BD%95%E5%9C%A8vue%E9%87%8C%E9%9D%A2%E4%BD%BF%E7%94%A8icomoon/"/>
+      <url>/2018/02/18/%E5%A6%82%E4%BD%95%E5%9C%A8vue%E9%87%8C%E9%9D%A2%E4%BD%BF%E7%94%A8icomoon/</url>
+      <content type="html"><![CDATA[<h3 id="icomoon是什么？"><a href="#icomoon是什么？" class="headerlink" title="icomoon是什么？"></a>icomoon是什么？</h3><blockquote><p>打开IcoMoon网站往往会给人一种错觉，误认为跟上面罗列的字体网站一样，就是展示。<br>其实非也，IcoMoon的水要深多了。<br>这么说吧：假设整个上海梅园地区有100家卖衣服的小店，其中有99家就是拿货然后卖衣服给顾客（这就是大搜罗的icon font们）；但是，其中有一家店不仅卖衣服，还可以根据用户需求定制衣服，甚至还可以把别家店的衣服按照顾客要求进行改制，且适用于高矮胖瘦，古今中外给类人群，而且还有穿衣说明，模特试穿以及打包送货上门服务（这就是本文的IcoMoon），最最关键的是，这家店是免费的。<br>体现在IcoMoon上就是：提供600+字符，您可以根据自己需求定制（如就选两个）；可以导入其他字体，也进行特别定制（类似fontforge功能）；定制字体提供打包导出功能（省去了字体转换），兼容IE6+，现代浏览器以及各类手机设备，且有demo实例，并对字符进行了HTML转化。<br>可谓图标字体一条龙服务，又称“图标解决方案”！</p></blockquote><a id="more"></a><h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>1、打开icomoon的<a href="https://icomoon.io/app/#/select" target="_blank" rel="noopener">官网</a>,选择自己需要的图标，当然你也可以点击左上角的’import icons’导入自己的svg格式的图标。<br>选择完需要的图片后点击下面的creat font<img src="/2018/02/18/如何在vue里面使用icomoon/TIM图片20180218205653.png"><br>然后点击download就会把字体图标下载到本地。<br>2、解压压缩包获得以下文件<img src="/2018/02/18/如何在vue里面使用icomoon/TIM图片20180218210103.png"><br>3、在自己的vue项目src文件下创建一个’common’文件夹，里面再分别建’fonts’和’stylus’文件夹，把解压下来的icomoon文件夹里面fonts文件夹下的所有文件拷贝到vue项目里面的fonts文件夹下面，然后把<img src="/2018/02/18/如何在vue里面使用icomoon/TIM图片20180218210740.png">  里面的style.css拷贝到vue项目里面的stylus下面，因为我这个项目用的是stylus预处理器，所以我把文件改为了style.styl<br>vue项目里面的路径如图<img src="/2018/02/18/如何在vue里面使用icomoon/TIM图片20180218211556.png"><br>4、在vue项目里面的main.js里面引入style.styl</p><pre><code>import &#39;./common/stylus/index.styl&#39;</code></pre><p>5、然后就可以在组件里面用.class的发法使用icmoon图标啦</p><h3 id="需要注意的坑"><a href="#需要注意的坑" class="headerlink" title="需要注意的坑"></a>需要注意的坑</h3><p><img src="/2018/02/18/如何在vue里面使用icomoon/TIM图片20180218211131.png">,此处的路径需要更改为</p><pre><code>@font-face {  font-family: &#39;icomoon&#39;;  src:  url(&#39;../fonts/icomoon.eot?yho9ht&#39;);  src:  url(&#39;../fonts/icomoon.eot?yho9ht#iefix&#39;) format(&#39;embedded-opentype&#39;),    url(&#39;../fonts/icomoon.ttf?yho9ht&#39;) format(&#39;truetype&#39;),    url(&#39;../fonts/icomoon.woff?yho9ht&#39;) format(&#39;woff&#39;),    url(&#39;../fonts/icomoon.svg?yho9ht#icomoon&#39;) format(&#39;svg&#39;);  font-weight: normal;  font-style: normal;}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue实现tab选项卡效果</title>
+      <link href="/2018/02/17/vue%E5%AE%9E%E7%8E%B0tab%E9%80%89%E9%A1%B9%E5%8D%A1%E6%95%88%E6%9E%9C/"/>
+      <url>/2018/02/17/vue%E5%AE%9E%E7%8E%B0tab%E9%80%89%E9%A1%B9%E5%8D%A1%E6%95%88%E6%9E%9C/</url>
+      <content type="html"><![CDATA[<p>刚接触vue，还没完全适应vue的响应式解构，刚遇到这个需求下意识还是dom操作,下面上vue实现的代码<br><a id="more"></a></p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;title&gt;&lt;/title&gt;    &lt;meta charset=&quot;utf-8&quot;&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no&quot;&gt;    &lt;script src=&quot;https://cdn.bootcss.com/vue/2.5.13/vue.js&quot;&gt;&lt;/script&gt;    &lt;style type=&quot;text/css&quot;&gt;        body,html{            margin: 0;            padding: 0;        }        .father{            width: 100%;            display: flex;        }        .father span{            flex:1;            text-align: center;            background-color: #31c27c;            color:#fff;            height: 40px;            line-height: 40px;        }        .active{            color:red!important;            background-color: blue!important;        }    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;    &lt;div id=&quot;app&quot;&gt;        &lt;div class=&quot;father&quot;&gt;            &lt;span :class=&quot;isshow==0?&#39;active&#39;:&#39;&#39;&quot; @click=&#39;changetag(0)&#39;&gt;我是tab1&lt;/span&gt;            &lt;span :class=&quot;isshow==1?&#39;active&#39;:&#39;&#39;&quot; @click=&#39;changetag(1)&#39;&gt;我是tab2&lt;/span&gt;        &lt;/div&gt;        &lt;div class=&quot;son&quot;&gt;            &lt;div v-show=&#39;isshow==0&#39;&gt;我是tab1里面的内容&lt;/div&gt;            &lt;div v-show=&#39;isshow==1&#39;&gt;我是tab2里面的内容啊啊啊啊啊&lt;/div&gt;        &lt;/div&gt;    &lt;/div&gt;&lt;/body&gt;    &lt;script type=&quot;text/javascript&quot;&gt;        var app=new Vue({            el:&#39;#app&#39;,            data:{                isshow:0            },            methods:{                changetag:function(idx){                    this.isshow=idx;                }            }        })    &lt;/script&gt;&lt;/html&gt;</code></pre><p>demo看<a href="https://xypecho.github.io/test/vue_tab.html" target="_blank" rel="noopener">这里</a></p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>input设置width:100%页面出现滚动条解决方案</title>
+      <link href="/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+      <url>/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</url>
+      <content type="html"><![CDATA[<p>先上解决方案：input 设置 width:100% 和padding后宽度超出父节点,加上下面这行css到超出的元素身上即可</p><pre><code>box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;</code></pre><p>下面是原理:<br><a id="more"></a></p><h2 id="box-sizing是什么"><a href="#box-sizing是什么" class="headerlink" title="box-sizing是什么"></a>box-sizing是什么</h2><p>一言以蔽之，box-sizing用来控制元素的内容区域的宽/高与padding，border之间的关系；<br>正常的盒模型：</p><p>元素的内容区域宽度=width；<br>元素的内容区域高度=height；<br>元素实际占的宽度=width+padding+border；<br>元素实际占的高度=height+padding+border；</p><h4 id="正常显示"><a href="#正常显示" class="headerlink" title="正常显示"></a>正常显示</h4><img src="/2018/02/13/input设置width-100-页面出现滚动条解决方案/2513564615-5a333910664fe_articlex.png"><p>从图中可以看出 元素实际占的宽度为 420px（10px+50px+300px+50px+10px）。</p><h4 id="box-sizing-content-box"><a href="#box-sizing-content-box" class="headerlink" title="box-sizing:content-box"></a>box-sizing:content-box</h4><p>当我们在该div上设置一个 box-sizing:content-box;效果跟默认的一致，也就是说默认的盒子模型就是<br>box-sizing:content-box; 如下图所示：<br><img src="/2018/02/13/input设置width-100-页面出现滚动条解决方案/content-box.png"></p><h4 id="box-sizing-border-box"><a href="#box-sizing-border-box" class="headerlink" title="box-sizing:border-box"></a>box-sizing:border-box</h4><p>当设置 box-sizing:border-box;时，元素的实际宽度就为 300px了，也就是实际宽度值就是 width的值，而该div的内容区的宽度则为除去 padding 和border后的宽度；如下图所示：<br><img src="/2018/02/13/input设置width-100-页面出现滚动条解决方案/border-box.png"></p>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>手机网站点击链接触发颜色块的问题解决</title>
+      <link href="/2018/02/09/%E6%89%8B%E6%9C%BA%E7%BD%91%E7%AB%99%E7%82%B9%E5%87%BB%E9%93%BE%E6%8E%A5%E8%A7%A6%E5%8F%91%E9%A2%9C%E8%89%B2%E5%9D%97%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"/>
+      <url>/2018/02/09/%E6%89%8B%E6%9C%BA%E7%BD%91%E7%AB%99%E7%82%B9%E5%87%BB%E9%93%BE%E6%8E%A5%E8%A7%A6%E5%8F%91%E9%A2%9C%E8%89%B2%E5%9D%97%E7%9A%84%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+      <content type="html"><![CDATA[<p>做移动端开发的时候，经常遇到就是点击一个标签的时候，整个颜色块会闪一下，影响美观。然后多次百度之后找到了解决方案</p><blockquote><p>-webkit-tap-highlight-color:rgba(0,0,0,0)  给body加上这个样式即可  </p><p>下面解释一下什么是RGBA，RAG就是颜色值了，大家都知道，A就是Alpha的缩写，就是透明度的意思，多了一个透明度。那么这个的含义就是颜色是黑色，透明度是0，看不到了。所以点击就没有效果了。</p></blockquote>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>vue里面实现toggle效果</title>
+      <link href="/2018/02/09/vue%E9%87%8C%E9%9D%A2%E5%AE%9E%E7%8E%B0toggle%E6%95%88%E6%9E%9C/"/>
+      <url>/2018/02/09/vue%E9%87%8C%E9%9D%A2%E5%AE%9E%E7%8E%B0toggle%E6%95%88%E6%9E%9C/</url>
+      <content type="html"><![CDATA[<p>在不用vue的时代，实现toggle效果一般是直接使用添加删除class来完成，或者使用低版本的jquery用.toggle()函数<br>不过vue最大的特色就是数据驱动页面了，下面我将使用vue来实现toggle效果<br><a id="more"></a></p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;title&gt;&lt;/title&gt;    &lt;script src=&quot;https://cdn.bootcss.com/vue/2.5.13/vue.js&quot;&gt;&lt;/script&gt;    &lt;style type=&quot;text/css&quot;&gt;        .active{            color:red;            font-size: 22px;        }    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;    &lt;div id=&quot;app&quot;&gt;        &lt;p @click=&#39;change(1)&#39; :class=&quot;tag==1?&#39;active&#39;:&#39;&#39;&quot;&gt;我是红色&lt;/p&gt;        &lt;p @click=&#39;change(2)&#39; :class=&quot;tag==2?&#39;active&#39;:&#39;&#39;&quot;&gt;我是红色&lt;/p&gt;        &lt;p @click=&#39;change(3)&#39; :class=&quot;tag==3?&#39;active&#39;:&#39;&#39;&quot;&gt;我是红色&lt;/p&gt;    &lt;/div&gt;&lt;/body&gt;    &lt;script type=&quot;text/javascript&quot;&gt;        var app=new Vue({            el:&#39;#app&#39;,            data:{                tag:0            },            methods:{                change:function(id){                    if (this.tag==id) {                        this.tag=0;                    } else {                        this.tag=id;                    }                }            }        })    &lt;/script&gt;&lt;/html&gt;</code></pre><p>展示demo看<a href="https://xypecho.github.io/test/vue_toggle.html" target="_blank" rel="noopener">这里</a></p>]]></content>
+      
+      <categories>
+          
+          <category> vue.js </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vue.js </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>移除type=number时浏览器自带的上下箭头</title>
+      <link href="/2018/02/09/%E7%A7%BB%E9%99%A4type-number%E6%97%B6%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E4%B8%8A%E4%B8%8B%E7%AE%AD%E5%A4%B4/"/>
+      <url>/2018/02/09/%E7%A7%BB%E9%99%A4type-number%E6%97%B6%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E4%B8%8A%E4%B8%8B%E7%AE%AD%E5%A4%B4/</url>
+      <content type="html"><![CDATA[<p>如图<img src="/2018/02/09/移除type-number时浏览器自带的上下箭头/4beb92ed544342d2ca78148cada0111a_articlex.png"><br>在pc端的input里面type=number时，会带有上下箭头去掉的方式如下</p><pre><code>input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {    -webkit-appearance: none !important;    margin: 0;}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>使用base64上传图片</title>
+      <link href="/2018/02/01/%E4%BD%BF%E7%94%A8base64%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/"/>
+      <url>/2018/02/01/%E4%BD%BF%E7%94%A8base64%E4%B8%8A%E4%BC%A0%E5%9B%BE%E7%89%87/</url>
+      <content type="html"><![CDATA[<p>以前做过的上传图片，要么是用的插件，用么就是用的用的定义好的接口，今天自己做项目时第一次遇到上传图片的需求。<br>本来是直接formData放表单里面跟着提交的，但是发现提交到后台后下载下来的文件是0kb，后台弄了很久都没解决方案，于是就用base64来上传图片了。<br><a id="more"></a></p><pre><code>//图片转成base64function readAsDataURL(parm, file) {  if (!file) {    return false;  }  var reader = new FileReader();  reader.readAsDataURL(file);  reader.onload = function(e) {    var index_local = e.target.result.indexOf(&#39;,&#39;);    console.log(index_local);    $(&quot;input[name=&#39;&quot; + parm + &quot;&#39;]&quot;).val(e.target.result.substring(index_local + 1));//此处删除了base64头部的信息  }};//上传图片并显示$(&#39;.upload_img_content_file&#39;).change(function() {  let img = this.files[0];  let img_src;  if (img.type.indexOf(&#39;image&#39;) &lt; 0) {    alert(&#39;请选择图片类型文件&#39;);    return false;  }  //判断兼容性  if (window.navigator.userAgent.indexOf(&#39;Chrome&#39;) &gt; 0 || window.navigator.userAgent.indexOf(&#39;Safari&#39;) &gt; 0) {    img_src = window.webkitURL.createObjectURL(img);  } else {    img_src = window.URL.createObjectURL(img);  }  $(&quot;.upload_img_content&quot;).html(`&lt;img src=${img_src}&gt;`);  readAsDataURL(&quot;logoimg_base64&quot;, img);})</code></pre><p>这里有<a href="https://xypecho.github.io/test/img_to_base64.html" target="_blank" rel="noopener">demo</a>记得打开f12看input里面的value值</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>纯js实现图片上传和预览</title>
+      <link href="/2018/01/26/%E4%BC%A0js%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%A2%84%E8%A7%88/"/>
+      <url>/2018/01/26/%E4%BC%A0js%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%A2%84%E8%A7%88/</url>
+      <content type="html"><![CDATA[<pre><code>&lt;img src=&quot;&quot; id=&#39;imgfile&#39;&gt;&lt;input type=&#39;file&#39; id=&#39;fileObj&#39; onchange=&#39;fileupload()&#39;&gt;&lt;script&gt;    fileupload=function(){        var fileImage = document.getElementById(&#39;fileObj&#39;);         var imgObjPreview = document.getElementById(&quot;imgfile&quot;);         if (window.navigator.userAgent.indexOf(&quot;Chrome&quot;) &gt;= 1 || window.navigator.userAgent.indexOf(&quot;Safari&quot;) &gt;= 1) {             imgObjPreview.src = window.webkitURL.createObjectURL(fileImage.files[0]);         }         else {             imgObjPreview.src = window.URL.createObjectURL(fileImage.files[0]);         }     }&lt;/script&gt;</code></pre><p>demo看<a href="https://xypecho.github.io/test/upload_img.html" target="_blank" rel="noopener">这里</a></p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>CSS使元素固定底部的方法</title>
+      <link href="/2018/01/24/CSS%E4%BD%BF%E5%85%83%E7%B4%A0%E5%9B%BA%E5%AE%9A%E5%BA%95%E9%83%A8%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+      <url>/2018/01/24/CSS%E4%BD%BF%E5%85%83%E7%B4%A0%E5%9B%BA%E5%AE%9A%E5%BA%95%E9%83%A8%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<blockquote><p>固定在底部包括两种情况，第一种是当页面内容尚未填充满的时候，页脚需要固定在底部，第二种是页面填充满后，页脚需要随页面内容的增加而填充在主体内容的下方。</p></blockquote><p>最简单粗暴的方法就是给元素设置position:fixed;bottom:0;不过这样写在移动端或者设备高度不高的情况下，会严重影响用户体验。前段时间看饿了么视频的时候，视频里面黄奕老师讲到一个黑科技’Sticky footers’,然后百度了一下，实现了他里面的方法。</p><a id="more"></a><pre><code>&lt;html&gt;&lt;head&gt;&lt;style type=&quot;text/css&quot;&gt;html,body{height:100%}.footer {margin-top:-30px;height:30px;background-color:#eee;}.wrap{min-height:100%}.main{padding-bottom:30px;overflow:hidden;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;    &lt;div class=&quot;wrap&quot;&gt;        &lt;div class=&quot;main&quot;&gt;这里是网页的主体&lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;footer&quot;&gt;这里是页脚&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>demo看<a href="https://xypecho.github.io/test/Sticky_footers.html" target="_blank" rel="noopener">这里</a>  </p><p>还可以使用flex布局来实现</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;title&gt;&lt;/title&gt;    &lt;style type=&quot;text/css&quot;&gt;        html {          height: 100%;        }        body {          min-height: 100%;          display: flex;          flex-direction: column;        }        #content {          flex: 1;        }        #footer {          line-height: 30px;          text-align: center;        }    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;    &lt;div id=&quot;content&quot;&gt;    &lt;/div&gt;    &lt;div id=&quot;footer&quot;&gt;&amp;copy; Brook.inc&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>戳<a href="https://xypecho.github.io/test/bottom.html" target="_blank" rel="noopener">这里看demo</a></p>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>原生js批量增加css样式</title>
+      <link href="/2018/01/24/%E5%8E%9F%E7%94%9Fjs%E6%89%B9%E9%87%8F%E5%A2%9E%E5%8A%A0css%E6%A0%B7%E5%BC%8F/"/>
+      <url>/2018/01/24/%E5%8E%9F%E7%94%9Fjs%E6%89%B9%E9%87%8F%E5%A2%9E%E5%8A%A0css%E6%A0%B7%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;原生js里面我们一般这样给元素增加样式</p><pre><code>let div_heade=document.querySelector(&#39;.div_heade&#39;);div_heade.style.width=&#39;100px&#39;;div_heade.style.height=&#39;100px&#39;;</code></pre><a id="more"></a><p>&#8194;&#8194;这样显然效率会比较低，于是google了一下，发现了一个属性cssText，然后我们批量写属性的时候就可以这么写了</p><pre><code>let div_heade=document.querySelector(&#39;.div_heade&#39;);div_heade.style.cssText=&#39;width:100px;height:100px&#39;;</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>利用h5的新特性在客户端存储数据</title>
+      <link href="/2018/01/21/%E5%88%A9%E7%94%A8h5%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%E5%9C%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE/"/>
+      <url>/2018/01/21/%E5%88%A9%E7%94%A8h5%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%E5%9C%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;感觉做项目能学到的很多新东西啊，最近项目里有个需求，要展示用户的搜索记录。由于我是第一次遇到这个需求，于是我就先百度了一下，发现了h5的一个黑科技</p><blockquote><p>在客户端存储数据<br>HTML5 提供了两种在客户端存储数据的新方法：<br>localStorage - 没有时间限制的数据存储<br>sessionStorage - 针对一个 session 的数据存储<br>之前，这些都是由 cookie 完成的。但是 cookie 不适合大量数据的存储，因为它们由每个对服务器的请求来传递，这使得 cookie 速度很慢而且效率也不高。<br>在 HTML5 中，数据不是由每个服务器请求传递的，而是只有在请求时使用数据。它使在不影响网站性能的情况下存储大量数据成为可能。<br>对于不同的网站，数据存储于不同的区域，并且一个网站只能访问其自身的数据。<br>HTML5 使用 JavaScript 来存储和访问数据。</p></blockquote><a id="more"></a><p>&#8194;&#8194;于是我就打算用localStorage来实现历史搜索这个功能。先百度了一下他的<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="noopener">api</a>,发现他是用setItem来存储数据，用getItem来删除数据的。</p><pre><code>let storage=window.localStorage;//先定义并初始化变量let history_keywords=[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;];//定义要存储的数据，实际项目中history_keywords是获取用户输入的关键词history_keywords=JSON.stringify(history_keywords); //stringify()用于从一个对象解析出字符串,方面存储数据storage.setItem(&#39;options&#39;,history_keywords);//把history_keywords存储进storage，键为optionsconsole.log(storage);//输出的内容看下图let get_storage=storage.getItem(&#39;options&#39;);//取出数据console.log(get_storage);//输出为[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;]</code></pre><p>&#8194;&#8194;这是console.log(storage);输出的数据<img src="/2018/01/21/利用h5的新特性在客户端存储数据/20180121164859.png"><br>&#8194;&#8194;那么如何删除里面的指定数据呢？</p><pre><code>let options=JSON.parse(localStorage.getItem(&#39;options&#39;));//将localStorage里面的对象转成数组进行增删console.log(options);//[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;,&#39;d&#39;,&#39;e&#39;];let arr1=options.filter((val_options)=&gt;{    return val_options!==options_val;});//返回一个新数据localStorage.setItem(&#39;options&#39;,JSON.stringify(arr1));//把去除元素后的新数组赋值给localStoragealert(&#39;该条历史搜索清除成功&#39;);window.location.reload();console.log(localStorage);</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> H5新特性 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> H5新特性 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>css实现图片自动旋转</title>
+      <link href="/2018/01/21/css%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E6%97%8B%E8%BD%AC/"/>
+      <url>/2018/01/21/css%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E6%97%8B%E8%BD%AC/</url>
+      <content type="html"><![CDATA[<blockquote><p>通过 @keyframes 规则，您能够创建动画。<br>创建动画的原理是，将一套 CSS 样式逐渐变化为另一套样式。<br>在动画过程中，您能够多次改变这套 CSS 样式。<br>以百分比来规定改变发生的时间，或者通过关键词 “from” 和 “to”，等价于 0% 和 100%。<br>0% 是动画的开始时间，100% 动画的结束时间。<br>为了获得最佳的浏览器支持，您应该始终定义 0% 和 100% 选择器。</p></blockquote><a id="more"></a><p>&#8194;&#8194;CSS3里面多了很多动画特效方面的css，前几天项目里遇到一个需要，做一个ajax加载时的动画效果（一个圆圈在旋转显示加载中）,在网上搜索了一下找到了解决方案，在jquery的ajax方法里面加一个参数beforeSend,这个里面就是ajax发送前执行的函数，然后可以配合css3的图片旋转，让display:none的图片在这个时候显示display:block。<br>&#8194;&#8194;那么css3怎么实现图片不停旋转呢，开头引用的w3school里面的文档就很好的说明了。老规矩，先上代码</p><pre><code>//css样式        .loading img{          display: inline-block;          vertical-align: middle;          animation:rotating 1.2s linear infinite; //第一个参数是规定需要绑定到选择器的 keyframe 名称;第二个是规定完成动画所花费的时间，以秒或毫秒计;第三个参数是规定动画的速度曲线(可选值看http://www.w3school.com.cn/cssref/pr_animation-timing-function.asp);          width: 100px;        }        @keyframes rotating{        from{transform:rotate(0)}        to{transform:rotate(360deg)}        }//一个div里面有一个图片&lt;div class=&quot;loading&quot;&gt;    &lt;img src=&quot;http://pic9.nipic.com/20100916/2531170_131413079748_2.jpg&quot;&gt;&lt;/div&gt;</code></pre><p>点这里看<a href="https://xypecho.github.io/test/tese.html" target="_blank" rel="noopener">demo</a>.</p>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>改变函数内部this的指向</title>
+      <link href="/2018/01/18/%E6%94%B9%E5%8F%98%E5%87%BD%E6%95%B0%E5%86%85%E9%83%A8this%E7%9A%84%E6%8C%87%E5%90%91/"/>
+      <url>/2018/01/18/%E6%94%B9%E5%8F%98%E5%87%BD%E6%95%B0%E5%86%85%E9%83%A8this%E7%9A%84%E6%8C%87%E5%90%91/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;今天项目遇到一个问题，先上代码</p><pre><code>        son.city.li.onclick=function(){            updateResume(province_city[i].citys[j].id);        }         function updateResume(id){             console.log(this);//this指向了window         }</code></pre><a id="more"></a><p>最近都没怎么用jquery，一直用的原生js，所以遇到了很多以前没遇到过的问题(正好可以熟练下js)，’son.city.li’是动态创建的，原本是想给每个li都增加一个点击事件，然后点击后父级style的color变成红色；可是在updateResume函数内使用this.parentNode.style.color=’#ba3537’却一直不奏效，于是打印了一下this，发现指向了window(ps:本人js基础很渣渣，以前不知道：没有被绑定的对象，默认this 指向window 对象);于是百度了一下，知道了call()。<br>解决方案</p><pre><code>        son.city.li.onclick=function(){            //updateResume(province_city[i].citys[j].id);            updateResume.call(this, position12[i].position2[j].id);        }         function updateResume(id){             console.log(this);//this指向了son.city.li         }</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>图片在div垂直水平居中的方法(持续更新)</title>
+      <link href="/2018/01/16/%E5%9B%BE%E7%89%87%E5%9C%A8div%E5%9E%82%E7%9B%B4%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/"/>
+      <url>/2018/01/16/%E5%9B%BE%E7%89%87%E5%9C%A8div%E5%9E%82%E7%9B%B4%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</url>
+      <content type="html"><![CDATA[<h4 id="1、vertical-align属性只会在inline-block水平的元素上期作用-例如图片，按钮，单复选框，单行-多行文本框等HTML控件，只有这些元素默认情况下会对vertical-align属性起作用"><a href="#1、vertical-align属性只会在inline-block水平的元素上期作用-例如图片，按钮，单复选框，单行-多行文本框等HTML控件，只有这些元素默认情况下会对vertical-align属性起作用" class="headerlink" title="1、vertical-align属性只会在inline-block水平的元素上期作用,例如图片，按钮，单复选框，单行/多行文本框等HTML控件，只有这些元素默认情况下会对vertical-align属性起作用."></a>1、vertical-align属性只会在inline-block水平的元素上期作用,例如图片，按钮，单复选框，单行/多行文本框等HTML控件，只有这些元素默认情况下会对vertical-align属性起作用.</h4><a id="more"></a><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;title&gt;&lt;/title&gt;    &lt;style type=&quot;text/css&quot;&gt;        div{            width: 300px;            height: 300px;            background-color: red;            text-align: center;            line-height: 300px;        }        img{            width:100px;            height:100px;            vertical-align: middle;        }    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;            &lt;div&gt;                &lt;img src=&quot;http://pic9.nipic.com/20100916/2531170_131413079748_2.jpg&quot;&gt;            &lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>效果如图：<img src="/2018/01/16/图片在div垂直水平居中的方法-持续更新/QQ截图20180116155325.png"></p><h4 id="2、利用绝对定位-不过感觉为什么视觉上并没有居中…"><a href="#2、利用绝对定位-不过感觉为什么视觉上并没有居中…" class="headerlink" title="2、利用绝对定位(不过感觉为什么视觉上并没有居中…)"></a>2、利用绝对定位(不过感觉为什么视觉上并没有居中…)</h4><pre><code>    &lt;style type=&quot;text/css&quot;&gt;        body{            margin: 0;            padding: 0;            position: absolute;            width: 100%;            height: 100%;            text-align: center;        }        img{            position: absolute;            width: 100px;            height: 100px;            top:50%;            transform: translateY(-50%);        }    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;    &lt;img src=&quot;http://img5.duitang.com/uploads/item/201312/05/20131205172435_Sesdy.jpeg&quot;&gt;&lt;/body&gt;</code></pre><p>戳<a href="https://xypecho.github.io/test/center.html" target="_blank" rel="noopener">这里</a>看demo</p><h4 id="3、利用css3属性transform"><a href="#3、利用css3属性transform" class="headerlink" title="3、利用css3属性transform"></a>3、利用css3属性transform</h4><pre><code>&lt;style media=&quot;screen&quot; type=&quot;text/css&quot;&gt;    #appLoading { width: 100%; height: 100%; }    #appLoading img {    position: absolute;    top: 50%;    left: 50%;    width: 200px;    height: 200px;    transform: translateY(-50%)  translateX(-50%);    }&lt;/style&gt;&lt;div id=&quot;appLoading&quot;&gt;    &lt;img src=&quot;https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3828227436,2721096501&amp;fm=27&amp;gp=0.jpg&quot; alt=&quot;loading&quot; /&gt;&lt;/div&gt;</code></pre><p>戳<a href="https://xypecho.github.io/test/center1.html" target="_blank" rel="noopener">这里</a>看demo</p>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>ES6知识点记录</title>
+      <link href="/2018/01/12/ES6%E7%9F%A5%E8%AF%86%E7%82%B9%E8%AE%B0%E5%BD%95/"/>
+      <url>/2018/01/12/ES6%E7%9F%A5%E8%AF%86%E7%82%B9%E8%AE%B0%E5%BD%95/</url>
+      <content type="html"><![CDATA[<h3 id="0、es6开发环境搭建"><a href="#0、es6开发环境搭建" class="headerlink" title="0、es6开发环境搭建"></a>0、es6开发环境搭建</h3><h4 id="建立工程目录："><a href="#建立工程目录：" class="headerlink" title="建立工程目录："></a>建立工程目录：</h4><p>先建立一个项目的工程目录，并在目录下边建立两个文件夹：src和dist<br><br>src：书写ES6代码的文件夹，写的js程序都放在这里。<br><br>dist：利用Babel编译成的ES5代码的文件夹，在HTML页面需要引入的时这里的js文件。<br></p><h4 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h4><a id="more"></a><p>在安装Babel之前，需要用npm init先初始化我们的项目。打开终端或者通过cmd打开命令行工具，进入项目目录，输入下边的命令：</p><pre><code>npm init -y</code></pre><h4 id="全局安装Babel-cli"><a href="#全局安装Babel-cli" class="headerlink" title="全局安装Babel-cli"></a>全局安装Babel-cli</h4><pre><code>npm install -g babel-cli</code></pre><h4 id="本地安装babel-preset-es2015-和-babel-cli"><a href="#本地安装babel-preset-es2015-和-babel-cli" class="headerlink" title="本地安装babel-preset-es2015 和 babel-cli"></a>本地安装babel-preset-es2015 和 babel-cli</h4><pre><code>npm install --save-dev babel-preset-es2015 babel-cli</code></pre><h4 id="根目录新建-babelrc"><a href="#根目录新建-babelrc" class="headerlink" title="根目录新建.babelrc"></a>根目录新建.babelrc</h4><pre><code>type null&gt;.babelrc //如果创建文件提示请输入文件名，就用这个命令</code></pre><p>这个文件我们建立完成后，现在可以在终端输入的转换命令了，这次ES6成功转化为ES5的语法。</p><pre><code>babel src/index.js -o dist/index.js</code></pre><h3 id="1、ES6中，给传递的参数设置默认值的方式为"><a href="#1、ES6中，给传递的参数设置默认值的方式为" class="headerlink" title="1、ES6中，给传递的参数设置默认值的方式为"></a>1、ES6中，给传递的参数设置默认值的方式为</h3><pre><code>    function print(text=&quot;hello world&quot;){        console.log(text);   //这种写法可以在参数设置默认值    }    function add(a,b=1){        return a+b;    }    add(1,2);//2会取代设备的b的默认值1    add(1);//b会启用默认值1</code></pre><!--more--><h3 id="2、let声明的变量只在自己的作用域里面有效即块级作用域-通俗的理解就是let的作用域在一对｛-｝花括号里面，出了花括号就是undefined"><a href="#2、let声明的变量只在自己的作用域里面有效即块级作用域-通俗的理解就是let的作用域在一对｛-｝花括号里面，出了花括号就是undefined" class="headerlink" title="2、let声明的变量只在自己的作用域里面有效即块级作用域(通俗的理解就是let的作用域在一对｛ ｝花括号里面，出了花括号就是undefined)"></a>2、let声明的变量只在自己的作用域里面有效即块级作用域(通俗的理解就是let的作用域在一对｛ ｝花括号里面，出了花括号就是undefined)</h3><pre><code>    function test(){        for(let i=1;i&lt;3;i++){            console.log(i);//输出结果为1，2        }            console.log(i);//报错Reference Error 引用错误i is not defined    }    test();    &lt;!--下面的var的例子--&gt;    var a=&#39;hello&#39;;    {        var a=&quot;hello world&quot;;    }    console.log(a);//hello world ,var定义的为全局变量，在代码块里面也会覆盖前面的赋值</code></pre><h3 id="3、使用let-声明变量时不能重复声明，否则会报语法错误"><a href="#3、使用let-声明变量时不能重复声明，否则会报语法错误" class="headerlink" title="3、使用let 声明变量时不能重复声明，否则会报语法错误"></a>3、使用let 声明变量时不能重复声明，否则会报语法错误</h3><pre><code>    let a=1;    let a=2; //Syntax Error 语法错误，</code></pre><h3 id="4、const-声明的常量的值无法被修改，否则会报错；const也是块级作用域"><a href="#4、const-声明的常量的值无法被修改，否则会报错；const也是块级作用域" class="headerlink" title="4、const 声明的常量的值无法被修改，否则会报错；const也是块级作用域"></a>4、const 声明的常量的值无法被修改，否则会报错；const也是块级作用域</h3><pre><code>    function test(){        const PI=3.1415;        PI=123;        console.log(PI);    }    test();//TypeError 类型错误，</code></pre><h3 id="5、const声明常量时必须赋值，不然会报错"><a href="#5、const声明常量时必须赋值，不然会报错" class="headerlink" title="5、const声明常量时必须赋值，不然会报错"></a>5、const声明常量时必须赋值，不然会报错</h3><pre><code>    function test(){        const a;        a=1;    }    test(); //语法错误Uncaught SyntaxError: Missing initializer in const declaration</code></pre><h3 id="6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变"><a href="#6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变" class="headerlink" title="6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变"></a>6、使用const声明一个对象时，数值可以修改，因为对象是引用类型，返回的是的对象存储的内存的指针；而指针没有改变</h3><pre><code>    function test(){        const k={            a:1        }        k.b=2;        console.log(k);输出为{a: 1, b: 2}    }    test();</code></pre><h3 id="7、es6语法新增的赋值写法"><a href="#7、es6语法新增的赋值写法" class="headerlink" title="7、es6语法新增的赋值写法"></a>7、es6语法新增的赋值写法</h3><pre><code>    {        let a,b,reset;        [a,b]=[1,2];        console.log(a,b); //输出为1 2    }</code></pre><h3 id="8、数组的解构赋值"><a href="#8、数组的解构赋值" class="headerlink" title="8、数组的解构赋值"></a>8、数组的解构赋值</h3><pre><code>    {        let a,b,c;        [a,b,...c]=[1,2,3,4,5,6,7];        console.log(a,b,c);//1 2  [3, 4, 5, 6, 7]    }    {        let [a,b,c]=[1,2,3];//这种写法需要键值对应        console.log(a,b,c);//1,2,3        //给b设置默认值        let [a,b=&#39;3&#39;,c]=[1,,3];//逗号不能省略        console.log(a,b,c);//1,&#39;3&#39;,3    }    &lt;!--上面的写法相当于es5的下面的写法--&gt;    &quot;use strict&quot;;    var a = 1,        b = 2,        c = 3;    console.log(a, b, c);    //使用场景，交互值    let a,b;    a=1;    b=2;    [a,b]=[b,a]    //解构赋值使用场景，去除json数据    {        let jsondata={            title:&quot;test&quot;,            test:[                {                    name:&quot;mytest&quot;,                    desc:&quot;this is a test&quot;                }            ]        }        let {title:data1,test:[{name:data2}]}=jsondata;        console.log(data1,data2); //输出为test mytest    }    var jsonData = {     id: 42,     status: &quot;OK&quot;,     data: [867, 5309]    };    let { id, status, data: number } = jsonData;    console.log(id, status, number);    // 42, &quot;OK&quot;, [867, 5309]</code></pre><h3 id="9、对象的解构赋值"><a href="#9、对象的解构赋值" class="headerlink" title="9、对象的解构赋值"></a>9、对象的解构赋值</h3><pre><code>let {bar,foo}={foo:&#39;123&#39;,bar:&quot;jack&quot;};console.log(bar,foo); //对象的解构赋值只需要键值对应，顺序不影响赋值let bar;{bar}={bar:&quot;123&quot;};//这样写会报错，因为先赋值了再解构必然会报错({bar}={bar:&quot;123&quot;}) ;//正确的写法应该在外面加个圆括号,一个小技巧，单引号比双引号编译快</code></pre><h3 id="10、字符串的解构"><a href="#10、字符串的解构" class="headerlink" title="10、字符串的解构"></a>10、字符串的解构</h3><pre><code>    let [a,b,c,d,e]=&#39;hello&#39;;    console.log(a,b,c,d,e); //输出h e l l o</code></pre><h3 id="10、扩展运算符"><a href="#10、扩展运算符" class="headerlink" title="10、扩展运算符"></a>10、扩展运算符</h3><pre><code>//扩展运算符就是 ... 三个点，后面加一个自定义的变量//使用场景，声明一个方法，不确定参数个数的时候function test(...arg){    console.log(arg[0]);    console.log(arg[1]);    console.log(arg[2]);    console.log(arg[3]);};test(1,2,3);//1,2,3,undefined  //实例let arr1=[&#39;www&#39;,&#39;xypecho&#39;,&#39;com&#39;];let arr2=arr1;arr2.push(&#39;cn&#39;);console.log(arr1);//输出 [&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;, &quot;cn&quot;]，因为这个let arr2=arr1;并没有开辟新的内存空间给arr2，所以arr1和arr2是同一个内存空间//修正写法应该为let arr1=[&#39;www&#39;,&#39;xypecho&#39;,&#39;com&#39;];let arr2=[...arr1];arr2.push(&#39;cn&#39;);console.log(arr1); //[&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;]console.log(arr2); //[&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;, &quot;cn&quot;]</code></pre><h3 id="11、rest运算符"><a href="#11、rest运算符" class="headerlink" title="11、rest运算符"></a>11、rest运算符</h3><pre><code>//rest英文有剩余的意思//值得注意的是rest参数之后不能再有其他参数（只能是最后一个参数）否则会报错//函数的length属性不包括rest参数。function test(first_arg,...arg){    for(let val of arg){        console.log(val);    }}test(1,2,3,4,5); //输出为2，3，4，5</code></pre><h3 id="12、字符串查找，查看某段字符串里面是否含有某个字符"><a href="#12、字符串查找，查看某段字符串里面是否含有某个字符" class="headerlink" title="12、字符串查找，查看某段字符串里面是否含有某个字符"></a>12、字符串查找，查看某段字符串里面是否含有某个字符</h3><pre><code>let a=&#39;非常高兴你能看到这篇文章，我是你的老朋友&#39;;let b=&#39;老朋友&#39;;console.log(a.includes(b)); //输出true，b里面的‘老朋友’加上空格的话，即输出falseconsole.log(a.startsWith(b));//输出false；表示参数字符串是否在源字符串的头部console.log(a.endssWith(b));//输出false；表示参数字符串是否在源字符串的尾部。</code></pre><h3 id="13、字符串的复制"><a href="#13、字符串的复制" class="headerlink" title="13、字符串的复制"></a>13、字符串的复制</h3><pre><code>let a=&#39;demo123&#39;;console.log(a.repeat(3)); //repeat()里面的参数代表复制的次数</code></pre><h3 id="14、ES6数字操作"><a href="#14、ES6数字操作" class="headerlink" title="14、ES6数字操作"></a>14、ES6数字操作</h3><pre><code>//创建一个二进制数字，binarylet a=0B010101;console.log(a); //21//创建一个八进制数字,octallet b=0O666;console.log(b);//438,ps第二个字符是大写的字母O//判断是否是数字let a=0B010101;console.log(Number.isFinite(a)); //trueconsole.log(Number.isFinite(NaN)); //falseconsole.log(Number.isFinite(&#39;hello&#39;));//false//判断是否是NaNconsole.log(Number.isNaN(NaN)); //trueconsole.log(Number.isNaN(123));//false//判断数字是否为整数console.log(Number.isInteger(123));//trueconsole.log(Number.isInteger(12.3));//false//把数字转为整型let num=123.1;console.log(Number.parseInt(num)); //123//把数字转成浮点类型let num1=123;console.log(Number.parseFloat(num1));//数组取整console.log(Math.trunc(4.1)); //输出4console.log(Math.trunc(4.9)); //输出4//判断是正数负数还是0console.log(Math.sign(4)); //输出1console.log(Math.sign(-3));//输出-1console.log(Math.trunc(0));//输出0</code></pre><h3 id="15、json转为数组"><a href="#15、json转为数组" class="headerlink" title="15、json转为数组"></a>15、json转为数组</h3><pre><code>//原生js并没有什么直接内置好的函数去将json数据转化为数组，es6有方法可以实现let json={    &#39;0&#39;:&#39;www&#39;,    &#39;1&#39;:&#39;xypecho&#39;,    &#39;2&#39;:&#39;com&#39;,    length:3}console.log(json);//{0: &quot;www&quot;, 1: &quot;xypecho&quot;, 2: &quot;com&quot;, length: 3}console.log(Array.from(json));// [&quot;www&quot;, &quot;xypecho&quot;, &quot;com&quot;]</code></pre><h3 id="16、数字和字符串转为数组"><a href="#16、数字和字符串转为数组" class="headerlink" title="16、数字和字符串转为数组"></a>16、数字和字符串转为数组</h3><pre><code>console.log(Array.of(1,2,3,4));// [1, 2, 3, 4]console.log(Array.of(&#39;javascript&#39;));//[&quot;javascript&quot;]</code></pre><h3 id="17、查找数组里面的字符"><a href="#17、查找数组里面的字符" class="headerlink" title="17、查找数组里面的字符"></a>17、查找数组里面的字符</h3><pre><code>//find()为示例方法,value为需要查找的值，index为索引，arr为源数组//数组实例的find方法，用于找出第一个符合条件的数组成员。它的参数是一个回调函数，所有数组成员依次执行该回调函数，直到找出第一个返回值为true的成员，然后返回该成员。如果没有符合条件的成员，则返回undefined。let arr=[1,2,3,4,5,6];console.log(arr.find(function(value,index,arr){        return value&gt;5;    }));let arr=[1,2,3,4,5,6];console.log(arr.findIndex(function(value,index,arr){        return value&gt;5;    }));//查找满足条件的值的索引</code></pre><h3 id="18、数组里面值的替换"><a href="#18、数组里面值的替换" class="headerlink" title="18、数组里面值的替换"></a>18、数组里面值的替换</h3><pre><code>let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];//arr.fill(&#39;text&#39;,1,2); //第一个参数是用来替换的变量，第二个是开始位置，第三个是结束位置arr.fill(&#39;text&#39;); //不加起始位置则全部替换console.log(arr);</code></pre><h3 id="19、es6的新的数组循环"><a href="#19、es6的新的数组循环" class="headerlink" title="19、es6的新的数组循环"></a>19、es6的新的数组循环</h3><pre><code>let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];for(let item of arr){    console.log(item);//www,xyp,com}//要输出下标的话可以这样let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];for(let item of arr.keys()){    console.log(item); //0,1,2}//如果要下标和值一起输出的话可以这样let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];for(let item of arr.entries()){    console.log(item); // [0, &quot;www&quot;]  [1, &quot;xyp&quot;]  [2, &quot;com&quot;]}//键值分开输出let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];for(let [key,val] of arr.entries()){    console.log(key,val);    //0 &quot;www&quot;    //1 &quot;xyp&quot;    //2 &quot;com&quot;}//手动循环输出数组let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];let list=arr.entries();console.log(list.next().value);console.log(&#39;----------&#39;);console.log(list.next().value);console.log(&#39;----------&#39;);console.log(list.next().value);console.log(&#39;----------&#39;);//(2) [0, &quot;www&quot;]//-------// [1, &quot;xyp&quot;]//-------// [2, &quot;com&quot;]//--------</code></pre><h3 id="20、es6箭头函数"><a href="#20、es6箭头函数" class="headerlink" title="20、es6箭头函数"></a>20、es6箭头函数</h3><pre><code>//获取需要传递的参数数量function add(a,b){    return a+b;}console.log(add.length);//2//需要注意的是如果参数设置了默认值，则不会计入lengthfunction add(a,b=1){    return a+b;}console.log(add.length); //1//箭头函数let add=(a,b)=&gt;a+b;console.log(add(1,2)); //3//上面的函数相当于es5的&quot;use strict&quot;;var add = function add(a, b) {    return a + b;};console.log(add(1, 2));//函数作用域问题let a=&#39;hello&#39;;function test(a,b=a){    console.log(a,b); //world world}test(&#39;world&#39;);let a=&#39;hello&#39;;function test(c,b=a){    console.log(c,b); //world hello}test(&#39;world&#39;);//没有参数的箭头函数写法let arrow=()=&gt;&#39;hello world&#39;;console.log(arrow());//hello world</code></pre><h3 id="21、对象的函数解构"><a href="#21、对象的函数解构" class="headerlink" title="21、对象的函数解构"></a>21、对象的函数解构</h3><pre><code>//这个方法适应于操作后台返回的json数据时let json={    name:&#39;jack&#39;,    id:666}let test=({name,id})=&gt;{    console.log(name,id); //jack 666}test(json);//下面是数组的函数解构let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];let foo=(a,b,c)=&gt;{    console.log(a,b,c);//www xyp com}foo(...arr);</code></pre><h3 id="22、查看对象里面是否有该键"><a href="#22、查看对象里面是否有该键" class="headerlink" title="22、查看对象里面是否有该键"></a>22、查看对象里面是否有该键</h3><pre><code>let json={    name:&#39;jack&#39;,    id:666};console.log(&#39;name&#39; in json);//true 查看对象里面是否有该键</code></pre><h3 id="23、数组遍历的几种方式"><a href="#23、数组遍历的几种方式" class="headerlink" title="23、数组遍历的几种方式"></a>23、数组遍历的几种方式</h3><pre><code>//1、forEach()循环遍历let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];arr.forEach((val,idx)=&gt;console.log(val,idx)); //www 0   xyp 1  com 2//2、filter循环let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];arr.filter(x=&gt;console.log(x));//www,xyp,com//3、some循环let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];arr.some(x=&gt;console.log(x));//www,xyp,com</code></pre><h3 id="24、key值的构建-目前尚不知道实际使用场景"><a href="#24、key值的构建-目前尚不知道实际使用场景" class="headerlink" title="24、key值的构建//目前尚不知道实际使用场景"></a>24、key值的构建//目前尚不知道实际使用场景</h3><pre><code>let kill=&#39;test&#39;;let obj={    [kill]:&#39;web&#39;};console.log(obj); //{test: &quot;web&quot;}</code></pre><h3 id="25、ES6判断的数值是否严格相等"><a href="#25、ES6判断的数值是否严格相等" class="headerlink" title="25、ES6判断的数值是否严格相等"></a>25、ES6判断的数值是否严格相等</h3><pre><code>Object.is(&#39;foo&#39;, &#39;foo&#39;);     // trueObject.is(window, window);   // trueObject.is(&#39;foo&#39;, &#39;bar&#39;);     // falseObject.is([], []);           // falsevar test = { a: 1 };Object.is(test, test);       // trueObject.is(null, null);       // true// 特例Object.is(0, -0);            // falseObject.is(-0, -0);           // trueObject.is(NaN, 0/0);         // true</code></pre><h3 id="26、es6合并对象的方法"><a href="#26、es6合并对象的方法" class="headerlink" title="26、es6合并对象的方法"></a>26、es6合并对象的方法</h3><pre><code>//Object.assign方法用于对象的合并，将源对象（ source ）的所有可枚举属性，复制到目标对象（ target ）。//Object.assign方法的第一个参数是目标对象，后面的参数都是源对象。let target = { a: 1 };  let source1 = { b: 2 };  let source2 = { c: 3 };  console.log(Object.assign(target,source1,source2));//{a: 1, b: 2, c: 3}console.log(Object.assign(target,source2,source1));//{a: 1, b: 2, c: 3}</code></pre><h3 id="27、新增的Set数据解构"><a href="#27、新增的Set数据解构" class="headerlink" title="27、新增的Set数据解构"></a>27、新增的Set数据解构</h3><pre><code>let setArr=new Set();let arr=[&#39;www&#39;,&#39;xyp&#39;,&#39;com&#39;];//定义的时候重复的数据也不会被重复加进去，这个特性可以用来给数组去重arr.forEach((val)=&gt;{    setArr.add(val); //set增加数据的方式为add(),ps重复的数据不会被加进去，    })console.log(setArr);//Set(3) {&quot;www&quot;, &quot;xyp&quot;, &quot;com&quot;}//Array.from方法可以将 Set 结构转为数组。Array.from(setArr);//查找set里面是否有某个变量console.log(setArr.has(&#39;www&#39;)); //has()方法返回true/false//删除set里面所有数据setArr.clear();console.log(setArr); //Set(0) {} 输出空//删除set里面指定的数据setArr.delete(&#39;www&#39;);//delete()里面放参数console.log(setArr);//输出Set(2) {&quot;xyp&quot;, &quot;com&quot;}//遍历set里面的元素之for..offor(let a of setArr){    console.log(a);//www xyp com}//遍历set里面的元素之forEachsetArr.forEach((val)=&gt;{    console.log(val);//www xyp com    })//巧用扩展运算符进行遍历let set1 = new Set([&#39;red&#39;, &#39;green&#39;, &#39;blue&#39;]);let arr1 = [...set1];console.log(arr1);//[&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;]//获取set里面元素的数量方法console.log(setArr.size); //3,size不会计入重复的数据的数量//扩展运算符和 Set 结构相结合，就可以去除数组的重复成员。let arr = [3, 5, 2, 2, 5, 5];let unique = [...new Set(arr)];console.log(unique);//[3, 5, 2]更多demo看[阮一峰老师的教程](http://es6.ruanyifeng.com/#docs/set-map)</code></pre><h3 id="28、WeakSet数据结构"><a href="#28、WeakSet数据结构" class="headerlink" title="28、WeakSet数据结构"></a>28、WeakSet数据结构</h3><pre><code>//WeakSet与Set不同的地方在于，WeakSet可以放对象let weakarr=new WeakSet();let obj={name:&#39;jack&#39;,id:&#39;666&#39;};weakarr.add(obj);console.log(weakarr);//value: {name: &quot;jack&quot;, id: &quot;666&quot;}//如果两个不同的变量值相同，赋值给WeakSet，会输出两个相同的值，解决方法，把两个对象合为一个let weakarr=new WeakSet();let obj={name:&#39;jack&#39;,id:&#39;666&#39;};let obj1={name:&#39;jack&#39;,id:&#39;666&#39;};weakarr.add(obj);weakarr.add(obj1);console.log(weakarr);//value1: {name: &quot;jack&quot;, id: &quot;666&quot;};value2: {name: &quot;jack&quot;, id: &quot;666&quot;} //会把两个都输出</code></pre><h3 id="29、Map数据结构"><a href="#29、Map数据结构" class="headerlink" title="29、Map数据结构"></a>29、Map数据结构</h3><pre><code>//往Map里面增加数据let json={    name:&#39;test&#39;,    user_id:&#39;321&#39;,    password:&#39;123456a&#39;};console.log(json);let maparr=new Map();maparr.set(json,&#39;jspang&#39;,);//set方法为往Map里面加数据；前面是key，后面是valueconsole.log(maparr);//查看增加的数据let json={    name:&#39;test&#39;,    user_id:&#39;321&#39;,    password:&#39;123456a&#39;};let maparr=new Map();maparr.set(json,&#39;jspang&#39;,);//set方法为往Map里面加数据；前面是key，后面是valueconsole.log(maparr.get(json));//jspang//删除里面所有数据maparr.clear();//删除指定数据maparr.delete(json);//查找是否存在某个变量maparr.has(&#39;www&#39;);//false//Map的数量也用.size</code></pre><h3 id="30、用Proxy进行预处理"><a href="#30、用Proxy进行预处理" class="headerlink" title="30、用Proxy进行预处理"></a>30、用Proxy进行预处理</h3><blockquote><p>Proxy用于修改某些操作的默认行为，等同于在语言层面做出修改，所以属于一种“元编程”（meta programming），即对编程语言进行编程。<br>```<br>//get方法，读取pro里面属性时会执行<br>let obj={<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>};<br>let pro=new Proxy({<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>},{<br>    get:function(target,key,property){//target：得到的目标值  key：目标的key值，相当于对象的属性<br>        console.log(‘我先执行了’);<br>    }<br>});//声明变量,前面的花括号里面是对象主体，后面的花括号是需要预处理的函数<br>console.log(pro.name);//我先执行了;打印pro.name是因为pro读取属性时才会执行预处理函数执行</p></blockquote><p>//set方法，改变Proxy属性值时，执行的函数<br>let obj={<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>};<br>let pro=new Proxy({<br>    add:function(val){<br>        return val++;<br>    },<br>    name:’this is test’<br>},{<br>    get:function(target,key,property){//target：得到的目标值  key：目标的key值，相当于对象的属性<br>        console.log(‘我先执行了’);<br>    },<br>    set:function(target,key,value,receiver){<br>        console.log(‘hello’);<br>    }<br>});<br>pro.name=’ppp’;<br>console.log(pro.name);</p><p>//apply的用户，先mark，以后再看<br>let target=function(){<br>    console.log(‘this is target’);<br>}<br>let handler={<br>    apply(target,ctx,args){<br>        console.log(‘this is apply’);<br>        return Reflect.apply(…args);<br>    }<br>}<br>let pro=new Proxy(target,handler);<br>console.log(pro());</p><pre><code>### 31、promise的语法&gt; ES6中的promise的出现给我们很好的解决了回调地狱的问题，在使用ES5的时候，在多层嵌套回调时，写完的代码层次过多，很难进行维护和二次开发，ES6认识到了这点问题，现在promise的使用，完美解决了这个问题。那我们如何理解promise这个单词在ES5中的作用那，你可以想象他是一种承诺，当它成功时执行一些代码，当它失败时执行一些代码。它更符合人类的行为思考习惯，而不在是晦涩难懂的冰冷语言。</code></pre><p>//以洗菜，做饭，吃饭为例<br>let ERR_OK=1;<br>function step1(reject,reject){<br>    console.log(‘1、准备开始洗菜’);<br>    if (ERR_OK==1) {<br>        reject(‘1、洗菜成功’);<br>    }else{<br>        reject(‘1、洗菜失败’);<br>    }<br>}<br>function step2(resolve,reject){<br>    console.log(‘2、准备开始做饭’);<br>    if (ERR_OK==1) {<br>        reject(‘2、做饭成功’);<br>    }else{<br>        reject(‘2、做饭失败’);<br>    }<br>}<br>function step3(resolve,reject){<br>    console.log(‘3、准备开始吃饭’);<br>    if (ERR_OK==1) {<br>        reject(‘3、吃饭成功’);<br>    }else{<br>        reject(‘3、吃饭失败’);<br>    }<br>}<br>new Promise(step1).then(function(val){<br>    console.log(val);//这边的val即为上面if判断后输出的值<br>    return new Promise(step2);<br>}).then(function(val){<br>    console.log(val);<br>    return new Promise(step3);<br>}).then(function(val){<br>    return val;<br>});</p><pre><code>### 32、es6中的class</code></pre><p>class Coder{ //定义一个程序员类<br>    name(val){<br>        //console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>}<br>let forg=new Coder;//实例化类<br>forg.name(‘daidai’);//my name is daidai</p><p>//里面写多个函数时<br>class Coder{ //定义一个程序员类<br>    name(val){<br>        console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>    skill(val){<br>        console.log(‘:skills’+val);<br>    }<br>}<br>let forg=new Coder;//实例化类<br>forg.name(‘daidai’);//my name is daidai<br>forg.skill(‘coding’);</p><p>//类的传参<br>class Coder{ //定义一个程序员类<br>    name(val){<br>        console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>    skill(val){<br>        console.log(this.name+’:skills’+val);<br>    }<br>    constructor(a,b){<br>        this.a=a;<br>        this.b=b;<br>    }<br>    add(){<br>        return this.a+this.b;<br>    }<br>}<br>let forg=new Coder(1,4);//a.b在实例化的时候传进去<br>console.log(forg.add());//5</p><p>//类的继承<br>class Coder{ //定义一个程序员类<br>    name(val){<br>        console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>    skill(val){<br>        console.log(this.name+’:skills’+val);<br>    }<br>    constructor(a,b){<br>        this.a=a;<br>        this.b=b;<br>    }<br>    add(){<br>        return this.a+this.b;<br>    }<br>}</p><p>class htmler extends Coder{<br>    //htmler类里面继承了coder里面所有的属性和方法<br>}<br>let daidai=new htmler;<br>daidai.name(‘test’);//my name is test</p><pre><code>### 33、模块化编程</code></pre><p>//export负责进行模块化，也是模块的输出。<br>//import引入模块</p><p>//test.js<br>export var a = ‘jspang’;<br>//index.js<br>import {a} from ‘./test.js’;<br>console.log(a);</p><p>执行<br>babel-node index.js<br>//输出jspang</p><p>//输出多变量的话可以这样<br>var a=’hello’;<br>var b=’world’;<br>export {a,b};</p><p>//函数的输出<br>export function add(a,b){<br>    return a+b;<br>}</p><p>//将变量语义化输出<br>var a=’hello’;<br>var b=’world’;<br>export{<br>    name as a,<br>    skill as b<br>}<br>//引用可以这样<br>import {name,skill} from ‘./test.js’</p><pre><code>### 34、正则新特性es5中正则的写法为</code></pre><pre><code>let regex=new RegExp(&#39;xyz&#39;,&#39;i&#39;);let regex2=new RegExp(/xyz/i);console.log(regex.test(&#39;xyz123&#39;),regex2.test(&#39;xyz12345&#39;)); //true,true</code></pre><pre><code>es6新特性</code></pre><pre><code>let regex3=new RegExp(/xyz/ig,&#39;i&#39;);//这段的意思是后面的修饰符来替代前面的修饰符console.log(regex3.flags); //输出i，flags是获取正则表达式修饰符的属性</code></pre><pre><code>### 35、字符串新特性</code></pre><p>console.log(‘1’.padStart(2,’0’));  //输出01，padStart的意思为向前面补白，2代表长度，0代表用0来补<br>console.log(‘1’.padEnd(2,’0’)); //输出10，向后面补白</p><p>console.log(String.raw<code>hi/naaa</code>); //输出hi\naaa，这个api的作用是在反斜杠前面再加个反斜杠来转义<br>console.log(<code>hi/naaa</code>);//输出hi<br>                            aaa</p><pre><code>### 36、数组新特性</code></pre><p>let arr =Array.of(‘test’,’i’,’am’,’mi’,1,2,3);<br>console.log(arr);  //[“test”, “i”, “am”, “mi”, 1, 2, 3]，把任意字符转成数组类型</p><p>console.log(Array.from([1,2,3],(item) =&gt;{return item *2;}));//可以转化为数组的同时遍历里面数据并修改数据</p><p>let arr=[‘www’,’xyp’,’com’];<br>arr.fill(‘text’,1,2); //第一个参数是用来替换的变量，第二个是开始位置，第三个是结束位置<br>arr.fill(‘text’); //不加起始位置则全部替换,输出为[‘text’,’text’,’text’]<br>console.log(arr);</p><p>let arr=[1,2,3,4,5];<br>for(let [key,val] of arr.entries()){<br>    console.log(key,val);<br>}//遍历输出数组里面的键值</p><p>const arr1 = [‘a’, ‘b’, ‘c’, ‘d’, ‘e’, ‘f’, ‘g’, ‘h’, ‘i’, ‘j’, ‘k’, NaN];<br>console.log(arr1.includes(NaN));//查看数组里面是否包含某个值，有返回true，没有则返回false</p><pre><code>### 37、函数新特性</code></pre><p>//函数作用域问题<br>let a=’hello’;<br>function test(a,b=a){<br>    console.log(a,b);<br>}<br>test(‘world’); //输出为world world</p><p>let a=’hello’;<br>function test(a,b=a){<br>    console.log(a,b);<br>}<br>test();//输出为undefined undefined</p><p>let a=’hello’;<br>function test(c,b=a){<br>    console.log(c,b);<br>}<br>test(‘world’);//输出为world hello</p><p>//箭头函数<br>let fun = a =&gt;  a*a;<br>console.log(fun(2)); //输出4</p><p>//如果函数没有参数可以这么写<br>let test =()=&gt;’hello world’;<br>console.log(test()); //hello world</p><pre><code>### 38、Object新增方法</code></pre><p>//对象中有方法<br>let es5_methods={<br>    hello:function(){<br>        console.log(‘hello world’);<br>    }<br>}//es5的写法<br>let es6_methods={<br>    hello(){<br>        console.log(‘hello world’);<br>    }<br>}//es6里面的写法</p><p>//判断两个值是否相同<br>console.log(Object.is(‘aaa’,’aaa’));  //Object.is和 === 相同</p><p>//对象合并<br>let arr=[1,2,3];<br>let brr=[‘a’,’b’,’c’];</p><p>let crr=Object.assign({},arr,brr);//花括号叫目标对象，后面的arr、brr是源对象。对象合并是指：将源对象里面的属性添加到目标对象中去，若两者的属性名有冲突，后面的将会覆盖前面的<br>console.log(crr);</p><p>//将对象分成数组<br>let test ={name:’jack’,age:’18’};<br>for(let [key,val] of Object.entries(test)){<br>    console.log([key,val]);// [“name”, “jack”],[“age”, “18”]<br>}</p><pre><code>### 39、symbol数据类型&gt;ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型，前六种是：undefined、null、布尔值（Boolean）、字符串（String）、数值（Number）、对象（Object）。### 40、set-map数据结构</code></pre><p>let setArr=new Set();<br>setArr.add(‘a’); //set解构往里面新增值用add方法<br>console.log(setArr.size);//获取set里面的长度用size</p><p>//Array.from方法可以将 Set 结构转为数组。<br>Array.from(setArr);</p><p>//set的遍历<br>let arr=[‘add’,’delete’,’has’,’clear’];<br>let setArr=new Set(arr);<br>for(let key of setArr){<br>    console.log(key); //输出为’add’,’delete’,’has’,’clear’<br>}</p><p>setArr.forEach((val)=&gt;{<br>    console.log(val);//输出为’add’,’delete’,’has’,’clear’<br>})</p><pre><code>### 41、set和array对比</code></pre><p>let arr=new Array;<br>let map=new Map();<br>//增<br>arr.push({‘t’:1});<br>map.set(‘t’,1);<br>console.log(arr);<br>console.log(map);<br>//删<br>let idx=arr.findIndex(item=&gt;item.t);<br>arr.splice(idx,1);<br>map.delete(‘t’);<br>console.log(arr);<br>console.log(map);<br>//改<br>arr.forEach(item=&gt;item.t?item.t=2:’’);<br>map.set(‘t’,2);<br>console.log(arr);<br>console.log(map);<br>//查<br>let m=map.has(‘t’);<br>let a=arr.find(item=&gt;item.t);<br>console.log(m);<br>console.log(a);</p><pre><code>### 42、类和对象基本定义和生成实例</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>}<br>let child =new Parent();<br>console.log(child.name);//hello world</p><p>let obj=new Parent(‘ppp’);<br>console.log(obj.name);//ppp</p><pre><code>继承</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>}<br>class child extends Parent{<br>    constructor(name=’child_name’){<br>        super(name);//子类要想修改父类值需要调用super方法，方面里面写修改的属性<br>        this.type=’child_type’;//子类新增属性<br>    }<br>}<br>console.log(new child());//child {name: “child_name”, type: “child_type”}</p><pre><code>get和set操作</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>    get longName(){<br>        return <code>这是get操作${this.name}</code>;<br>    }<br>    set longName(val){<br>        this.name=val;<br>    }<br>}<br>let test = new Parent();<br>//console.log(test.longName);//这是get操作hello world<br>test.longName=’呆呆’;<br>console.log(test.longName);//这是get操作’呆呆’</p><pre><code>静态方法(只能通过类来调用而不是通过类的实例来调用)</code></pre><p>//错误示范<br>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>    static say(){<br>        console.log(this.name);<br>    }<br>}<br>let test = new Parent();<br>test.say(); //报错，test.say is not a function</p><p>//正确写法<br>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>    static say(){<br>        console.log(this.name);<br>    }<br>}<br>Parent.say();//输出Parent</p><pre><code>静态方法</code></pre><p>class Parent{<br>    constructor(name=’hello world’){<br>        this.name=name;<br>    }<br>}<br>Parent.sex=’boy’;<br>console.log(Parent.sex);//boy</p><pre><code>### 43、模块化编程</code></pre><p>//这是a.js里面<br>let a=123;<br>let foo =function(){<br>    console.log(‘hello’);<br>}<br>class hello{<br>    test(){<br>        alert(123);<br>    }<br>}<br>export default{<br>    a,<br>    foo,<br>    hello<br>}</p><p>//这是b.js<br>import xxx(此处可以随便起名字) from a.js<br>console.log(xxx.a);<br>console.log(xxx.hello());<br>```</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> ES6 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> ES6 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>记第一次处理移动端滑动事件</title>
+      <link href="/2018/01/11/%E8%AE%B0%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%91%E5%8A%A8%E4%BA%8B%E4%BB%B6/"/>
+      <url>/2018/01/11/%E8%AE%B0%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%A4%84%E7%90%86%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%91%E5%8A%A8%E4%BA%8B%E4%BB%B6/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;公司的物业项目里面有个轮播图模块，不同于PC端的轮播图，移动端的轮播图没有左右箭头只能左右滑动来实现上一张下一张。<br><img src="/2018/01/11/记第一次处理移动端滑动事件/1865037572-56319b425dc69_articlex.gif"><br><a id="more"></a><br>&#8194;&#8194;当然大名鼎鼎的swiper.js完全可以轻轻松松的实现这样的需求，可是对于一个从没写过相关功能的前端萌新来说，这是一个绝好的练手机会。<br>于是，我先百度了一下移动端的滑动事件，发现jquery mobile里面的“swipeleft”和“swiperight”可以实现相关功能，下载下来试验了一下，发现在部分安卓机上<br>比较卡顿，可能是由于dom操作太多？然后我就重新搜索了一下，发现了js的原生滑动事件touchstart，touchmove，touchend完整的滑动事件。下面上代码</p><pre><code>  //touchstart事件  var startX = 0, startY = 0;  //触摸起始位置  var num =0;  function touchStartFun(event){    var touch=event.touches[0];    var x=touch.pageX;    var y=touch.pageY;    startX=x;    startY=y;//记录初始坐标  }  //touchmove事件  function touchMoveFun(event){    var touch=event.touches[0];    var x=touch.pageX;    var y=touch.pageY;  }  //touchend事件  function touchEndFun(event){    var imgs=&#39;{$getHouseInfo[&quot;publish_imgpath&quot;]}&#39;;    var imgarr=imgs.split(&quot;,&quot;);    var left=$(&#39;#swiper&#39;).css(&#39;left&#39;).split(&#39;px&#39;)[0];    var touch=event.changedTouches[0];    var x=touch.pageX;    var y=touch.pageY;    if (x-startX&gt;0) {   //判断是左滑还是右滑        num++;        if (num&gt;=0) {          num=0;        }      $(&quot;#swiper&quot;).css({&quot;transition-duration&quot;:&quot;0.6s&quot;,&quot;left&quot;:img_contentwidth*num+&quot;px&quot;});      console.log(left);    }else{      num--;      if (-num&gt;=imgarr.length) {        num=0;      }      $(&quot;#swiper&quot;).css({&quot;transition-duration&quot;:&quot;0.6s&quot;,&quot;left&quot;:img_contentwidth*num+&quot;px&quot;});      console.log(left);    }  }  //给幻灯片里面的li绑定事件  var swiperPics = document.getElementById(&quot;swiper&quot;).getElementsByTagName(&quot;li&quot;);  for (var i = 0; i &lt; swiperPics.length; i++) {    swiperPics[i].addEventListener(&quot;touchstart&quot;,touchStartFun,true);    swiperPics[i].addEventListener(&quot;touchmove&quot;,touchMoveFun,true);    swiperPics[i].addEventListener(&quot;touchend&quot;,touchEndFun,true);  }});</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> 移动端 </category>
+          
+          <category> 左右滑动事件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> 移动端 </tag>
+            
+            <tag> 左右滑动事件 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>下拉加载更多数据重复问题</title>
+      <link href="/2018/01/11/%E4%B8%8B%E6%8B%89%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%A4%9A%E6%95%B0%E6%8D%AE%E9%87%8D%E5%A4%8D%E9%97%AE%E9%A2%98/"/>
+      <url>/2018/01/11/%E4%B8%8B%E6%8B%89%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%A4%9A%E6%95%B0%E6%8D%AE%E9%87%8D%E5%A4%8D%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;最近公司的微信端项目有个下拉加载更多的功能，以前也做过一个类似的，传当前页面给后台然后后台返回给对应的数据。这次项目做完后，测试的时候发现一个bug就是部分数据会重复加载，当时还以为是下拉过快引起的= =<br>&#8194;&#8194;先上代码<a id="more"></a></p><pre><code>//下拉加载更多$(document).on(&quot;scroll&quot;,function(){  var scrollheight=$(document).scrollTop();//滚动的高度  var screenheight=document.documentElement.clientHeight;//网页可视区域高度  var domheight=$(document).height();//整个文档高度  act_id=$(&quot;.box&quot;).last().attr(&quot;id&quot;);//最后一个box的id  supply_id=$(&quot;.title .active&quot;).attr(&quot;id&quot;);  var imgs = document.getElementsByClassName(&#39;lazyimg&#39;);  if (scrollheight+screenheight&gt;=domheight) {    getcontent(act_id,supply_id,stree_id,price_level,price_level_type,room,half,toilet,build_area,house_age,floor_min,housetype_id);  }  for (var j = 0; j &lt; imgs.length; j++) {    var imgheight=imgs[j].offsetTop;//图片的div盒子距离顶部的高    console.log(imgheight+&quot;======&quot;+(scrollheight+screenheight));    if (imgheight&lt; scrollheight+screenheight) {      imgs[j].src=imgs[j].getAttribute(&quot;data-src&quot;);    }  }})</code></pre><p>当时的代码只判断了下拉滚动的距离是否大于等于该图片到顶部的距离，但是打开谷歌浏览器就看请求的时候，发现请求了两次;然后百度了一翻，搜到一个答案：<a href="https://segmentfault.com/q/1010000000668595" target="_blank" rel="noopener">https://segmentfault.com/q/1010000000668595</a> ;</p><pre><code>var loading = false;$(window).on(&#39;scroll&#39;, function () {  if($(document).scrollTop() + $(window).height() &gt; $(document).height() - 100){    if(!loading){      push();    }  };})function push() {  //ajax添加数据相关  loading = true;  $.ajax(...)   complete:(function () {     loading = false;   });}</code></pre><p>用了这个标志变量后，就可以在下拉滚动的距离是否大于等于该图片到顶部的距离的判断if语句中再加道安全锁 &amp;&amp; !loading,来防止ajax多次请求。</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> BUG集锦 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> BUG集锦 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>实现图片懒加载</title>
+      <link href="/2018/01/06/%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/"/>
+      <url>/2018/01/06/%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;在电商网站中，首页经常需要一次性加载很多图片，但有些不在可视区域内的图片也在刚进来就加载未免太浪费资源。于是在前几天的公司项目中我就实验性的试了下懒加载。</p><blockquote><p>懒加载核心思路：将页面里所有img属性src属性用data-xx代替，当页面滚动直至此图片出现在可视区域时，用js取到该图片的data-xx的值赋给src。</p></blockquote><a id="more"></a><p>&#8194;&#8194;上项目代码</p><pre><code>&lt;div class=&quot;box_left&quot;&gt;  &lt;img src=&quot;/public/static/img/default.jpg&quot; data-src=&quot;${imgpath[0]}&quot; alt=&quot;&quot; class=&quot;lazyimg&quot;&gt;&lt;/div&gt;</code></pre><p>default.jpg是一张灰色背景的公司logo，ajax加载时先把真实路径放到“data-url”里面，然后滚动的高度加上网页可视区域的高度有没有大于该图片距离网页顶部的高度。</p><pre><code>var imgs = document.getElementsByClassName(&#39;lazyimg&#39;);var scrollheight=$(document).scrollTop();//滚动的高度var screenheight=document.documentElement.clientHeight;//网页可视区域高度for (var j = 0; j &lt; imgs.length; j++) {  var imgheight=imgs[j].offsetTop;//图片的div盒子距离顶部的高  if (imgheight&lt; scrollheight+screenheight) {    imgs[j].src=imgs[j].getAttribute(&quot;data-src&quot;);//把真实路径赋值给src  }}</code></pre><p>以上，就是一个简易版本的JS懒加载了。</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> 图片懒加载 </category>
+          
+          <category> jquery图片懒加载 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> 图片懒加载 </tag>
+            
+            <tag> jquery图片懒加载 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>JS巧妙输出26个字母</title>
+      <link href="/2018/01/06/JS%E5%B7%A7%E5%A6%99%E8%BE%93%E5%87%BA26%E4%B8%AA%E5%AD%97%E6%AF%8D/"/>
+      <url>/2018/01/06/JS%E5%B7%A7%E5%A6%99%E8%BE%93%E5%87%BA26%E4%B8%AA%E5%AD%97%E6%AF%8D/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;偶然看到了一个JS黑魔法，马克一下，如何创建a-z的26个字母的数组；</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;title&gt;&lt;/title&gt;&lt;/head&gt;&lt;body&gt;    &lt;script type=&quot;text/javascript&quot;&gt;        var arr=[];        for (var i = 65; i &lt;=90; i++) {            arr.push(String.fromCharCode(i).toLowerCase());        }        console.log(arr);    &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>多个for循环时如何跳出到最外面</title>
+      <link href="/2018/01/05/%E5%A4%9A%E4%B8%AAfor%E5%BE%AA%E7%8E%AF%E6%97%B6%E5%A6%82%E4%BD%95%E8%B7%B3%E5%87%BA%E5%88%B0%E6%9C%80%E5%A4%96%E9%9D%A2/"/>
+      <url>/2018/01/05/%E5%A4%9A%E4%B8%AAfor%E5%BE%AA%E7%8E%AF%E6%97%B6%E5%A6%82%E4%BD%95%E8%B7%B3%E5%87%BA%E5%88%B0%E6%9C%80%E5%A4%96%E9%9D%A2/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;看到的一个小测验，输出一个数组里面两两相加等于9的元素，遍历相加等于9很简单，如何只输出第一个就稍微有点难度了，当时想的是抛出异常强行结束循环或者直接截取第一个输出等等。今天看JS权威指南时偶然看到这个<a id="more"></a><img src="/2018/01/05/多个for循环时如何跳出到最外面/test.png" title="This is an example image"></p><pre><code>    var a=[1,2,3,4,5,6,7,3,1,6,8,3,1,5,7];    var b=9;    var num_a;    var num_b;    test123:for (var i = 0; i &lt; a.length; i++) {        for (var j = 0; j &lt; a.length; j++) {            if (a[i]+a[j]==b) {                num_a=i;                num_b=j;                document.writeln(num_a+&quot;:&quot;+a[num_a]+&quot;===========&quot;+num_b+&quot;:&quot;+a[num_b]);                break test123;            }        }        document.writeln(num_a+&quot;:&quot;+a[num_a]+&quot;===========&quot;+num_b+&quot;:&quot;+a[num_b]);        document.writeln(&quot;&lt;br&gt;&quot;);    }</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> break用法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> break用法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>实现文字两端对齐</title>
+      <link href="/2018/01/05/%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E4%B8%A4%E7%AB%AF%E5%AF%B9%E9%BD%90/"/>
+      <url>/2018/01/05/%E5%AE%9E%E7%8E%B0%E6%96%87%E5%AD%97%E4%B8%A4%E7%AB%AF%E5%AF%B9%E9%BD%90/</url>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;今天要项目要实现下图这样的效果，以前一直是用&amp;nbsp，但是转念一想，应该不会是这么粗暴的方式，肯定有更优雅的方式来实现这个,于是百度了一下，发现了正确的姿势代码如下<a id="more"></a><img src="/2018/01/05/实现文字两端对齐/QQ图片20171228165110.png">：</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;title&gt;Document&lt;/title&gt;    &lt;style&gt;        span{            width: 100px;            text-align: justify;            float: left;        }        span:after{            content:&#39;.&#39;;            width: 100%;            display: inline-block;            overflow: hidden;            height: 0;        }        input{            width: 100px;        }    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;    &lt;div class=&quot;demo&quot;&gt;        &lt;span&gt;昵称&lt;/span&gt;：&lt;input type=&quot;text&quot; style = &#39;width: 100px&#39;&gt;&lt;br&gt;&lt;br&gt;        &lt;span&gt;电子邮箱&lt;/span&gt;：&lt;input type=&quot;email&quot; style = &#39;width: 100px;&#39;&gt;    &lt;/div&gt;&lt;/body&gt;&lt;/html&gt;</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+          <category> 排版 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+            <tag> 排版 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+  
+  
+    
+    <entry>
+      <title>tags</title>
+      <link href="/tags/index.html"/>
+      <url>/tags/index.html</url>
+      <content type="html"><![CDATA[]]></content>
+    </entry>
+    
+  
+</search>

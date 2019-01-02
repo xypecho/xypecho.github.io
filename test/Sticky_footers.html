@@ -1,0 +1,33 @@
+﻿<html>
+<head>
+<style type="text/css">
+html,body{height:100%}
+.footer {margin-top:-30px;height:30px;background-color:#eee;}
+.wrap{min-height:100%}
+.main{padding-bottom:30px;overflow:hidden;}
+</style>
+</head>
+<body>
+	<button>click it</button>
+    <div class="wrap">
+        <div class="main">这里是网页的主体</div>
+    </div>
+    <div class="footer">这里是页脚</div>
+</body>
+	<script type="text/javascript">
+		let btn=document.querySelector("button");
+		let main=document.querySelector('.main');
+		let append_html=`在网页设计中，Sticky footers设计是最古老和最常见的效果之一，大多数人都曾经经历过。它可以概括如下：如果页面内容不够长的时候，页脚块粘贴在视窗底部；如果内容足够长时，页脚块会被内容向下推送。
+
+这种效果不仅是无处不在，很受欢迎，而且实现起来看上去也非常容易。但实际上实现起来要比预期花的时间更多。此外，在CSS2.1中的解决方案中几乎都要给页脚设置一个固定高度。这是很脆弱的，很少是可行的。实际上实现这个效果过于复杂，而且还需要增加特定的标记和一些Hack手段。在CSS2.1中受到一些限制，但使用现代CSS，我们能把这个效果做得更好，那要如何做呢？
+
+如果你从未看过这样的效果或者对这个问题的相关资料感兴趣的话，这里有一些受欢迎的文章，提供了许多Web开发人员的构思和解决方案：
+
+著作权归作者所有。
+商业转载请联系作者获得授权,非商业转载请注明出处。
+原文: https://www.w3cplus.com/css3/css-secrets/sticky-footers.html © w3cplus.com`;
+		btn.onclick=function(){
+			main.innerHTML+=append_html;
+		}
+	</script>
+</html>

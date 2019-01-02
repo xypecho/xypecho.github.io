@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+	<style type="text/css">
+		.active{
+			color:red;
+			font-size: 22px;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<button @click='upsort'>点击调换a和b的位置</button>
+		<span>{{arr1}}</span>
+    <p>===============================================</p>
+    <button @click='topsort'>点击把d的位置移到第一位</button>
+    <span>{{arr2}}</span>
+    <p>===============================================</p>
+    <button @click='downsort'>点击把a的位置移到最后一位</button>
+    <span>{{arr3}}</span>
+    <p>===============================================</p>
+    <button @click='totalupsort'>把cd的位置往前移动一位</button>
+    <span>{{arr4}}</span>
+    <p>===============================================</p>
+    <button @click='totaldownsort'>把ab的位置往后移动一位</button>
+    <span>{{arr5}}</span>
+	</div>
+</body>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:'#app',
+			data:{
+        arr1: ['a','b','c','d'],
+        arr2: ['a','b','c','d'],
+        arr3: ['a','b','c','d'],
+        arr4: ['a','b','c','d'],
+				arr5: ['a','b','c','d']
+			},
+			methods:{
+				upsort(){
+          this.arr1[1]=this.arr1.splice(0,1,this.arr1[1])[0];
+        },
+        topsort(){
+          if (this.arr2[3] === 'd') {
+            this.arr2.splice(3,1);
+            this.arr2.unshift('d');
+          } else {
+            alert('位置已经调换成功啦,不要再点了');
+          }
+        },
+        downsort(){
+          if (this.arr3[0] === 'a') {
+            this.arr3.splice(0,1);
+            this.arr3.push('a');
+          } else {
+            alert('位置已经调换成功啦,不要再点了');
+          }
+        },
+        totalupsort(){
+          let idx = [2,3];
+          this.arr4.forEach((val,index) => {
+            idx.forEach((item) => {
+              if (index == item) {
+                this.arr4[index-1]=this.arr4.splice(index,1,this.arr4[index-1])[0];
+              }
+            });
+          });
+        },
+        totaldownsort(){
+          let idx=[0,1];
+          this.arr5.forEach((val,index) => {
+            idx.forEach((item) => {
+              if (index == item) {
+                this.arr5[index+1]=this.arr5.splice(index,1,this.arr5[index])[0];
+              }
+            });
+          });
+        }
+			}
+		})
+	</script>
+</html>

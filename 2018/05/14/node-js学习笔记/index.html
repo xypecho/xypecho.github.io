@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            node.js学习笔记 | 
+        
+        小小切图仔也有大大的梦想
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/avatar.jpg">
+    <link rel="icon" href="/img/avatar.jpg">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="小切图仔的前端生涯记录博客">
+    <meta name="keywords" content=",node.js">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/github-v2.min.css?AfzKxt++K+/lhZBlSjnxwg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="小小切图仔也有大大的梦想">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2018/05/14/node-js学习笔记/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="小小切图仔也有大大的梦想">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/avatar.jpg">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2018/05/14/node-js学习笔记/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="node.js学习笔记 | 小小切图仔也有大大的梦想">
+    <meta property="og:image" content="/img/avatar.jpg">
+    <meta property="og:description" content="小切图仔的前端生涯记录博客">
+    <meta property="og:article:tag" content="node.js"> 
+
+    
+        <meta property="article:published_time" content="Mon May 14 2018 20:10:23 GMT+0800">
+        <meta property="article:modified_time" content="Wed Jul 04 2018 21:17:48 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2018/05/14/node-js学习笔记/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2018/05/14/node-js学习笔记/index.html",
+    "headline": "node.js学习笔记",
+    "datePublished": "Mon May 14 2018 20:10:23 GMT+0800",
+    "dateModified": "Wed Jul 04 2018 21:17:48 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "很青的青蛙",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.jpg"
+        },
+        "description": "年轻无为，卖码糊口"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "小小切图仔也有大大的梦想",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/avatar.jpg"
+        }
+    },
+    "keywords": ",node.js",
+    "description": "小切图仔的前端生涯记录博客",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#0、nodeJs特征"><span class="post-toc-number">1.</span> <span class="post-toc-text">0、nodeJs特征</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、node里面的全局对象"><span class="post-toc-number">2.</span> <span class="post-toc-text">1、node里面的全局对象</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、模块的引入"><span class="post-toc-number">3.</span> <span class="post-toc-text">2、模块的引入</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-单个函数的export"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">2.1 单个函数的export</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-export多个函数或者变量"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2.2 export多个函数或者变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-3模块化编程思想"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">2.3模块化编程思想</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-4-require的各种写法"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">2.4 require的各种写法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块"><span class="post-toc-number">3.4.1.</span> <span class="post-toc-text">如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、events-事件"><span class="post-toc-number">4.</span> <span class="post-toc-text">3、events (事件)</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、文件系统"><span class="post-toc-number">5.</span> <span class="post-toc-text">4、文件系统</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、1读取文件内容"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">4、1读取文件内容</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、2创建文件并写入内容"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">4、2创建文件并写入内容</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、3删除文件"><span class="post-toc-number">5.3.</span> <span class="post-toc-text">4、3删除文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、4创建文件夹和删除文件夹"><span class="post-toc-number">5.4.</span> <span class="post-toc-text">4、4创建文件夹和删除文件夹</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-5-获取文件的详细信息"><span class="post-toc-number">5.5.</span> <span class="post-toc-text">4.5 获取文件的详细信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-6-获取一个文件夹里面所有文件-包括文件夹里面的文件夹"><span class="post-toc-number">5.6.</span> <span class="post-toc-text">4.6 获取一个文件夹里面所有文件(包括文件夹里面的文件夹)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、stream-流"><span class="post-toc-number">6.</span> <span class="post-toc-text">5、stream (流)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-1-读取流"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">5.1 读取流</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-2-写入流"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">5.2 写入流</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6、http模块"><span class="post-toc-number">7.</span> <span class="post-toc-text">6、http模块</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-0-get和post请求区别"><span class="post-toc-number">7.1.</span> <span class="post-toc-text">6.0 get和post请求区别</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-1-创建web服务器"><span class="post-toc-number">7.2.</span> <span class="post-toc-text">6.1 创建web服务器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-2-响应JSON"><span class="post-toc-number">7.3.</span> <span class="post-toc-text">6.2 响应JSON</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-3-响应HTML页面"><span class="post-toc-number">7.4.</span> <span class="post-toc-text">6.3 响应HTML页面</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7、路由"><span class="post-toc-number">8.</span> <span class="post-toc-text">7、路由</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#7-1-实现一个简单的路由"><span class="post-toc-number">8.1.</span> <span class="post-toc-text">7.1 实现一个简单的路由</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#8、express框架的使用"><span class="post-toc-number">9.</span> <span class="post-toc-text">8、express框架的使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8-1-express创建web服务"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">8.1 express创建web服务</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                node.js学习笔记
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.jpg" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>很青的青蛙</strong>
+        <span>5月 14, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/node-js/">node.js</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=node.js学习笔记&url=http://yoursite.com/2018/05/14/node-js学习笔记/index.html&pic=http://yoursite.com/img/avatar.jpg&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+        <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://yoursite.com/2018/05/14/node-js学习笔记/index.html&title=node.js学习笔记" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 LinkedIn
+            </li>
+        </a>
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=小小切图仔也有大大的梦想&title=node.js学习笔记&summary=小切图仔的前端生涯记录博客&pics=http://yoursite.com/img/avatar.jpg&url=http://yoursite.com/2018/05/14/node-js学习笔记/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h2 id="0、nodeJs特征"><a href="#0、nodeJs特征" class="headerlink" title="0、nodeJs特征"></a>0、nodeJs特征</h2><p>单线程、非阻塞I/O、事件驱动</p>
+<h2 id="1、node里面的全局对象"><a href="#1、node里面的全局对象" class="headerlink" title="1、node里面的全局对象"></a>1、node里面的全局对象</h2><blockquote>
+<p>JavaScript有且仅有一个全局对象，在浏览器中，叫window对象。而在Node.js环境中，也有唯一的全局对象，但不叫window，而叫global</p>
+</blockquote>
+<pre><code class="javascript">console.log(__dirname); //输出F:\node学习\beginning    获取当前文件所在的路径
+
+console.log(__filename);//输出F:\node学习\beginning\test.js 获取当前文件路径
+</code></pre>
+<h2 id="2、模块的引入"><a href="#2、模块的引入" class="headerlink" title="2、模块的引入"></a>2、模块的引入</h2><blockquote>
+<p>一个模块想要对外暴露变量（函数也是变量），可以用module.exports = variable;，一个模块要引用其他模块暴露的变量，用var ref = require(‘module_name’);就拿到了引用模块的变量。</p>
+</blockquote>
+<h3 id="2-1-单个函数的export"><a href="#2-1-单个函数的export" class="headerlink" title="2.1 单个函数的export"></a>2.1 单个函数的export</h3><pre><code>//这是count.js
+function counter(arr){
+    console.log(`the lenght of arr is ${arr.length}`);
+}
+module.exports = counter;
+
+
+//这是test.js
+var counter = require(&#39;./count.js&#39;); //引入模块
+const arr = [1,2,3,4,5,6,7];
+counter(arr);
+
+node test.js //输出 the lenght of arr is 7
+</code></pre><h3 id="2-2-export多个函数或者变量"><a href="#2-2-export多个函数或者变量" class="headerlink" title="2.2 export多个函数或者变量"></a>2.2 export多个函数或者变量</h3><pre><code>// 这是count.js
+function counter(arr){
+    console.log(`the lenght of arr is ${arr.length}`);
+}
+function test(){
+    console.log(&#39;hello world&#39;);
+}
+const a = 10;
+module.exports.counter = counter;
+module.exports.test = test;
+module.exports.a = a;
+ps: 此处可以简写为
+module.exports = {
+    counter,
+    test,
+    a
+}
+
+
+
+//这是test.js
+var shuffle = require(&#39;./count.js&#39;);
+console.log(shuffle.a);
+shuffle.test();
+
+node test.js //输出 10 &#39;hello world&#39;
+
+
+//test.js里面的require可以直接引入需要的函数或者数值
+var a = require(&#39;./count.js&#39;).a;
+console.log(a);// 10
+</code></pre><h3 id="2-3模块化编程思想"><a href="#2-3模块化编程思想" class="headerlink" title="2.3模块化编程思想"></a>2.3模块化编程思想</h3><pre><code>//这是server.js
+let http = require(&#39;http&#39;);
+let fs = require(&#39;fs&#39;);
+function server(){
+    let server = http.createServer((request, response) =&gt; {
+        response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/html&#39;});//设置响应头
+        let data = fs.createReadStream(__dirname + &#39;/transition01.html&#39;,&#39;utf8&#39;);
+        data.pipe(response);
+    });
+    server.listen(3000);
+    console.log(&#39;server start at localhost:3000&#39;);
+}
+exports.server = server;
+
+//这是app.js
+var server = require(&#39;./server.js&#39;);
+server.server(); //输出 &#39;hello world&#39;
+</code></pre><h3 id="2-4-require的各种写法"><a href="#2-4-require的各种写法" class="headerlink" title="2.4 require的各种写法"></a>2.4 require的各种写法</h3><p>直接require文件名字</p>
+<pre><code>const foo = require(&#39;foo.js&#39;);  // 这种写法将直接从node_modules文件夹中查找对于的文件
+</code></pre><p>直接require一个文件夹(即没有文件后缀)</p>
+<pre><code>const foo = require(&#39;foo&#39;);  //  直接从node_modules中找到foo文件夹执行里面的index.js
+
+//如果foo文件夹里面没有index.js则必须要有package.json文件，里面指定了入口文件
+{
+    &#39;name&#39; : &#39;foo&#39;,
+    &#39;version&#39; : &#39;1.1.1&#39;,
+    &#39;main&#39; : &#39;xxx.js&#39;  // 必须要有main这个字段，里面对应的值是执行文件的文件名字 
+}
+</code></pre><h4 id="如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块"><a href="#如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块" class="headerlink" title="如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块"></a>如果require的模块与系统内置模块名字冲突，系统的模块会覆盖自定义的模块</h4><h2 id="3、events-事件"><a href="#3、events-事件" class="headerlink" title="3、events (事件)"></a>3、events (事件)</h2><pre><code>let events = require(&#39;events&#39;); //引入事件库
+var myEvents = new events.EventEmitter(); //创建一个EventEmitter实例
+myEvents.on(&#39;someEvent&#39;,function(data){ //someEvent是指某个事件例如click ，data是传入的数据
+    console.log(data); 
+})
+myEvents.emit(&#39;someEvent&#39;, &#39;hello world&#39;); //手动触发函数
+</code></pre><h2 id="4、文件系统"><a href="#4、文件系统" class="headerlink" title="4、文件系统"></a>4、文件系统</h2><h3 id="4、1读取文件内容"><a href="#4、1读取文件内容" class="headerlink" title="4、1读取文件内容"></a>4、1读取文件内容</h3><pre><code>//同步读取文件
+let fs = require(&#39;fs&#39;); // 引入文件库
+let txt = fs.readFileSync(&#39;./file.txt&#39;,&#39;utf-8&#39;); //readFileSync接受两个参数，第一个是文件路径，第二个是文件的编码格式
+console.log(txt); //输出‘hello world’
+
+//这是file.txt里面的内容
+hello world
+
+
+//异步读取文件
+let fs = require(&#39;fs&#39;);
+fs.readFile(&#39;aaa.txt&#39;,&#39;utf-8&#39;,(err,data) =&gt; {
+    console.log(err); //null
+    console.log(data); // &#39;hello worldd&#39;
+});
+console.log(&#39;读取文件成功&#39;);
+输出为
+读取文件成功
+null
+hello world
+</code></pre><h3 id="4、2创建文件并写入内容"><a href="#4、2创建文件并写入内容" class="headerlink" title="4、2创建文件并写入内容"></a>4、2创建文件并写入内容</h3><pre><code>//同步创建文件
+let fs = require(&#39;fs&#39;);
+let txt = fs.readFileSync(&#39;./file.txt&#39;);
+fs.writeFileSync(&#39;aaa.txt&#39;,txt); //把file.txt里面的内容写入到新建的aaa.txt里面
+
+//异步创建文件
+fs.writeFile(&#39;aaa.txt&#39;,data,() =&gt; {
+    console.log(&#39;txt file has been created&#39;);
+});
+</code></pre><h3 id="4、3删除文件"><a href="#4、3删除文件" class="headerlink" title="4、3删除文件"></a>4、3删除文件</h3><pre><code>//同步删除
+let fs = require(&#39;fs&#39;);
+fs.unlinkSync(&#39;server.js&#39;);
+
+//异步删除
+let fs = require(&#39;fs&#39;);
+fs.unlink(&#39;aaa.txt&#39;,() =&gt; {
+    console.log(&#39;删除成功&#39;);
+});
+console.log(&#39;finished&#39;);
+输出
+finished
+删除成功
+</code></pre><h3 id="4、4创建文件夹和删除文件夹"><a href="#4、4创建文件夹和删除文件夹" class="headerlink" title="4、4创建文件夹和删除文件夹"></a>4、4创建文件夹和删除文件夹</h3><pre><code>//同步创建
+let fs = require(&#39;fs&#39;);
+fs.mkdirSync(&#39;aaa&#39;);
+
+
+//异步创建
+let fs = require(&#39;fs&#39;);
+fs.mkdir(&#39;test&#39;, () =&gt; {
+    console.log(&#39;创建成功&#39;);
+});
+
+//同步删除文件夹
+let fs = require(&#39;fs&#39;);
+fs.rmdirSync(&#39;aaa&#39;);
+
+//异步删除
+let fs = require(&#39;fs&#39;);
+fs.rmdir(&#39;test&#39;,() =&gt; {
+    console.log(&#39;删除成功&#39;);
+});
+
+
+//demo，创建文件夹，并在里面新建文件
+let fs = require(&#39;fs&#39;);
+fs.mkdir(&#39;test&#39;,() =&gt; {
+    fs.writeFile(&#39;test/aaa.txt&#39;,&#39;hello world&#39;,() =&gt; {
+        console.log(&#39;成功创建文件夹和文件&#39;);
+    });
+});
+</code></pre><h3 id="4-5-获取文件的详细信息"><a href="#4-5-获取文件的详细信息" class="headerlink" title="4.5 获取文件的详细信息"></a>4.5 获取文件的详细信息</h3><blockquote>
+<p>如果我们要获取文件大小，创建时间等信息，可以使用fs.stat()，它返回一个Stat对象，能告诉我们文件或目录的详细信息：</p>
+</blockquote>
+<pre><code>let fs = require(&#39;fs&#39;);
+fs.stat(&#39;./test.txt&#39;,((err,data) =&gt; {
+    console.log(data);
+}))
+
+//输出以下内容
+Stats {
+  dev: 563682,
+  mode: 33206,
+  nlink: 1,
+  uid: 0,
+  gid: 0,
+  rdev: 0,
+  blksize: undefined,
+  ino: 1688849860428397,
+  size: 23,
+  blocks: undefined,
+  atimeMs: 1526475120655.8008,
+  mtimeMs: 1526475270067.3467,
+  ctimeMs: 1526475270067.3467,
+  birthtimeMs: 1526475120655.8008,
+  atime: 2018-05-16T12:52:00.656Z,
+  mtime: 2018-05-16T12:54:30.067Z,
+  ctime: 2018-05-16T12:54:30.067Z,
+  birthtime: 2018-05-16T12:52:00.656Z 
+}
+</code></pre><h3 id="4-6-获取一个文件夹里面所有文件-包括文件夹里面的文件夹"><a href="#4-6-获取一个文件夹里面所有文件-包括文件夹里面的文件夹" class="headerlink" title="4.6 获取一个文件夹里面所有文件(包括文件夹里面的文件夹)"></a>4.6 获取一个文件夹里面所有文件(包括文件夹里面的文件夹)</h3><pre><code>const http = require(&#39;http&#39;);
+const fs = require(&#39;fs&#39;);
+
+http.createServer((req, res) =&gt; {
+    if (req.url === &#39;/favicon.ico&#39;) {
+        return;
+    }
+    fs.readdir(&#39;../1、http模块&#39;, (err, data) =&gt; {
+        console.log(data); // 返回的data是个数组
+    });
+    res.end(&#39;success&#39;);
+}).listen(3000, &#39;127.0.0.1&#39;);
+</code></pre><h2 id="5、stream-流"><a href="#5、stream-流" class="headerlink" title="5、stream (流)"></a>5、stream (流)</h2><blockquote>
+<p>什么是流？流是一种抽象的数据结构。想象水流，当在水管中流动时，就可以从某个地方（例如自来水厂）源源不断地到达另一个地方（比如你家的洗手池）。我们也可以把数据看成是数据流，比如你敲键盘的时候，就可以把每个字符依次连起来，看成字符流。这个流是从键盘输入到应用程序，实际上它还对应着一个名字：标准输入流（stdin）。如果应用程序把字符一个一个输出到显示器上，这也可以看成是一个流，这个流也有名字：标准输出流（stdout）。流的特点是数据是有序的，而且必须依次读取，或者依次写入，不能像Array那样随机定位。</p>
+</blockquote>
+<h3 id="5-1-读取流"><a href="#5-1-读取流" class="headerlink" title="5.1 读取流"></a>5.1 读取流</h3><pre><code>let fs = require(&#39;fs&#39;);
+let myFile = fs.createReadStream(__dirname + &#39;/test.txt&#39;);
+myFile.on(&#39;data&#39;,(res) =&gt; { // &#39;data&#39;,代表是接受收据时执行的函数
+    console.log(res); //&lt;Buffer 69 6e 70 75 74 20 69 6e 70 75 74 20 69 6e 70 75 74 20 69 6e 70 75 74&gt;
+});
+</code></pre><h3 id="5-2-写入流"><a href="#5-2-写入流" class="headerlink" title="5.2 写入流"></a>5.2 写入流</h3><pre><code>let fs = require(&#39;fs&#39;);
+let myReadFile = fs.createReadStream(__dirname + &#39;/test.txt&#39;);
+myReadFile.setEncoding(&#39;utf8&#39;);
+let myWriteFile = fs.createWriteStream(__dirname + &#39;/new.txt&#39;);
+myReadFile.on(&#39;data&#39;,(res) =&gt; {
+    myWriteFile.write(res);
+});
+
+
+
+//利用管道写入流
+let fs = require(&#39;fs&#39;);
+let readStream = fs.createReadStream(__dirname + &#39;/count.js&#39;);
+let writeStream = fs.createWriteStream(__dirname + &#39;/a.js&#39;);
+
+readStream.pipe(writeStream);
+</code></pre><h2 id="6、http模块"><a href="#6、http模块" class="headerlink" title="6、http模块"></a>6、http模块</h2><h3 id="6-0-get和post请求区别"><a href="#6-0-get和post请求区别" class="headerlink" title="6.0 get和post请求区别"></a>6.0 get和post请求区别</h3><p>get请求数据在URL中，post请求数据不在URL中<br>post接收数据比get大很多</p>
+<h3 id="6-1-创建web服务器"><a href="#6-1-创建web服务器" class="headerlink" title="6.1 创建web服务器"></a>6.1 创建web服务器</h3><pre><code>//初体验
+// 引用模块
+let http = require(&#39;http&#39;);
+
+//创建一个服务器，回调函数表示收到请求后做的事，request是请求，response是响应
+let server = http.createServer((request, response) =&gt; {
+    console.log(`服务器已经打开${request.url}`);    
+    response.end(&#39;完毕&#39;);//必须要有end，不然一直在加载
+})
+
+server.listen(3000, &#39;127.0.0.1&#39;);
+
+
+
+let http = require(&#39;http&#39;); //引入http模块
+let server = http.createServer((request, response) =&gt; {
+    response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/plain&#39;});//设置响应头
+    response.write(&#39;hello from application&#39;);
+    response.end(&#39;end&#39;);
+}); //创建server服务器
+server.listen(3000);//监听3000端口
+console.log(&#39;server start at localhost:3000&#39;);
+</code></pre><h3 id="6-2-响应JSON"><a href="#6-2-响应JSON" class="headerlink" title="6.2 响应JSON"></a>6.2 响应JSON</h3><pre><code>let http = require(&#39;http&#39;);
+let server = http.createServer((request, response) =&gt; {
+    response.writeHead(200, {&#39;Content-Type&#39;: &#39;application/json&#39;});//设置响应头
+    let data = {
+        name: &#39;xyp&#39;,
+        sex: &#39;man&#39;,
+        age: 25,
+        job: &#39;developer&#39;
+    }
+    response.end(JSON.stringify(data));
+});
+server.listen(3000);
+console.log(&#39;server start at localhost:3000&#39;);
+</code></pre><p>输出为<img src="/2018/05/14/node-js学习笔记/TIM图片20180516220031.png"></p>
+<h3 id="6-3-响应HTML页面"><a href="#6-3-响应HTML页面" class="headerlink" title="6.3 响应HTML页面"></a>6.3 响应HTML页面</h3><pre><code>//直接把html写在变量里面
+let http = require(&#39;http&#39;);
+let server = http.createServer((request, response) =&gt; {
+    response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/html&#39;});//设置响应头
+    let data = `&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p&gt;hello world&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;`;
+    response.end(data);
+});
+server.listen(3000);
+console.log(&#39;server start at localhost:3000&#39;);
+</code></pre><p>输出为 <img src="/2018/05/14/node-js学习笔记/TIM图片20180516222743.png"></p>
+<pre><code>//读取外部文件
+let http = require(&#39;http&#39;);
+let fs = require(&#39;fs&#39;);
+let server = http.createServer((request, response) =&gt; {
+    response.writeHead(200, {&#39;Content-Type&#39;: &#39;text/html&#39;});//此处设置为‘text/plain’的话，浏览器将不会解析为html，会变成纯文本输出
+    let data = fs.createReadStream(__dirname + &#39;/transition01.html&#39;,&#39;utf8&#39;);
+    data.pipe(response);
+});
+server.listen(3000);
+console.log(&#39;server start at localhost:3000&#39;);
+</code></pre><h2 id="7、路由"><a href="#7、路由" class="headerlink" title="7、路由"></a>7、路由</h2><h3 id="7-1-实现一个简单的路由"><a href="#7-1-实现一个简单的路由" class="headerlink" title="7.1 实现一个简单的路由"></a>7.1 实现一个简单的路由</h3><pre><code>//app.js
+var startServer = require(&#39;./server.js&#39;);
+startServer.startServer();
+
+//server.js
+var http = require(&#39;http&#39;);
+var fs = require(&#39;fs&#39;);
+
+function startServer() {
+    var onRequest = function(request, response) {
+        console.log(request.url); //输出的是localhost:3000/admin ，3000后面的内容，例如本例输出的是‘/admin’
+        if (request.url === &#39;/&#39; || request.url === &#39;/home&#39;) {
+            response.writeHead(200, { &#39;Content-Type&#39;: &#39;text/html&#39; });
+            fs.createReadStream(__dirname + &#39;/index.html&#39;, &#39;utf8&#39;).pipe(response);
+        } else if (request.url === &#39;/review&#39;) {
+            response.writeHead(200, { &#39;Content-Type&#39;: &#39;text/html&#39; });
+            fs.createReadStream(__dirname + &#39;/review.html&#39;, &#39;utf8&#39;).pipe(response);
+        } else if (request.url === &#39;/api/v1/records&#39;) {
+            response.writeHead(200, { &#39;Content-Type&#39;: &#39;application/json&#39; });
+            var jsonObj = {
+                name: &quot;hfpp2012&quot;
+            };
+            response.end(JSON.stringify(jsonObj));
+        } else {
+            response.writeHead(404, { &#39;Content-Type&#39;: &#39;text/html&#39; });
+            fs.createReadStream(__dirname + &#39;/404.html&#39;, &#39;utf8&#39;).pipe(response);
+        }
+    }
+
+    var server = http.createServer(onRequest);
+
+    server.listen(3000, &#39;127.0.0.1&#39;);
+    console.log(&#39;Server started on localhost port 3000&#39;);
+}
+
+exports.startServer = startServer;
+</code></pre><h2 id="8、express框架的使用"><a href="#8、express框架的使用" class="headerlink" title="8、express框架的使用"></a>8、express框架的使用</h2><h3 id="8-1-express创建web服务"><a href="#8-1-express创建web服务" class="headerlink" title="8.1 express创建web服务"></a>8.1 express创建web服务</h3><pre><code>const express = require(&#39;express&#39;);
+let server = express();
+
+server.use(&#39;/a.html&#39;, (req, res) =&gt; {
+    res.send(&#39;hello world&#39;);
+    res.end();
+}) // 用use处理请求
+server.listen(&#39;8080&#39;);
+</code></pre>
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/05/15/vue里面如何监听键盘事件/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/05/12/解决span标签内意外出现的空格/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.jpg" alt="很青的青蛙's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        xypecho@163.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:xypecho@163.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">14</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/BUG集锦/">BUG集锦<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/BUG集锦/vue-js/">vue.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/">CSS相关<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/排版/">排版<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/">JS技巧<span class="sidebar_archives-count">21</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/BUG集锦/">BUG集锦<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/CSS相关/">CSS相关<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/ES6/">ES6<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/H5新特性/">H5新特性<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/break用法/">break用法<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/原型/">原型<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/">图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/jquery图片懒加载/">jquery图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/性能优化/">性能优化<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/">移动端<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/左右滑动事件/">左右滑动事件<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JavaScript权威指南/">JavaScript权威指南<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/RegExp/">RegExp<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/git/">git<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/http/">http<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/">mysql<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/数据库/">数据库<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/npm/">npm<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/package-json/">package.json<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/">vue.js<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/axios/">axios<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/性能优化/">性能优化<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/杂谈/">杂谈<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/杂谈/转行一周年纪念/">转行一周年纪念<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/">项目部署<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/linux/">linux<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="标签">
+                
+                    <i class="material-icons sidebar-material-icons">label</i>
+                
+                标签
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">57</span>
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+
+<!-- Theme Material -->
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>小小切图仔也有大大的梦想
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+            <!--
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+            -->
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+        <script>lsloader.load("sm_js","/js/smoothscroll.js?lOy/ACj5suSNi7ZVFVbpFQ==", true)</script>
+    
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
