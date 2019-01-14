@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>React Native踩坑指南</title>
+      <link href="/2019/01/14/React-Native%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97/"/>
+      <url>/2019/01/14/React-Native%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8D%97/</url>
+      <content type="html"><![CDATA[<h3 id="1-编译并运行-React-Native-应用"><a href="#1-编译并运行-React-Native-应用" class="headerlink" title="1.编译并运行 React Native 应用"></a>1.编译并运行 React Native 应用</h3><p>首先按照react native的<a href="https://reactnative.cn/docs/getting-started.html" target="_blank" rel="noopener">中文网</a>上的说明，一步步搭建环境这边是没什么坑的，大部分都坑在<code>react-native run-android</code>真机运行这个上面。基本都是报错<code>:app:installDebug FAILED</code>,<a href="https://stackoverflow.com/questions/37500205/react-native-appinstalldebug-failed" target="_blank" rel="noopener">这里</a>的答案足够解决很多问题，但是！！！如果你的尝试了google到的所有答案，都还没解决的话可以试试升级下USB驱动…我就是因为这个问题被坑了整整三天…</p>]]></content>
+      
+      <categories>
+          
+          <category> React Native </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> React Native </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>收藏一些炫酷的css效果(持续更新)</title>
       <link href="/2019/01/03/%E6%94%B6%E8%97%8F%E4%B8%80%E4%BA%9B%E7%82%AB%E9%85%B7%E7%9A%84css%E6%95%88%E6%9E%9C-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/"/>
       <url>/2019/01/03/%E6%94%B6%E8%97%8F%E4%B8%80%E4%BA%9B%E7%82%AB%E9%85%B7%E7%9A%84css%E6%95%88%E6%9E%9C-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/</url>
