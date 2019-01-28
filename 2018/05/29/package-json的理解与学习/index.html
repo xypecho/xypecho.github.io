@@ -244,7 +244,7 @@
 
     
         <meta property="article:published_time" content="Tue May 29 2018 14:25:58 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 29 2018 16:17:54 GMT+0800">
+        <meta property="article:modified_time" content="Mon Jan 28 2019 22:37:35 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -267,7 +267,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/05/29/package-json的理解与学习/index.html",
     "headline": "package.json的理解与学习",
     "datePublished": "Tue May 29 2018 14:25:58 GMT+0800",
-    "dateModified": "Tue May 29 2018 16:17:54 GMT+0800",
+    "dateModified": "Mon Jan 28 2019 22:37:35 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -510,7 +510,7 @@
   &quot;lint&quot;: &quot;eslint --ext .js,.vue src test/unit/specs test/e2e/specs&quot;,
   &quot;build&quot;: &quot;node build/build.js&quot;
 }
-</code></pre><h3 id="2-2-dependencies字段，devDependencies字段"><a href="#2-2-dependencies字段，devDependencies字段" class="headerlink" title="2.2 dependencies字段，devDependencies字段"></a>2.2 dependencies字段，devDependencies字段</h3><p>dependencies字段指定了项目运行所依赖的模块，devDependencies指定项目开发所需要的模块。<br>它们都指向一个对象。该对象的各个成员，分别由模块名和对应的版本要求组成，表示依赖的模块及其版本范围。<br>关于安装模块的版本需要注意下面几点：</p>
+</code></pre><h3 id="2-2-dependencies字段，devDependencies字段"><a href="#2-2-dependencies字段，devDependencies字段" class="headerlink" title="2.2 dependencies字段，devDependencies字段"></a>2.2 dependencies字段，devDependencies字段</h3><p>dependencies((上线和开发都需要的依赖))字段指定了项目运行所依赖的模块，devDependencies(开发时运行的依赖)指定项目开发所需要的模块。<br>它们都指向一个对象。该对象的各个成员，分别由模块名和对应的版本要求组成，表示依赖的模块及其版本范围。<br>关于安装模块的版本需要注意下面几点：</p>
 <pre><code>1、指定版本：例如&quot;vue&quot;: &quot;2.5.2&quot;,即执行npm install时只安装2.5.2版本的vue
 2、波浪号（tilde）+ 指定版本：例如&quot;vue&quot;: &quot;~2.5.2&quot;,即安装2.5.x里面的最新版本，不会安装2.6.x里面的版本
 3、插入号（caret）+ 指定版本：例如&quot;vue&quot;: &quot;^2.5.2&quot;,即安装2.x.x里面的最新版本，但不会安装3.x.x里面的版本
