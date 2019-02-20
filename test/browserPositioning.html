@@ -10,15 +10,7 @@
 </head>
 
 <body>
-    <div id="container"></div>
-    <div id="info"></div>
     <script>
-        var clientWidth = document.documentElement.clientWidth,
-            clientHeight = document.documentElement.clientHeight;
-        var container = document.getElementById('container');
-        container.style.width = clientWidth + 'px';
-        container.style.height = clientHeight + 'px';
-
         function getLocation() {
             var options = {
                 enableHighAccuracy: true, //boolean 是否要求高精度的地理信息，默认为false
@@ -38,12 +30,11 @@
         //成功时
         function onSuccess(position) {
             console.log(position);
-            return false;
-            //返回用户位置
             //经度
             var longitude = position.coords.longitude;
             //纬度
             var latitude = position.coords.latitude;
+            return false;
         }
         //失败时
         function onError(error) {
