@@ -53,38 +53,7 @@
     <link rel="icon" href="/img/avatar.jpg">
 
     <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="1、判断当前设备是pc端还是移动端核心代码
-function browserRedirect() {
-            var sUserAgent = navigator.userAgent.toLowerCase();
-            var bIsIpad = sUserAgent.match(/ipad/i) == &amp;quot;ipad&amp;quot;;
-            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == &amp;quot;iphone os&amp;quot;;
-            var bIsMidp = sUserAgent.match(/midp/i) == &amp;quot;midp&amp;quot;;
-            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == &amp;quot;rv:1.2.3.4&amp;quot;;
-            var bIsUc = sUserAgent.match(/ucweb/i) == &amp;quot;ucweb&amp;quot;;
-            var bIsAndroid = sUserAgent.match(/android/i) == &amp;quot;android&amp;quot;;
-            var bIsCE = sUserAgent.match(/windows ce/i) == &amp;quot;windows ce&amp;quot;;
-            var bIsWM = sUserAgent.match(/windows mobile/i) == &amp;quot;windows mobile&amp;quot;;
-            document.writeln(&amp;quot;您的浏览设备为：&amp;quot;);
-            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-                document.writeln(&amp;quot;phone&amp;quot;);
-            } else {
-                document.writeln(&amp;quot;pc&amp;quot;);
-            }
-        }
-
-        browserRedirect();
-点击这里看demo
-2、计算代码执行的时间
-你可以启动一个计时器（timer）来跟踪某一个操作的占用时长。每一个计时器必须拥有唯一的名字，页面中最多能同时运行10,000个计时器。当以此计时器名字为参数调用 console.timeEnd() 时，浏览器将以毫秒为单位，输出对应计时器所经过的时间.
-
-示例：
-console.time(&amp;quot;sort&amp;quot;);
-let arr = [];
-for (var i = 0; i &amp;lt; 10000000; i++) {
-  arr.push(i);
-}
-console.timeEnd(&amp;quot;sort&amp;quot;); //sort: 268.125ms
-3、搜索结果高亮显示用搜索工具搜索问题的时候，一般会把搜索出来的答案的关键词高亮，例如下图:然后最近项目里面也有搜索这个功能，就想着JS能不能也实现这样的功能：‘把用户搜索的关键词在搜索结果里面高亮显示’">
+    <meta name="description" itemprop="description" content="1、判断当前设备是pc端还是移动端核心代码">
     <meta name="keywords" content=",JS技巧">
     <meta name="theme-color" content="#0097A7">
 
@@ -270,43 +239,12 @@ console.timeEnd(&amp;quot;sort&amp;quot;); //sort: 268.125ms
     <meta property="og:type" content="blog">
     <meta property="og:title" content="JavaScript中的一些骚操作 | 小小切图仔也有大大的梦想">
     <meta property="og:image" content="/img/avatar.jpg">
-    <meta property="og:description" content="1、判断当前设备是pc端还是移动端核心代码
-function browserRedirect() {
-            var sUserAgent = navigator.userAgent.toLowerCase();
-            var bIsIpad = sUserAgent.match(/ipad/i) == &amp;quot;ipad&amp;quot;;
-            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == &amp;quot;iphone os&amp;quot;;
-            var bIsMidp = sUserAgent.match(/midp/i) == &amp;quot;midp&amp;quot;;
-            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == &amp;quot;rv:1.2.3.4&amp;quot;;
-            var bIsUc = sUserAgent.match(/ucweb/i) == &amp;quot;ucweb&amp;quot;;
-            var bIsAndroid = sUserAgent.match(/android/i) == &amp;quot;android&amp;quot;;
-            var bIsCE = sUserAgent.match(/windows ce/i) == &amp;quot;windows ce&amp;quot;;
-            var bIsWM = sUserAgent.match(/windows mobile/i) == &amp;quot;windows mobile&amp;quot;;
-            document.writeln(&amp;quot;您的浏览设备为：&amp;quot;);
-            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-                document.writeln(&amp;quot;phone&amp;quot;);
-            } else {
-                document.writeln(&amp;quot;pc&amp;quot;);
-            }
-        }
-
-        browserRedirect();
-点击这里看demo
-2、计算代码执行的时间
-你可以启动一个计时器（timer）来跟踪某一个操作的占用时长。每一个计时器必须拥有唯一的名字，页面中最多能同时运行10,000个计时器。当以此计时器名字为参数调用 console.timeEnd() 时，浏览器将以毫秒为单位，输出对应计时器所经过的时间.
-
-示例：
-console.time(&amp;quot;sort&amp;quot;);
-let arr = [];
-for (var i = 0; i &amp;lt; 10000000; i++) {
-  arr.push(i);
-}
-console.timeEnd(&amp;quot;sort&amp;quot;); //sort: 268.125ms
-3、搜索结果高亮显示用搜索工具搜索问题的时候，一般会把搜索出来的答案的关键词高亮，例如下图:然后最近项目里面也有搜索这个功能，就想着JS能不能也实现这样的功能：‘把用户搜索的关键词在搜索结果里面高亮显示’">
+    <meta property="og:description" content="1、判断当前设备是pc端还是移动端核心代码">
     <meta property="og:article:tag" content="JS技巧"> 
 
     
         <meta property="article:published_time" content="Thu Jan 31 2019 22:21:01 GMT+0800">
-        <meta property="article:modified_time" content="Fri Feb 01 2019 14:28:54 GMT+0800">
+        <meta property="article:modified_time" content="Wed Feb 20 2019 21:42:58 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -329,7 +267,7 @@ console.timeEnd(&amp;quot;sort&amp;quot;); //sort: 268.125ms
     "mainEntityOfPage": "http://yoursite.com/2019/01/31/JavaScript中的一些骚操作/index.html",
     "headline": "JavaScript中的一些骚操作",
     "datePublished": "Thu Jan 31 2019 22:21:01 GMT+0800",
-    "dateModified": "Fri Feb 01 2019 14:28:54 GMT+0800",
+    "dateModified": "Wed Feb 20 2019 21:42:58 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -348,38 +286,7 @@ console.timeEnd(&amp;quot;sort&amp;quot;); //sort: 268.125ms
         }
     },
     "keywords": ",JS技巧",
-    "description": "1、判断当前设备是pc端还是移动端核心代码
-function browserRedirect() {
-            var sUserAgent = navigator.userAgent.toLowerCase();
-            var bIsIpad = sUserAgent.match(/ipad/i) == &amp;quot;ipad&amp;quot;;
-            var bIsIphoneOs = sUserAgent.match(/iphone os/i) == &amp;quot;iphone os&amp;quot;;
-            var bIsMidp = sUserAgent.match(/midp/i) == &amp;quot;midp&amp;quot;;
-            var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == &amp;quot;rv:1.2.3.4&amp;quot;;
-            var bIsUc = sUserAgent.match(/ucweb/i) == &amp;quot;ucweb&amp;quot;;
-            var bIsAndroid = sUserAgent.match(/android/i) == &amp;quot;android&amp;quot;;
-            var bIsCE = sUserAgent.match(/windows ce/i) == &amp;quot;windows ce&amp;quot;;
-            var bIsWM = sUserAgent.match(/windows mobile/i) == &amp;quot;windows mobile&amp;quot;;
-            document.writeln(&amp;quot;您的浏览设备为：&amp;quot;);
-            if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-                document.writeln(&amp;quot;phone&amp;quot;);
-            } else {
-                document.writeln(&amp;quot;pc&amp;quot;);
-            }
-        }
-
-        browserRedirect();
-点击这里看demo
-2、计算代码执行的时间
-你可以启动一个计时器（timer）来跟踪某一个操作的占用时长。每一个计时器必须拥有唯一的名字，页面中最多能同时运行10,000个计时器。当以此计时器名字为参数调用 console.timeEnd() 时，浏览器将以毫秒为单位，输出对应计时器所经过的时间.
-
-示例：
-console.time(&amp;quot;sort&amp;quot;);
-let arr = [];
-for (var i = 0; i &amp;lt; 10000000; i++) {
-  arr.push(i);
-}
-console.timeEnd(&amp;quot;sort&amp;quot;); //sort: 268.125ms
-3、搜索结果高亮显示用搜索工具搜索问题的时候，一般会把搜索出来的答案的关键词高亮，例如下图:然后最近项目里面也有搜索这个功能，就想着JS能不能也实现这样的功能：‘把用户搜索的关键词在搜索结果里面高亮显示’",
+    "description": "1、判断当前设备是pc端还是移动端核心代码",
 }
 </script>
 
@@ -582,7 +489,7 @@ console.timeEnd(&amp;quot;sort&amp;quot;); //sort: 268.125ms
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="1、判断当前设备是pc端还是移动端"><a href="#1、判断当前设备是pc端还是移动端" class="headerlink" title="1、判断当前设备是pc端还是移动端"></a>1、判断当前设备是pc端还是移动端</h3><p>核心代码</p>
+        <h3 id="1、判断当前设备是pc端还是移动端"><a href="#1、判断当前设备是pc端还是移动端" class="headerlink" title="1、判断当前设备是pc端还是移动端"></a>1、判断当前设备是pc端还是移动端</h3><p>核心代码<br><a id="more"></a></p>
 <pre><code>function browserRedirect() {
             var sUserAgent = navigator.userAgent.toLowerCase();
             var bIsIpad = sUserAgent.match(/ipad/i) == &quot;ipad&quot;;
@@ -613,7 +520,7 @@ for (var i = 0; i &lt; 10000000; i++) {
   arr.push(i);
 }
 console.timeEnd(&quot;sort&quot;); //sort: 268.125ms
-</code></pre><h3 id="3、搜索结果高亮显示"><a href="#3、搜索结果高亮显示" class="headerlink" title="3、搜索结果高亮显示"></a>3、搜索结果高亮显示</h3><p>用搜索工具搜索问题的时候，一般会把搜索出来的答案的关键词高亮，例如下图:<br><img src="/2019/01/31/JavaScript中的一些骚操作/企业微信截图_15236114695192.png"><br>然后最近项目里面也有搜索这个功能，就想着JS能不能也实现这样的功能：‘把用户搜索的关键词在搜索结果里面高亮显示’<br><a id="more"></a><br>下面是代码</p>
+</code></pre><h3 id="3、搜索结果高亮显示"><a href="#3、搜索结果高亮显示" class="headerlink" title="3、搜索结果高亮显示"></a>3、搜索结果高亮显示</h3><p>用搜索工具搜索问题的时候，一般会把搜索出来的答案的关键词高亮，例如下图:<br><img src="/2019/01/31/JavaScript中的一些骚操作/企业微信截图_15236114695192.png"><br>然后最近项目里面也有搜索这个功能，就想着JS能不能也实现这样的功能：‘把用户搜索的关键词在搜索结果里面高亮显示’<br><!--more--><br>下面是代码</p>
 <pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
     const pcontent = document.querySelector(&#39;#word&#39;).innerHTML;//文章内容
     const input = document.getElementById(&#39;inp&#39;);//搜索框
@@ -758,7 +665,7 @@ console.timeEnd(&quot;sort&quot;); //sort: 268.125ms
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">13</span></a>
+                <a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">13</span></a>
             </ul>
         </li>
         
@@ -776,7 +683,7 @@ console.timeEnd(&quot;sort&quot;); //sort: 268.125ms
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/BUG集锦/">BUG集锦<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/BUG集锦/vue-js/">vue.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/">CSS相关<span class="sidebar_archives-count">12</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/排版/">排版<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/">JS技巧<span class="sidebar_archives-count">18</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/BUG集锦/">BUG集锦<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/CSS相关/">CSS相关<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/ES6/">ES6<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/H5新特性/">H5新特性<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/break用法/">break用法<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/原型/">原型<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/">图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/jquery图片懒加载/">jquery图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/">移动端<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/左右滑动事件/">左右滑动事件<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JavaScript权威指南/">JavaScript权威指南<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/React-Native/">React Native<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/RegExp/">RegExp<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/git/">git<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/http/">http<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/">mysql<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/数据库/">数据库<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/npm/">npm<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/package-json/">package.json<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/">vue.js<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/axios/">axios<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/性能优化/">性能优化<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/杂谈/">杂谈<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/">项目部署<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/linux/">linux<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/BUG集锦/">BUG集锦<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/BUG集锦/vue-js/">vue.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/">CSS相关<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/categories/CSS相关/排版/">排版<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/">JS技巧<span class="sidebar_archives-count">18</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/BUG集锦/">BUG集锦<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/CSS相关/">CSS相关<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/ES6/">ES6<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/H5新特性/">H5新特性<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/break用法/">break用法<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/原型/">原型<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/">图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/图片懒加载/jquery图片懒加载/">jquery图片懒加载<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/">移动端<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JS技巧/移动端/左右滑动事件/">左右滑动事件<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/JavaScript权威指南/">JavaScript权威指南<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/React-Native/">React Native<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/RegExp/">RegExp<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/git/">git<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/http/">http<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/">mysql<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/mysql/数据库/">数据库<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/npm/">npm<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/package-json/">package.json<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/">vue.js<span class="sidebar_archives-count">13</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/axios/">axios<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/vue-js/性能优化/">性能优化<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/杂谈/">杂谈<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/">项目部署<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/">node.js<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/项目部署/node-js/linux/">linux<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -800,7 +707,7 @@ console.timeEnd(&quot;sort&quot;); //sort: 268.125ms
         <li>
             <a href="/archives">
                 文章总数
-                <span class="sidebar-badge">57</span>
+                <span class="sidebar-badge">58</span>
             </a>
         </li>
         
