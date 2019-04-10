@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        :root {
+            --theme-color: #369;
+        }
+
+        h1 {
+            color: var(--theme-color);
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: var(--theme-color);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>hello world</h1>
+    <div></div>
+    <input type="color" onchange="changeTheme(this)">
+</body>
+<script>
+    function changeTheme(data) {
+        const docStyle = document.documentElement.style;
+        docStyle.setProperty('--theme-color', data.value);
+    }
+</script>
+
+</html>
