@@ -29,10 +29,6 @@
     </p>
 </body>
 <script>
-    const body = document.querySelector('body')
-    var cssVarColor = getComputedStyle(body).getPropertyValue('--fontSize');
-    console.log(cssVarColor) // 这是获取css变量的方法
-
     function changeFontSize(data) {
         const docStyle = document.documentElement.style;
         switch (data.value) {
@@ -46,6 +42,9 @@
                 docStyle.setProperty('--fontSize', '13px');
                 break;
         }
+        const body = document.querySelector('body')
+        var cssVarColor = getComputedStyle(body).getPropertyValue('--fontSize');
+        console.log(cssVarColor) // 这是获取css变量的方法
     }
 </script>
 

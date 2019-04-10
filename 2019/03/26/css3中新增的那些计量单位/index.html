@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Tue Mar 26 2019 21:46:18 GMT+0800">
-        <meta property="article:modified_time" content="Wed Apr 10 2019 21:51:16 GMT+0800">
+        <meta property="article:modified_time" content="Wed Apr 10 2019 21:59:39 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2019/03/26/css3中新增的那些计量单位/index.html",
     "headline": "css3中新增的那些计量单位",
     "datePublished": "Tue Mar 26 2019 21:46:18 GMT+0800",
-    "dateModified": "Wed Apr 10 2019 21:51:16 GMT+0800",
+    "dateModified": "Wed Apr 10 2019 21:59:39 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -552,6 +552,11 @@ h1 {
 
 const docStyle = document.documentElement.style;
 docStyle.setProperty(&#39;--fontSize&#39;, &#39;13px&#39;);
+
+ // 下面是获取css变量的方法
+const body = document.querySelector(&#39;body&#39;)
+var cssVarColor = getComputedStyle(body).getPropertyValue(&#39;--fontSize&#39;);
+console.log(cssVarColor)
 </code></pre><p>戳这里看<a href="https://xypecho.github.io/test/css3Demo/fontSizeDemo.html" target="_blank" rel="noopener">demo</a>  </p>
 
         
