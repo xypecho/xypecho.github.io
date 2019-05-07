@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu Jan 31 2019 22:21:01 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 20 2019 22:18:45 GMT+0800">
+        <meta property="article:modified_time" content="Tue May 07 2019 21:35:13 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2019/01/31/JavaScript中的一些骚操作/index.html",
     "headline": "JavaScript中的一些骚操作",
     "datePublished": "Thu Jan 31 2019 22:21:01 GMT+0800",
-    "dateModified": "Wed Feb 20 2019 22:18:45 GMT+0800",
+    "dateModified": "Tue May 07 2019 21:35:13 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、判断当前设备是pc端还是移动端"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、判断当前设备是pc端还是移动端</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、计算代码执行的时间"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、计算代码执行的时间</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3、搜索结果高亮显示"><span class="post-toc-number">3.</span> <span class="post-toc-text">3、搜索结果高亮显示</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、JS巧妙输出26个字母"><span class="post-toc-number">4.</span> <span class="post-toc-text">4、JS巧妙输出26个字母</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5、基于浏览器的HTML5地理定位"><span class="post-toc-number">5.</span> <span class="post-toc-text">5、基于浏览器的HTML5地理定位</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、判断当前设备是pc端还是移动端"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、判断当前设备是pc端还是移动端</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、计算代码执行的时间"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、计算代码执行的时间</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3、搜索结果高亮显示"><span class="post-toc-number">3.</span> <span class="post-toc-text">3、搜索结果高亮显示</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、JS巧妙输出26个字母"><span class="post-toc-number">4.</span> <span class="post-toc-text">4、JS巧妙输出26个字母</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5、基于浏览器的HTML5地理定位"><span class="post-toc-number">5.</span> <span class="post-toc-text">5、基于浏览器的HTML5地理定位</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6、js生成随机数"><span class="post-toc-number">6.</span> <span class="post-toc-text">6、js生成随机数</span></a></li></ol>
     </ul>
     
 
@@ -545,28 +545,48 @@ console.timeEnd(&quot;sort&quot;); //sort: 268.125ms
     }
 &lt;/script&gt;
 </code></pre><p>点击<a href="https://xypecho.github.io/test/highLightSearchWords.html" target="_blank" rel="noopener">这里</a>看demo</p>
-<h3 id="4、JS巧妙输出26个字母"><a href="#4、JS巧妙输出26个字母" class="headerlink" title="4、JS巧妙输出26个字母"></a>4、JS巧妙输出26个字母</h3><pre><code>    &lt;script type=&quot;text/javascript&quot;&gt;
-        var arr=[];
-        for (var i = 65; i &lt;=90; i++) {
-            arr.push(String.fromCharCode(i).toLowerCase());
-        }
-        console.log(arr);
-    &lt;/script&gt;
+<h3 id="4、JS巧妙输出26个字母"><a href="#4、JS巧妙输出26个字母" class="headerlink" title="4、JS巧妙输出26个字母"></a>4、JS巧妙输出26个字母</h3><pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    var arr=[];
+    for (var i = 65; i &lt;=90; i++) {
+        arr.push(String.fromCharCode(i).toLowerCase());
+    }
+    console.log(arr);
+&lt;/script&gt;
 </code></pre><h3 id="5、基于浏览器的HTML5地理定位"><a href="#5、基于浏览器的HTML5地理定位" class="headerlink" title="5、基于浏览器的HTML5地理定位"></a>5、基于浏览器的HTML5地理定位</h3><p>核心代码</p>
-<pre><code>        function getLocation() {
-            var options = {
-                enableHighAccuracy: true, //boolean 是否要求高精度的地理信息，默认为false
-                maximumAge: 1000 //应用程序的缓存时间
-            }
-            if (navigator.geolocation) {
-                //浏览器支持geolocation
-                navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-            } else {
-                //浏览器不支持geolocation
-                console.log(&quot;浏览器不支持!&quot;);
-            }
-        }
+<pre><code>function getLocation() {
+    var options = {
+        enableHighAccuracy: true, //boolean 是否要求高精度的地理信息，默认为false
+        maximumAge: 1000 //应用程序的缓存时间
+    }
+    if (navigator.geolocation) {
+        //浏览器支持geolocation
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+    } else {
+        //浏览器不支持geolocation
+        console.log(&quot;浏览器不支持!&quot;);
+    }
+}
 </code></pre><p>点击<a href="https://xypecho.github.io/test/browserPositioning.html" target="_blank" rel="noopener">这里</a>看demo</p>
+<h3 id="6、js生成随机数"><a href="#6、js生成随机数" class="headerlink" title="6、js生成随机数"></a>6、js生成随机数</h3><p>核心代码</p>
+<pre><code>function getRandomMumber(size) {
+    var arr = [];
+    var str = &#39;&#39;;
+    for (let i = 0; i &lt; 10; i++) {
+    arr.push(i);
+    }
+    for (var i = 65; i &lt;= 90; i++) {
+    arr.push(String.fromCharCode(i).toLowerCase());
+    arr.push(String.fromCharCode(i).toUpperCase());
+    }
+    for (let i = 0; i &lt; size; i++) {
+    var num = arr[Math.floor(Math.random() * arr.length)];
+    str += num;
+    }
+    console.log(str);
+    return str;
+}
+getRandomMumber(6);
+</code></pre><p>点击<a href="https://xypecho.github.io/test/getRandomNumber.html" target="_blank" rel="noopener">这里</a>看demo</p>
 
         
     
