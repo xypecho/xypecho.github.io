@@ -6,7 +6,7 @@
       <title>react中的生命周期函数</title>
       <link href="/2019/05/20/react%E4%B8%AD%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0/"/>
       <url>/2019/05/20/react%E4%B8%AD%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0/</url>
-      <content type="html"><![CDATA[<blockquote><p>生命周期函数是指组件在某一时刻会自动执行的函数。</p></blockquote><pre><code class="javascript">// 在组件即将被第一次挂载到页面时执行componentWillMount() {}// render函数是做页面的挂载操作render() {}// 组件第一次挂载到页面之后执行componentDidMount() {}// 当一个组件从父组件接受了参数// 如果这个组件第一次存在于父组件中，不会执行// 如果这个组件之前已经存在于父组件中，才会执行componentWillReceiveProps() {}// 组件被更新之前执行(即组件里面的state数据发生变化)，这个生命周期需要返回一个布尔值shouldComponentUpdate() {}// 组件被更新之前执行，但是他在shouldComponentUpdate返回true之后才执行反之就不会执行componentWillUpdate() {}// 组件更新完成之后执行componentDidUpdate() {}// 当这个组件即将被从页面剔除的时候，会被执行componentWillUnmount() {}</code></pre>]]></content>
+      <content type="html"><![CDATA[<blockquote><p>生命周期函数是指组件在某一时刻会自动执行的函数。</p></blockquote><pre><code class="javascript">// 在组件即将被第一次挂载到页面时执行componentWillMount() {}// render函数是做页面的挂载操作render() {}// 组件第一次挂载到页面之后执行，ajax请求一般放在这个生命周期componentDidMount() {}// 当一个组件从父组件接受了参数// 如果这个组件第一次存在于父组件中，不会执行// 如果这个组件之前已经存在于父组件中，才会执行componentWillReceiveProps() {}// 组件被更新之前执行(即组件里面的state数据发生变化)，这个生命周期需要返回一个布尔值shouldComponentUpdate(nextProps, nextState) {    // 此处的content是该组件接受的父组件的传值(这里是随便写的)    // 这段代码的意思是，如果父组件传值发生变化才更新子组件，反正则不更新，加上这段代码能够优化性能    if(nextProps.content !== this.props.content){        return true;    } else {        return false;    }}// 组件被更新之前执行，但是他在shouldComponentUpdate返回true之后才执行反之就不会执行componentWillUpdate() {}// 组件更新完成之后执行componentDidUpdate() {}// 当这个组件即将被从页面剔除的时候，会被执行componentWillUnmount() {}</code></pre>]]></content>
       
       <categories>
           
