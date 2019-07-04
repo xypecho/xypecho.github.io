@@ -319,6 +319,7 @@
         
             1、从远程仓库获取代码到本地git clone https://gitee.com/xxx/xxx.git  //直接克隆了默认的master分支下的代码
 git clone -b dev https://gitee.com/xxx/xxx.git //克隆dev分支下的代码，可把dev换成你想克隆的任意分支
+git clone https://gitee.com/xxx/xxx.git --depth 3 // 只clone最近3次的记录(代码是完整的)，这段命令对于commit次数较多，clone特别慢时有效
 2、添加远程仓库该操作一般是fork项目后，想更新fork的项目时使用
 git remote -v //执行该命令后，会列出当前程序对应的所有远程版本仓库的信息，含仓库名和仓库地址
 git remote add xoxoxo https://gitee.com/xxx/xxx.git  //添加远程仓库，‘xoxoxo’代表该分支的名字（自己随便取），后面的分支的地址
