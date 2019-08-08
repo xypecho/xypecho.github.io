@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>JavaScript的函数节流</title>
+      <link href="/2019/08/08/JavaScript%E7%9A%84%E5%87%BD%E6%95%B0%E8%8A%82%E6%B5%81/"/>
+      <url>/2019/08/08/JavaScript%E7%9A%84%E5%87%BD%E6%95%B0%E8%8A%82%E6%B5%81/</url>
+      <content type="html"><![CDATA[<h3 id="0、前言"><a href="#0、前言" class="headerlink" title="0、前言"></a>0、前言</h3><p>之前经常在掘金的推荐文章里面看到函数防抖和函数节流相关的文章，看过之后一直没实际操作过，自然而然的也就忘了这回事。<br>今天在写项目时，遇到一个问题<code>子组件监听(watch)了父组件传来的mode(是编辑还是详情)以及id(每个列表的id)来获取列表详情，可是每次都会调两遍接口</code>。于是Google了一翻，重新了解了一下<em>函数节流</em>。</p><h3 id="1、什么是函数节流-throttle"><a href="#1、什么是函数节流-throttle" class="headerlink" title="1、什么是函数节流(throttle)"></a>1、什么是函数节流(throttle)</h3><blockquote><p>规定一个单位时间，在这个单位时间内，只能有一次触发事件的回调函数执行，如果在同一个单位时间内某事件被触发多次，只有一次能生效。</p></blockquote><h3 id="2、应用场景"><a href="#2、应用场景" class="headerlink" title="2、应用场景"></a>2、应用场景</h3><ol><li>重新调整浏览器窗口大小(resize)</li><li>浏览器页面滚动(scroll)</li><li>鼠标移动(mousemove)</li><li>防止用户短时间内多次快速点击</li></ol><h3 id="3、代码实现"><a href="#3、代码实现" class="headerlink" title="3、代码实现"></a>3、代码实现</h3><h4 id="3-1-利用定时器"><a href="#3-1-利用定时器" class="headerlink" title="3.1 利用定时器"></a>3.1 利用定时器</h4><pre><code>&lt;button onclick=&quot;throttle(aaa,1000)&quot;&gt;click&lt;/button&gt;&lt;script&gt;    function throttle(fn, delay) {        if (fn._id) {            clearTimeout(fn._id);        }        fn._id = window.setTimeout(() =&gt; {            fn();            fn._id = null;        }, delay);    }    // 在1秒内，无论点击多少次都只会输出一次&#39;执行了哦&#39;    function aaa() {        console.log(&#39;执行了哦&#39;);    }&lt;/script&gt;</code></pre><p>点这里看<a href="https://xypecho.github.io/test/throttle/throttle1.html" target="_blank" rel="noopener">demo</a>.</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> JS技巧 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>五年面试，三年模拟</title>
       <link href="/2019/06/25/%E4%BA%94%E5%B9%B4%E9%9D%A2%E8%AF%95%EF%BC%8C%E4%B8%89%E5%B9%B4%E6%A8%A1%E6%8B%9F/"/>
       <url>/2019/06/25/%E4%BA%94%E5%B9%B4%E9%9D%A2%E8%AF%95%EF%BC%8C%E4%B8%89%E5%B9%B4%E6%A8%A1%E6%8B%9F/</url>
