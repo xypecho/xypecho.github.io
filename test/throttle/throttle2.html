@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="test()">click</button>
+    <script>
+        function throttle(fn, threshhold) {
+            var start = new Date;
+            var threshhold = threshhold || 1000
+            return function () {
+                var context = this, args = arguments, curr = new Date() - 0
+                if (curr - start >= threshhold) {
+                    console.log("now", curr, curr - start)//注意这里相减的结果，都差不多是160左右
+                    fn.apply(context, args) //只执行一部分方法，这些方法是在某个时间段内执行一次
+                    start = curr
+                }
+            }
+        }
+        // function mousemove() {
+        //     throttle(test, 1000)
+        // }
+        function mousemove() {
+            throttle(test);
+        }
+        function test() {
+            console.log('执行了哦');
+        }
+        // 绑定监听
+    </script>
+</body>
+
+</html>
