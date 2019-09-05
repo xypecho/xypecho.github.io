@@ -248,7 +248,7 @@
 
     
         <meta property="article:published_time" content="Fri Jan 12 2018 20:17:25 GMT+0800">
-        <meta property="article:modified_time" content="Thu Sep 05 2019 21:48:32 GMT+0800">
+        <meta property="article:modified_time" content="Thu Sep 05 2019 22:45:51 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -271,7 +271,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/01/12/ES6知识点记录/index.html",
     "headline": "ES6知识点记录",
     "datePublished": "Fri Jan 12 2018 20:17:25 GMT+0800",
-    "dateModified": "Thu Sep 05 2019 21:48:32 GMT+0800",
+    "dateModified": "Thu Sep 05 2019 22:45:51 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -775,7 +775,13 @@ console.log(&#39;----------&#39;);
 //-------
 // [2, &quot;com&quot;]
 //--------
-</code></pre><h3 id="20、es6箭头函数"><a href="#20、es6箭头函数" class="headerlink" title="20、es6箭头函数"></a>20、es6箭头函数</h3><pre><code>//获取需要传递的参数数量
+</code></pre><h3 id="20、es6箭头函数"><a href="#20、es6箭头函数" class="headerlink" title="20、es6箭头函数"></a>20、es6箭头函数</h3><p>箭头函数的特性</p>
+<ol>
+<li>继承外部的作用域，即this的指向 // 例如vue中的箭头函数this指向vue对象</li>
+<li>不能用作构造函数</li>
+<li>没有prototype属性</li>
+</ol>
+<pre><code>//获取需要传递的参数数量
 function add(a,b){
     return a+b;
 }
@@ -814,6 +820,18 @@ function test(c,b=a){
     console.log(c,b); //world hello
 }
 test(&#39;world&#39;);
+
+// this指向问题
+var obj = {
+    commonFn: function () {
+        console.log(this);
+    },
+    arrowFn: () =&gt; {
+        console.log(this);
+    }
+}
+obj.commonFn(); // 指向obj对象
+obj.arrowFn(); // 指向了obj所在的作用域,window
 
 
 
@@ -976,7 +994,10 @@ maparr.has(&#39;www&#39;);//false
 <p>//apply的用户，先mark，以后再看<br>let target=function(){<br>    console.log(‘this is target’);<br>}<br>let handler={<br>    apply(target,ctx,args){<br>        console.log(‘this is apply’);<br>        return Reflect.apply(…args);<br>    }<br>}<br>let pro=new Proxy(target,handler);<br>console.log(pro());</p>
 <pre><code>### 31、promise的语法
 &gt; ES6中的promise的出现给我们很好的解决了回调地狱的问题，在使用ES5的时候，在多层嵌套回调时，写完的代码层次过多，很难进行维护和二次开发，ES6认识到了这点问题，现在promise的使用，完美解决了这个问题。那我们如何理解promise这个单词在ES5中的作用那，你可以想象他是一种承诺，当它成功时执行一些代码，当它失败时执行一些代码。它更符合人类的行为思考习惯，而不在是晦涩难懂的冰冷语言。
-</code></pre><p>//以洗菜，做饭，吃饭为例<br>let ERR_OK=1;<br>function step1(reject,reject){<br>    console.log(‘1、准备开始洗菜’);<br>    if (ERR_OK==1) {<br>        reject(‘1、洗菜成功’);<br>    }else{<br>        reject(‘1、洗菜失败’);<br>    }<br>}<br>function step2(resolve,reject){<br>    console.log(‘2、准备开始做饭’);<br>    if (ERR_OK==1) {<br>        reject(‘2、做饭成功’);<br>    }else{<br>        reject(‘2、做饭失败’);<br>    }<br>}<br>function step3(resolve,reject){<br>    console.log(‘3、准备开始吃饭’);<br>    if (ERR_OK==1) {<br>        reject(‘3、吃饭成功’);<br>    }else{<br>        reject(‘3、吃饭失败’);<br>    }<br>}<br>new Promise(step1).then(function(val){<br>    console.log(val);//这边的val即为上面if判断后输出的值<br>    return new Promise(step2);<br>}).then(function(val){<br>    console.log(val);<br>    return new Promise(step3);<br>}).then(function(val){<br>    return val;<br>});</p>
+</code></pre><p>// promise的结构，可以在<a href="http://happymmall.com下的控制台执行看看" target="_blank" rel="noopener">http://happymmall.com下的控制台执行看看</a></p>
+<p>new Promise((resolve, reject) =&gt; {<br>    $.ajax({<br>        url: ‘<a href="http://happymmall.com/user/get_user_info.do" target="_blank" rel="noopener">http://happymmall.com/user/get_user_info.do</a>‘,<br>        type: ‘post’,<br>        success(res) {<br>            resolve(res)<br>        },<br>        error(err) {<br>            reject(err)<br>        }<br>    })<br>}).then((res) =&gt; {<br>    console.log(‘success’, res)<br>}, (err) =&gt; {<br>    console.log(‘error’, err)<br>})</p>
+<p>// promise的链式操作<br>如果是以前，我们都是在一个ajax的success方法里面写另外一个异步函数。现在我们可以用链式promise来解决回调地狱</p>
+<p>const promise1 = new Promise((resolve, reject) =&gt; {<br>    $.ajax({<br>        url: ‘<a href="http://happymmall.com/user/get_user_info.do" target="_blank" rel="noopener">http://happymmall.com/user/get_user_info.do</a>‘,<br>        type: ‘post’,<br>        success(res) {<br>            resolve(res)<br>        },<br>        error(err) {<br>            reject(err)<br>        }<br>    })<br>});<br>const promise2 = new Promise((resolve, reject) =&gt; {<br>    $.ajax({<br>        url: ‘<a href="http://happymmall.com/cart/get_cart_product_count.do" target="_blank" rel="noopener">http://happymmall.com/cart/get_cart_product_count.do</a>‘,<br>        type: ‘post’,<br>        success(res) {<br>            resolve(res)<br>        },<br>        error(err) {<br>            reject(err)<br>        }<br>    })<br>});<br>promise1.then(() =&gt; {<br>    console.log(‘promise1 success’);<br>    return promise2;<br>}).then(() =&gt; {<br>    console.log(‘promise2 success’);<br>})</p>
 <pre><code>### 32、es6中的class
 </code></pre><p>class Coder{ //定义一个程序员类<br>    name(val){<br>        //console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>}<br>let forg=new Coder;//实例化类<br>forg.name(‘daidai’);//my name is daidai</p>
 <p>//里面写多个函数时<br>class Coder{ //定义一个程序员类<br>    name(val){<br>        console.log(<code>my name is ${val}</code>);<br>        return val;<br>    }<br>    skill(val){<br>        console.log(‘:skills’+val);<br>    }<br>}<br>let forg=new Coder;//实例化类<br>forg.name(‘daidai’);//my name is daidai<br>forg.skill(‘coding’);</p>
