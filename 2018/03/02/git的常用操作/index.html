@@ -260,7 +260,7 @@ git pull xoxoxo dev //获取该远程项目下面dev分支的代码
 
     
         <meta property="article:published_time" content="Fri Mar 02 2018 19:00:43 GMT+0800">
-        <meta property="article:modified_time" content="Thu Sep 19 2019 21:35:51 GMT+0800">
+        <meta property="article:modified_time" content="Thu Sep 19 2019 21:45:14 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -283,7 +283,7 @@ git pull xoxoxo dev //获取该远程项目下面dev分支的代码
     "mainEntityOfPage": "http://yoursite.com/2018/03/02/git的常用操作/index.html",
     "headline": "git的常用操作",
     "datePublished": "Fri Mar 02 2018 19:00:43 GMT+0800",
-    "dateModified": "Thu Sep 19 2019 21:35:51 GMT+0800",
+    "dateModified": "Thu Sep 19 2019 21:45:14 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -544,6 +544,7 @@ git checkout . //撤销本地所有文件的修改
 git diff //查看所有修改过的文件的具体内容
 git diff src/views/equip/components/MachineHome.vue //查看指定文件的修改内容，diff后面是文件路径
 git difftool // 图形化比较两个版本间文件的差异
+git difftool  src/views/equip/components/MachineHome.vue // 图形化比较指定文件版本间的差异
 </code></pre><h3 id="6、对比本地代码与pull更新下来的代码的差异"><a href="#6、对比本地代码与pull更新下来的代码的差异" class="headerlink" title="6、对比本地代码与pull更新下来的代码的差异"></a>6、对比本地代码与pull更新下来的代码的差异</h3><pre><code>git diff HEAD^  // 查看上次pull的详情
 git diff HEAD^^  // 查看上次和上上次pull的详情
 git diff HEAD~10  // 查看往上100个版本的修改详情
