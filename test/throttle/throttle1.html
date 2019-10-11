@@ -5,26 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>时间戳节流</title>
 </head>
 
 <body>
-    <button onclick="throttle(aaa,1000)">click</button>
-    <script>
-        function throttle(fn, delay) {
-            if (fn._id) {
-                clearTimeout(fn._id);
-            }
-            fn._id = window.setTimeout(() => {
-                fn();
-                fn._id = null;
-            }, delay);
-        }
-        // 在1秒内，无论点击多少次都只会调用一次函数
-        function aaa() {
-            console.log('执行了哦');
-        }
-    </script>
+    <h1>记得按f12哦(时间戳版本节流)</h1>
+    <p>用户名：<input type="text" name="" id=""></p>
+    <p>密码：<input type="password" name="" id=""></p>
+    <p><button id="login">登录</button></p>
 </body>
+<script>
+    function throttle(fn, delay) {
+        // fn是指需要节流的函数，delay是多长时间内再次触发
+        let last = +Date.now();
+        return function () {
+            let _args = arguments;
+            let _self = this;
+            let now = +Date.now();
+            console.log(`时间过去了${now - last}毫秒`);
+            if (now - last >= delay) {
+                fn.apply(_self, _args);
+                last = +Date.now();
+            }
+        }
+    }
+    function login(e) {
+        console.log('======================正在调用登录接口======================')
+    }
+    document.querySelector('#login').addEventListener('click', throttle(login, 3000));
+</script>
 
 </html>
