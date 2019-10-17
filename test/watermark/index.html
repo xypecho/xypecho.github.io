@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas" width=100 height=100></canvas>
+    <h2>Watermarked...</h2>
+</body>
+<script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+    // 开启跨域
+    img.crossOrigin = 'anonymous';
+    img.src = "https://xypecho.github.io/2019/06/24/%E6%AF%95%E4%B8%9A%E6%95%B4%E6%95%B4%E4%B8%89%E5%B9%B4%E4%BA%86/TIM%E5%9B%BE%E7%89%8720190624205011.png";
+    img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        watermarkedDataURL(canvas, "It's Mine!");
+    }
+
+    function watermarkedDataURL(canvas, text) {
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        let cw, ch;
+        cw = tempCanvas.width = canvas.width;
+        ch = tempCanvas.height = canvas.height;
+        tempCtx.drawImage(canvas, 0, 0);
+        tempCtx.font = "24px verdana";
+        const textWidth = tempCtx.measureText(text).width;
+        tempCtx.globalAlpha = .50;
+        tempCtx.fillStyle = 'white'
+        tempCtx.fillText(text, cw - textWidth - 10, ch - 20);
+        tempCtx.fillStyle = 'black'
+        tempCtx.fillText(text, cw - textWidth - 10 + 2, ch - 20 + 2);
+        document.body.appendChild(tempCanvas);
+        return (tempCanvas.toDataURL());
+    }
+</script>
+
+</html>

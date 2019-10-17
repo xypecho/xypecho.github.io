@@ -3,6 +3,60 @@
   
     
     <entry>
+      <title>使用canvas实现水印功能</title>
+      <link href="/2019/10/15/%E4%BD%BF%E7%94%A8canvas%E5%AE%9E%E7%8E%B0%E6%B0%B4%E5%8D%B0%E5%8A%9F%E8%83%BD/"/>
+      <url>/2019/10/15/%E4%BD%BF%E7%94%A8canvas%E5%AE%9E%E7%8E%B0%E6%B0%B4%E5%8D%B0%E5%8A%9F%E8%83%BD/</url>
+      <content type="html"><![CDATA[<p>切图也有两年多了，不过一直没有使用过<code>canvas</code>,最近有个上传图片增加水印的需求，正好可以试试<code>canvas</code>加水印。</p><h3 id="1、文字水印合成"><a href="#1、文字水印合成" class="headerlink" title="1、文字水印合成"></a>1、文字水印合成</h3><p>主要操作流程如下：  </p><ol><li>将需要添加水印的图片绘制到 canvas 上</li><li>将水印绘制到 canvas 上</li><li>将 canvas 的内容导出为图片</li></ol><h4 id="1-1-将图片绘制canvas上"><a href="#1-1-将图片绘制canvas上" class="headerlink" title="1.1 将图片绘制canvas上"></a>1.1 将图片绘制canvas上</h4><pre><code>const canvas = document.getElementById(&quot;canvas&quot;);const ctx = canvas.getContext(&quot;2d&quot;);const img = new Image();// 开启跨域img.crossOrigin = &#39;anonymous&#39;;img.src = &quot;https://xypecho.github.io/2019/06/24/%E6%AF%95%E4%B8%9A%E6%95%B4%E6%95%B4%E4%B8%89%E5%B9%B4%E4%BA%86/TIM%E5%9B%BE%E7%89%8720190624205011.png&quot;;img.onload = function () {    // canvas自适应图片的宽高    canvas.width = img.width;    canvas.height = img.height;    ctx.drawImage(img, 0, 0);    // 需要添加水印的图片绘制完成后调用方法watermarkedDataURL来绘制水印，第一个参数是canvas对象，第二个是文字水印    watermarkedDataURL(canvas, &quot;It&#39;s Mine!&quot;);}</code></pre><h4 id="1-2-将水印图片绘制到刚刚的canvas上"><a href="#1-2-将水印图片绘制到刚刚的canvas上" class="headerlink" title="1.2 将水印图片绘制到刚刚的canvas上"></a>1.2 将水印图片绘制到刚刚的canvas上</h4><pre><code>function watermarkedDataURL(canvas, text) {    const tempCanvas = document.createElement(&#39;canvas&#39;);    const tempCtx = tempCanvas.getContext(&#39;2d&#39;);    let cw, ch;    cw = tempCanvas.width = canvas.width;    ch = tempCanvas.height = canvas.height;    tempCtx.drawImage(canvas, 0, 0);    tempCtx.font = &quot;24px verdana&quot;;    const textWidth = tempCtx.measureText(text).width;    tempCtx.globalAlpha = .50;    tempCtx.fillStyle = &#39;white&#39;    tempCtx.fillText(text, cw - textWidth - 10, ch - 20);    tempCtx.fillStyle = &#39;black&#39;    tempCtx.fillText(text, cw - textWidth - 10 + 2, ch - 20 + 2);    document.body.appendChild(tempCanvas);    return (tempCanvas.toDataURL());}</code></pre><p>点击<a href="https://xypecho.github.io/test/watermark/index.html" target="_blank" rel="noopener">这里</a>看文字水印demo</p><h3 id="2、图片水印合成"><a href="#2、图片水印合成" class="headerlink" title="2、图片水印合成"></a>2、图片水印合成</h3><p>最开始的操作都是一样的，将要加水印的图片绘制到canvas上，然后  </p><pre><code>function watermarkedDataURL(canvas) {    const tempImg = new Image();    tempImg.crossOrigin = &#39;anonymous&#39;;    tempImg.src = &quot;https://xypecho.github.io/test/watermark/watermark.png&quot;;    tempImg.onload = function () {        ctx.drawImage(tempImg, 1, 1, tempImg.width / 2, tempImg.height / 2)    }}</code></pre><p>点击<a href="https://xypecho.github.io/test/watermark/index2.html" target="_blank" rel="noopener">这里</a>看图片水印demo</p>]]></content>
+      
+      <categories>
+          
+          <category> JS技巧 </category>
+          
+          <category> CSS相关 </category>
+          
+          <category> canvas </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+            <tag> JS技巧 </tag>
+            
+            <tag> canvas </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>linux下mysql忘记密码的解决方法</title>
+      <link href="/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/"/>
+      <url>/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>最近自己写的一个demo项目接口经常报错500，发现原来是因为数据库密码太简单(123456~)估计被黑了，然后搜索了很久才成功重置了mysql密码，记录一下。</p><h4 id="1、更改my-cnf配置文件"><a href="#1、更改my-cnf配置文件" class="headerlink" title="1、更改my.cnf配置文件"></a>1、更改my.cnf配置文件</h4><ol><li>用命令编辑<code>/etc/my.cnf</code>配置文件，即：<code>vim /etc/my.cnf</code></li><li>在[mysqld]下添加<code>skip-grant-tables</code>，然后保存并退出</li><li>重启mysql服务：<code>service mysqld restart</code></li></ol><center><br>    <img style="border-radius: 0.3125em;    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="QQ图片20191012134230.png"><br>    <br><br>    <div style="color:orange; border-bottom: 1px solid #d9d9d9;    display: inline-block;    color: #999;    padding: 2px;">如图</div><br></center><h4 id="2、修改root密码"><a href="#2、修改root密码" class="headerlink" title="2、修改root密码"></a>2、修改root密码</h4><ol><li>重启以后，执行mysql命令就可以直接进入mysql命令行</li><li>执行如下命令(是在mysql里面执行)</li></ol><pre><code>UPDATE mysql.user SET authentication_string=PASSWORD(&#39;这里写新密码&#39;) where USER=&#39;root&#39;;flush privileges;exit;</code></pre><ol><li>最后把我们最开始在<code>/etc/my.cnf</code>中的添加的<code>skip-grant-tables</code>删除掉，然后重启mysql，即：<code>service mysqld restart</code></li></ol>]]></content>
+      
+      <categories>
+          
+          <category> mysql </category>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>关于URL的一些实用操作</title>
       <link href="/2019/10/11/%E5%85%B3%E4%BA%8EURL%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E6%93%8D%E4%BD%9C/"/>
       <url>/2019/10/11/%E5%85%B3%E4%BA%8EURL%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AE%9E%E7%94%A8%E6%93%8D%E4%BD%9C/</url>
