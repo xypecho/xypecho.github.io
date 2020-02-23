@@ -40,9 +40,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
         </tags>
       
@@ -131,7 +131,7 @@
       <title>关于数组的一些操作</title>
       <link href="/2019/12/04/%E5%85%B3%E4%BA%8E%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/"/>
       <url>/2019/12/04/%E5%85%B3%E4%BA%8E%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%80%E4%BA%9B%E6%93%8D%E4%BD%9C/</url>
-      <content type="html"><![CDATA[<p>记录一下常见的关于数组的操作</p><h3 id="1、-数组降维-数组扁平化"><a href="#1、-数组降维-数组扁平化" class="headerlink" title="1、 数组降维(数组扁平化)"></a>1、 数组降维(数组扁平化)</h3><h4 id="1-1-flat"><a href="#1-1-flat" class="headerlink" title="1.1 flat"></a>1.1 flat</h4><p>直接上大招</p><p><strong>flat()是es6提供的一个新的关于数组的方法，该方法会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回。</strong></p><pre><code>var arr1 = [1, 2, [3, 4]];arr1.flat(); // [1, 2, 3, 4]var arr2 = [1, 2, [3, 4, [5, 6]]];arr2.flat();// [1, 2, 3, 4, [5, 6]]var arr3 = [1, 2, [3, 4, [5, 6]]];arr3.flat(2);// [1, 2, 3, 4, 5, 6]//使用 Infinity，可展开任意深度的嵌套数组var arr4 = [1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]];arr4.flat(Infinity);// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flat" target="_blank" rel="noopener">在mdn查看更多关于flat的介绍</a></p><h4 id="1-2-其他一些骚操作"><a href="#1-2-其他一些骚操作" class="headerlink" title="1.2 其他一些骚操作"></a>1.2 其他一些骚操作</h4><pre><code>var arr = [1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]];// some()是对数组中每一项运行给定函数，如果该函数对任一项返回true，则返回true。// arr.some(Array.isArray)相当于arr.some((item, index) =&gt; Array.isArray(item, index))while (arr.some(Array.isArray)) {    arr = [].concat(...arr)}console.log(arr) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre><h3 id="2、-数组去重"><a href="#2、-数组去重" class="headerlink" title="2、 数组去重"></a>2、 数组去重</h3><h4 id="2-1-一维数组去重"><a href="#2-1-一维数组去重" class="headerlink" title="2.1 一维数组去重"></a>2.1 一维数组去重</h4><h5 id="2-1-1-Set"><a href="#2-1-1-Set" class="headerlink" title="2.1.1 Set"></a>2.1.1 Set</h5><p><strong>ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。</strong>可以利用这个特性去重。</p><pre><code>var arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];var aaa = new Set(arr)console.log([...aaa]) //  [1, 3, 2, 4, 55, 23]</code></pre><p>封装一下</p><pre><code>// Array.from 方法可以将 Set 结构转为数组。const a = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];function unique(array) {    return Array.from(new Set(array));}console.log(unique(a)) // [1, 3, 2, 4, 55, 23]</code></pre><h5 id="2-1-2-filter"><a href="#2-1-2-filter" class="headerlink" title="2.1.2 filter"></a>2.1.2 filter</h5><p>第一种写法</p><pre><code>var arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];// filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素// arr.indexOf 返回在数组中可以找到一个给定元素的第一个索引// 这个方法的原理是：如果给定元素首次出现的索引不等于他自身的索引则剔除var aaa = arr.filter((item, index) =&gt; arr.indexOf(item) === index);console.log(aaa) // [1, 3, 2, 4, 55, 23]</code></pre><p>第二种写法</p><pre><code>const a = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];const b = a.filter((item, index, self) =&gt; self.indexOf(item) === index)console.log(b) //[1, 3, 4, 5, 2, 6, 7, 8]</code></pre><h5 id="2-1-3-reduce"><a href="#2-1-3-reduce" class="headerlink" title="2.1.3 reduce"></a>2.1.3 reduce</h5><p>这段代码有丶骚没看懂，先收藏</p><pre><code>var arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];var aaa = arr.reduce((unique, item) =&gt; unique.includes(item) ? unique : [...unique, item], [])console.log(aaa) // [1, 3, 2, 4, 55, 23]</code></pre><h5 id="2-1-4-最后来几个es5版本的数组去重"><a href="#2-1-4-最后来几个es5版本的数组去重" class="headerlink" title="2.1.4 最后来几个es5版本的数组去重"></a>2.1.4 最后来几个es5版本的数组去重</h5><pre><code>// 利用indexOfvar arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];function unique(arr) {    var result = [];    for (let i = 0; i &lt; arr.length; i++) {        if (arr.indexOf(arr[i]) === -1) {            result.push(arr[i])        }    }    return result;}console.log(unique(arr)) // [1, 4, 55, 23, 4, 23, 2]</code></pre><h4 id="2-2-数组对象去重"><a href="#2-2-数组对象去重" class="headerlink" title="2.2 数组对象去重"></a>2.2 数组对象去重</h4><p><a href="https://xypecho.github.io/2018/09/27/%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E5%A6%82%E4%BD%95%E5%8E%BB%E9%87%8D/" target="_blank" rel="noopener">数组对象去重</a></p><h3 id="3、-打乱数组"><a href="#3、-打乱数组" class="headerlink" title="3、 打乱数组"></a>3、 打乱数组</h3><p><a href="https://xypecho.github.io/2018/05/03/%E8%8E%B7%E5%8F%96%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0/" target="_blank" rel="noopener">打乱数组</a></p><h3 id="4、-数组排序"><a href="#4、-数组排序" class="headerlink" title="4、 数组排序"></a>4、 数组排序</h3><h4 id="4-0-一些排序算法"><a href="#4-0-一些排序算法" class="headerlink" title="4.0 一些排序算法"></a>4.0 一些排序算法</h4><p><a href="https://xypecho.github.io/2019/12/12/javascript%E4%B8%AD%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">使用算法进行的数组排序</a></p><h4 id="4-1-sort函数"><a href="#4-1-sort函数" class="headerlink" title="4.1 sort函数"></a>4.1 sort函数</h4><blockquote><p>sort() 方法用原地算法对数组的元素进行排序，并返回数组。默认排序顺序是在将元素转换为字符串，然后比较它们的UTF-16代码单元值序列时构建的</p></blockquote><p>不传任何函数默认是按<code>UTF-16</code>排序</p><pre><code>const array1 = [1, 30, 4, 21, 100000];array1.sort();console.log(array1);// expected output: Array [1, 100000, 21, 30, 4]</code></pre>]]></content>
+      <content type="html"><![CDATA[<p>记录一下常见的关于数组的操作</p><h3 id="1、-数组降维-数组扁平化"><a href="#1、-数组降维-数组扁平化" class="headerlink" title="1、 数组降维(数组扁平化)"></a>1、 数组降维(数组扁平化)</h3><h4 id="1-1-flat"><a href="#1-1-flat" class="headerlink" title="1.1 flat"></a>1.1 flat</h4><p>直接上大招</p><p><strong>flat()是es6提供的一个新的关于数组的方法，该方法会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回。</strong></p><pre><code>var arr1 = [1, 2, [3, 4]];arr1.flat(); // [1, 2, 3, 4]var arr2 = [1, 2, [3, 4, [5, 6]]];arr2.flat();// [1, 2, 3, 4, [5, 6]]var arr3 = [1, 2, [3, 4, [5, 6]]];arr3.flat(2);// [1, 2, 3, 4, 5, 6]//使用 Infinity，可展开任意深度的嵌套数组var arr4 = [1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]];arr4.flat(Infinity);// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flat" target="_blank" rel="noopener">在mdn查看更多关于flat的介绍</a></p><h4 id="1-2-其他一些骚操作"><a href="#1-2-其他一些骚操作" class="headerlink" title="1.2 其他一些骚操作"></a>1.2 其他一些骚操作</h4><pre><code>var arr = [1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]];// some()是对数组中每一项运行给定函数，如果该函数对任一项返回true，则返回true。// arr.some(Array.isArray)相当于arr.some((item, index) =&gt; Array.isArray(item, index))while (arr.some(Array.isArray)) {    arr = [].concat(...arr)}console.log(arr) // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</code></pre><h3 id="2、-数组去重"><a href="#2、-数组去重" class="headerlink" title="2、 数组去重"></a>2、 数组去重</h3><h4 id="2-1-一维数组去重"><a href="#2-1-一维数组去重" class="headerlink" title="2.1 一维数组去重"></a>2.1 一维数组去重</h4><h5 id="2-1-1-Set"><a href="#2-1-1-Set" class="headerlink" title="2.1.1 Set"></a>2.1.1 Set</h5><p><strong>ES6 提供了新的数据结构 Set。它类似于数组，但是成员的值都是唯一的，没有重复的值。</strong>可以利用这个特性去重。</p><pre><code>var arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];var aaa = new Set(arr)console.log([...aaa]) //  [1, 3, 2, 4, 55, 23]</code></pre><p>封装一下</p><pre><code>// Array.from 方法可以将 Set 结构转为数组。const a = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];function unique(array) {    return Array.from(new Set(array));}console.log(unique(a)) // [1, 3, 2, 4, 55, 23]</code></pre><h5 id="2-1-2-filter"><a href="#2-1-2-filter" class="headerlink" title="2.1.2 filter"></a>2.1.2 filter</h5><p>第一种写法</p><pre><code>var arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];// filter() 方法创建一个新的数组，新数组中的元素是通过检查指定数组中符合条件的所有元素// arr.indexOf 返回在数组中可以找到一个给定元素的第一个索引// 这个方法的原理是：如果给定元素首次出现的索引不等于他自身的索引则剔除var aaa = arr.filter((item, index) =&gt; arr.indexOf(item) === index);console.log(aaa) // [1, 3, 2, 4, 55, 23]</code></pre><p>第二种写法</p><pre><code>const a = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];const b = a.filter((item, index, self) =&gt; self.indexOf(item) === index)console.log(b) //[1, 3, 4, 5, 2, 6, 7, 8]</code></pre><h5 id="2-1-3-reduce"><a href="#2-1-3-reduce" class="headerlink" title="2.1.3 reduce"></a>2.1.3 reduce</h5><p>这段代码有丶骚没看懂，先收藏</p><pre><code>var arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];var aaa = arr.reduce((unique, item) =&gt; unique.includes(item) ? unique : [...unique, item], [])console.log(aaa) // [1, 3, 2, 4, 55, 23]</code></pre><h5 id="2-1-4-最后来几个es5版本的数组去重"><a href="#2-1-4-最后来几个es5版本的数组去重" class="headerlink" title="2.1.4 最后来几个es5版本的数组去重"></a>2.1.4 最后来几个es5版本的数组去重</h5><pre><code>// 利用indexOfvar arr = [1, 3, 1, 2, 3, 4, 55, 23, 4, 23, 2];function unique(arr) {    var result = [];    for (let i = 0; i &lt; arr.length; i++) {        if (arr.indexOf(arr[i]) === -1) {            result.push(arr[i])        }    }    return result;}console.log(unique(arr)) // [1, 4, 55, 23, 4, 23, 2]</code></pre><h4 id="2-2-数组对象去重"><a href="#2-2-数组对象去重" class="headerlink" title="2.2 数组对象去重"></a>2.2 数组对象去重</h4><p><a href="https://xypecho.github.io/2018/09/27/%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1%E5%A6%82%E4%BD%95%E5%8E%BB%E9%87%8D/" target="_blank" rel="noopener">数组对象去重</a></p><h3 id="3、-打乱数组"><a href="#3、-打乱数组" class="headerlink" title="3、 打乱数组"></a>3、 打乱数组</h3><p><a href="https://xypecho.github.io/2018/05/03/%E8%8E%B7%E5%8F%96%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%E4%B9%8B%E9%97%B4%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%95%B0/" target="_blank" rel="noopener">打乱数组</a></p><h3 id="4、-数组排序"><a href="#4、-数组排序" class="headerlink" title="4、 数组排序"></a>4、 数组排序</h3><h4 id="4-0-一些排序算法"><a href="#4-0-一些排序算法" class="headerlink" title="4.0 一些排序算法"></a>4.0 一些排序算法</h4><p><a href="https://xypecho.github.io/2019/12/12/javascript%E4%B8%AD%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">使用算法进行的数组排序</a></p><h4 id="4-1-sort函数"><a href="#4-1-sort函数" class="headerlink" title="4.1 sort函数"></a>4.1 sort函数</h4><blockquote><p>sort() 方法用原地算法对数组的元素进行排序，并返回数组。默认排序顺序是在将元素转换为字符串，然后比较它们的UTF-16代码单元值序列时构建的</p></blockquote><p>不传任何函数默认是按<code>UTF-16</code>排序</p><pre><code>const array1 = [1, 30, 4, 21, 100000];array1.sort();console.log(array1);// expected output: Array [1, 100000, 21, 30, 4]</code></pre><h3 id="5、-数组遍历"><a href="#5、-数组遍历" class="headerlink" title="5、 数组遍历"></a>5、 数组遍历</h3><h4 id="5-1-Array-from"><a href="#5-1-Array-from" class="headerlink" title="5.1 Array.from()"></a>5.1 Array.from()</h4><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/from" target="_blank" rel="noopener">在mdn查看更多关于Array.from的介绍</a></p><pre><code>var arr = [1, 2, 3];Array.from(arr, (item) =&gt; {    console.log(item) // 1,2,3});</code></pre><h3 id="6、-数组交集-并集-差集"><a href="#6、-数组交集-并集-差集" class="headerlink" title="6、 数组交集 并集 差集"></a>6、 数组交集 并集 差集</h3><h4 id="6-1-交集"><a href="#6-1-交集" class="headerlink" title="6.1 交集"></a>6.1 交集</h4><p>找出两个数组相同的部分</p><pre><code>let arr1 = [1, 2, 3, 5, 8, 9]let arr2 = [1, 3, 5, 7]let arr = arr1.filter(item =&gt; arr2.includes(item))console.log(arr) // 1,3,5</code></pre>]]></content>
       
       <categories>
           
@@ -234,9 +234,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
             <tag> canvas </tag>
             
@@ -357,9 +357,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> nginx </tag>
-            
             <tag> linux </tag>
+            
+            <tag> nginx </tag>
             
         </tags>
       
@@ -390,7 +390,7 @@
       <title>五年面试，三年模拟</title>
       <link href="/2019/06/25/%E4%BA%94%E5%B9%B4%E9%9D%A2%E8%AF%95%EF%BC%8C%E4%B8%89%E5%B9%B4%E6%A8%A1%E6%8B%9F/"/>
       <url>/2019/06/25/%E4%BA%94%E5%B9%B4%E9%9D%A2%E8%AF%95%EF%BC%8C%E4%B8%89%E5%B9%B4%E6%A8%A1%E6%8B%9F/</url>
-      <content type="html"><![CDATA[<p>123</p>]]></content>
+      <content type="html"><![CDATA[<blockquote><p>记录一下面试过程中遇到的一些问题，并且尝试用口语化&amp;精简化的答案回答</p></blockquote><h4 id="1-js中有哪几种数据类型"><a href="#1-js中有哪几种数据类型" class="headerlink" title="1. js中有哪几种数据类型"></a>1. js中有哪几种数据类型</h4><p>最简单的问题，不过遇到还是经常漏答</p><p>答案：<br>一共有8种数据类型：String、Number、Boolean、Null、Undefined、Object、Symbol、<a href="https://segmentfault.com/a/1190000019912017?utm_source=tag-newest" target="_blank" rel="noopener">BigInt</a>.</p><p>8种数据类型又可以分为<strong>基本类型</strong>和<strong>引用类型</strong>,Object为引用类型，其余均为基本类型.</p><p>ps:Object类型中有数组(Array)、函数(Function)以及两个特殊的对象：正则(RegExp)和日期(Date)<br>pps: 基本类型存放在栈中，引用类型存放在堆内存中</p><h4 id="2-let和var的区别"><a href="#2-let和var的区别" class="headerlink" title="2. let和var的区别"></a>2. let和var的区别</h4><p>1.var 声明的变量，在全局范围内都有效，let 和 const 声明的，只在它所在的代码块内有效</p><p>2.let 和 const 声明的变量不存在<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting" target="_blank" rel="noopener">变量提升</a>现象(var 定义变量可以先使用，后声明)</p><p>3.let 不允许在相同的作用域内重复声明同一个变量(const声明对象时必须赋值，且值不允许改变，也不能在同一个作用域重复声明)</p><h4 id="3-箭头函数和普通函数的区别"><a href="#3-箭头函数和普通函数的区别" class="headerlink" title="3. 箭头函数和普通函数的区别"></a>3. 箭头函数和普通函数的区别</h4><p>1.this指向不同，普通函数的this直接调用者，没有直接调用者，this指向window；箭头函数的this指向当前函数作用域的this<br>2.箭头函数没有 arguments 对象</p>]]></content>
       
       
     </entry>
@@ -659,9 +659,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> linux </tag>
-            
             <tag> node.js </tag>
+            
+            <tag> linux </tag>
             
         </tags>
       
@@ -1548,9 +1548,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
         </tags>
       

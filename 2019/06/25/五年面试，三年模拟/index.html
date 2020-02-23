@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Tue Jun 25 2019 21:08:22 GMT+0800">
-        <meta property="article:modified_time" content="Tue Jun 25 2019 21:08:58 GMT+0800">
+        <meta property="article:modified_time" content="Sat Feb 22 2020 15:21:17 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2019/06/25/五年面试，三年模拟/index.html",
     "headline": "五年面试，三年模拟",
     "datePublished": "Tue Jun 25 2019 21:08:22 GMT+0800",
-    "dateModified": "Tue Jun 25 2019 21:08:58 GMT+0800",
+    "dateModified": "Sat Feb 22 2020 15:21:17 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -346,6 +346,15 @@
 
     <!-- Left aligned menu below button -->
     
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-js中有哪几种数据类型"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. js中有哪几种数据类型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-let和var的区别"><span class="post-toc-number">2.</span> <span class="post-toc-text">2. let和var的区别</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-箭头函数和普通函数的区别"><span class="post-toc-number">3.</span> <span class="post-toc-text">3. 箭头函数和普通函数的区别</span></a></li></ol>
+    </ul>
     
 
 
@@ -484,7 +493,17 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>123</p>
+        <blockquote>
+<p>记录一下面试过程中遇到的一些问题，并且尝试用口语化&amp;精简化的答案回答</p>
+</blockquote>
+<h4 id="1-js中有哪几种数据类型"><a href="#1-js中有哪几种数据类型" class="headerlink" title="1. js中有哪几种数据类型"></a>1. js中有哪几种数据类型</h4><p>最简单的问题，不过遇到还是经常漏答</p>
+<p>答案：<br>一共有8种数据类型：String、Number、Boolean、Null、Undefined、Object、Symbol、<a href="https://segmentfault.com/a/1190000019912017?utm_source=tag-newest" target="_blank" rel="noopener">BigInt</a>.</p>
+<p>8种数据类型又可以分为<strong>基本类型</strong>和<strong>引用类型</strong>,Object为引用类型，其余均为基本类型.</p>
+<p>ps:Object类型中有数组(Array)、函数(Function)以及两个特殊的对象：正则(RegExp)和日期(Date)<br>pps: 基本类型存放在栈中，引用类型存放在堆内存中</p>
+<h4 id="2-let和var的区别"><a href="#2-let和var的区别" class="headerlink" title="2. let和var的区别"></a>2. let和var的区别</h4><p>1.var 声明的变量，在全局范围内都有效，let 和 const 声明的，只在它所在的代码块内有效</p>
+<p>2.let 和 const 声明的变量不存在<a href="https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting" target="_blank" rel="noopener">变量提升</a>现象(var 定义变量可以先使用，后声明)</p>
+<p>3.let 不允许在相同的作用域内重复声明同一个变量(const声明对象时必须赋值，且值不允许改变，也不能在同一个作用域重复声明)</p>
+<h4 id="3-箭头函数和普通函数的区别"><a href="#3-箭头函数和普通函数的区别" class="headerlink" title="3. 箭头函数和普通函数的区别"></a>3. 箭头函数和普通函数的区别</h4><p>1.this指向不同，普通函数的this直接调用者，没有直接调用者，this指向window；箭头函数的this指向当前函数作用域的this<br>2.箭头函数没有 arguments 对象</p>
 
         
     
