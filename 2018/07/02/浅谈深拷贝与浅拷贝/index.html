@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Mon Jul 02 2018 20:49:30 GMT+0800">
-        <meta property="article:modified_time" content="Mon Jul 02 2018 22:08:19 GMT+0800">
+        <meta property="article:modified_time" content="Thu Feb 27 2020 16:51:34 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2018/07/02/浅谈深拷贝与浅拷贝/index.html",
     "headline": "浅谈深拷贝与浅拷贝",
     "datePublished": "Mon Jul 02 2018 20:49:30 GMT+0800",
-    "dateModified": "Mon Jul 02 2018 22:08:19 GMT+0800",
+    "dateModified": "Thu Feb 27 2020 16:51:34 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -587,16 +587,8 @@ let arr1 = Object.assign([], arr)
 arr1[0] = &#39;a&#39;
 console.log(arr) // [1, 2, 3, 4, 5]
 console.log(arr1) //  [&quot;a&quot;, 2, 3, 4, 5]
-</code></pre><h2 id="4、深拷贝与浅拷贝的区别"><a href="#4、深拷贝与浅拷贝的区别" class="headerlink" title="4、深拷贝与浅拷贝的区别"></a>4、深拷贝与浅拷贝的区别</h2><p>浅拷贝是和深拷贝比较的，深拷贝可以理解为递归进行浅拷贝。<br>深拷贝为了解决对象中依旧含有对象，例如</p>
-<pre><code>let a = {
-  name: &#39;LiHua&#39;,
-  habits:  [&#39;a&#39;, &#39;b&#39;]
-}
-let b = a;
-b.habits[0] = &#39;aaa&#39;;
-console.log(a); 
-console.log(b);
-</code></pre><p>普通的=赋值：b=a，b如果修改了b.name，那么a.name也会改变<br>浅拷贝，b，如果修改了b.name, a.name不会改变，但是修改b.habits数组中的值，a.habits的值也会改变<br>深拷贝，b的值改变，不会对a产生任何影响<br><img src="/2018/07/02/浅谈深拷贝与浅拷贝/TIM图片20180702220724.png"></p>
+</code></pre><h2 id="4、深拷贝与浅拷贝的区别"><a href="#4、深拷贝与浅拷贝的区别" class="headerlink" title="4、深拷贝与浅拷贝的区别"></a>4、深拷贝与浅拷贝的区别</h2><p>浅拷贝是复制,两个对象指向同一个地址;</p>
+<p>深拷贝是新开栈,两个对象指向不同的地址</p>
 <p>参考资料：<br><a href="https://github.com/wengjq/Blog/issues/3" target="_blank" rel="noopener">javaScript中浅拷贝和深拷贝的实现</a><br><a href="https://segmentfault.com/a/1190000008637489" target="_blank" rel="noopener">JavaScript中的浅拷贝和深拷贝</a><br><a href="https://www.jb51.net/article/87751.htm" target="_blank" rel="noopener">再谈Javascript中的基本类型和引用类型(推荐)</a><br><a href="https://juejin.im/post/5b235b726fb9a00e8a3e4e88" target="_blank" rel="noopener">JavaScript深拷贝的一些坑</a></p>
 
         
@@ -724,7 +716,7 @@ console.log(b);
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2019/12/">十二月 2019<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/11/">十一月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/10/">十月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/08/">八月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/05/">五月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/04/">四月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/03/">三月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">13</span></a>
+                <a class="sidebar_archives-link" href="/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/12/">十二月 2019<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/10/">十月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/08/">八月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/05/">五月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/04/">四月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/03/">三月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/02/">二月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/01/">一月 2019<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/09/">九月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/06/">六月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/05/">五月 2018<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/04/">四月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/03/">三月 2018<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/02/">二月 2018<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">13</span></a>
             </ul>
         </li>
         
