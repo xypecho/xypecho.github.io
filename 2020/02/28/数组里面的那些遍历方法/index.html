@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Fri Feb 28 2020 14:51:13 GMT+0800">
-        <meta property="article:modified_time" content="Fri Feb 28 2020 16:43:18 GMT+0800">
+        <meta property="article:modified_time" content="Sat Feb 29 2020 12:36:22 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2020/02/28/数组里面的那些遍历方法/index.html",
     "headline": "数组里面的那些遍历方法",
     "datePublished": "Fri Feb 28 2020 14:51:13 GMT+0800",
-    "dateModified": "Fri Feb 28 2020 16:43:18 GMT+0800",
+    "dateModified": "Sat Feb 29 2020 12:36:22 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -598,7 +598,8 @@ console.log(Object.entries(arr1)) //  [[&quot;name&quot;, &quot;呆呆&quot;],[&
 for (const iterator of arr) {
     console.log(iterator) // 1 2 3
 }
-</code></pre><h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><table>
+</code></pre><h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p>*是否修改原数组是指：在该方法的遍历中做操作，是否会影响原数组</p>
+<table>
 <thead>
 <tr>
 <th style="text-align:left">方法</th>
@@ -609,10 +610,94 @@ for (const iterator of arr) {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">1</td>
-<td style="text-align:left">2</td>
-<td style="text-align:left">3</td>
-<td style="text-align:left">4</td>
+<td style="text-align:left">for</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">无</td>
+</tr>
+<tr>
+<td style="text-align:left">forEach</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">无</td>
+</tr>
+<tr>
+<td style="text-align:left">every</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Boolean</td>
+</tr>
+<tr>
+<td style="text-align:left">some</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Boolean</td>
+</tr>
+<tr>
+<td style="text-align:left">filter</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Array</td>
+</tr>
+<tr>
+<td style="text-align:left">map</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Array</td>
+</tr>
+<tr>
+<td style="text-align:left">reduce</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Any</td>
+</tr>
+<tr>
+<td style="text-align:left">reduceRight</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Any</td>
+</tr>
+<tr>
+<td style="text-align:left">for…in</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">无</td>
+</tr>
+<tr>
+<td style="text-align:left">find</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Any</td>
+</tr>
+<tr>
+<td style="text-align:left">findIndex</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Number</td>
+</tr>
+<tr>
+<td style="text-align:left">keys</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Array</td>
+</tr>
+<tr>
+<td style="text-align:left">values</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Array</td>
+</tr>
+<tr>
+<td style="text-align:left">entries</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">是</td>
+<td style="text-align:left">Array</td>
+</tr>
+<tr>
+<td style="text-align:left">for…of</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">否</td>
+<td style="text-align:left">无</td>
 </tr>
 </tbody>
 </table>
