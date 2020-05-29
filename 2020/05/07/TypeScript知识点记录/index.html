@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu May 07 2020 21:35:33 GMT+0800">
-        <meta property="article:modified_time" content="Fri May 08 2020 22:06:50 GMT+0800">
+        <meta property="article:modified_time" content="Mon May 18 2020 21:42:18 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2020/05/07/TypeScript知识点记录/index.html",
     "headline": "TypeScript知识点记录",
     "datePublished": "Thu May 07 2020 21:35:33 GMT+0800",
-    "dateModified": "Fri May 08 2020 22:06:50 GMT+0800",
+    "dateModified": "Mon May 18 2020 21:42:18 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、变量定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、变量定义</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1-定义基本数据类型"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.1 定义基本数据类型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-定义数组"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.2 定义数组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3-定义对象"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.3 定义对象</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-4-定义函数"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">1.4 定义函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-5-定义class"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">1.5 定义class</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、变量定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、变量定义</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-1-定义基本数据类型"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.1 定义基本数据类型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-2-定义数组"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.2 定义数组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-3-定义对象"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.3 定义对象</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-4-定义函数"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">1.4 定义函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-5-定义class"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">1.5 定义class</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-6-定义泛型函数"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">1.6 定义泛型函数</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -643,6 +643,19 @@ class Cat extends Animal {
 
 const maomao = new Cat(&#39;maomao&#39;);
 console.log(maomao.run())
+</code></pre><h4 id="1-6-定义泛型函数"><a href="#1-6-定义泛型函数" class="headerlink" title="1.6 定义泛型函数"></a>1.6 定义泛型函数</h4><p>泛型函数是参数和返回值类型相同的函数。</p>
+<pre><code>function echo&lt;T&gt;(arg: T): T {
+    return arg;
+}
+
+const res = echo(&#39;123&#39;);
+
+// 两个参数时的写法
+function echo&lt;T, U&gt;(arg: [T, U]): [U, T] {
+    return [arg[1], arg[0]];
+}
+
+const res = echo([&#39;123&#39;, 233]);
 </code></pre>
         
     
