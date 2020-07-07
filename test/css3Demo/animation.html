@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #cccccc;
+        }
+
+        .animation1 {
+            width: 90px !important;
+            height: 90px !important;
+            background-image: url('./favorite.png');
+            background-size: auto 90px;
+            animation: swiperLike .8s steps(32, end) 0ms infinite alternate forwards;
+            background-position: 90px 0
+        }
+
+        @keyframes swiperLike {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: -2880px 0;
+            }
+        }
+
+        .animation2 {
+            width: 280px!important;
+            height: 340px!important;
+            background-image: url('./guide.png');
+            background-size: auto 340px;
+            animation: swiper 1s steps(48, start) 0ms infinite normal backwards;
+            margin-top: 42px;
+        }
+
+        @keyframes swiper {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: -13440px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="animation1"></div>
+    <div class="animation2"></div>
+</body>
+
+</html>
