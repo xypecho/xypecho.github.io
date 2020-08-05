@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 100px;
+        }
+
+        div {
+            -webkit-line-clamp: 2;
+            /* （用来限制在一个块元素显示的文本的行数,2表示最多显示2行。 为了实现该效果，它需要组合其他的WebKit属性） */
+            display: -webkit-box;
+            /* （和1结合使用，将对象作为弹性伸缩盒子模型显示 ） */
+            -webkit-box-orient: vertical;
+            /* （和1结合使用 ，设置或检索伸缩盒对象的子元素的排列方式 ） */
+            overflow: hidden;
+            /* （文本溢出限定的宽度就隐藏内容） */
+            text-overflow: ellipsis;
+            /* （多行文本的情况下，用省略号“…”隐藏溢出范围的文本) */
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        如果实现单行文本的溢出显示省略号同学们应该都知道用如果实现单行文本的溢出显示省略号同学们应该都知道用如果实现单行文本的溢出显示省略号同学们应该都知道用
+    </div>
+</body>
+
+</html>

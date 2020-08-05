@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>文字超出显示省略号最全攻略</title>
+      <link href="/2020/08/05/%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7%E6%9C%80%E5%85%A8%E6%94%BB%E7%95%A5/"/>
+      <url>/2020/08/05/%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7%E6%9C%80%E5%85%A8%E6%94%BB%E7%95%A5/</url>
+      <content type="html"><![CDATA[<h3 id="单行文本溢出省略"><a href="#单行文本溢出省略" class="headerlink" title="单行文本溢出省略"></a>单行文本溢出省略</h3><pre><code>overflow: hidden;text-overflow: ellipsis;white-space: nowrap;</code></pre><p>优点：</p><ol><li>无兼容问题</li><li>响应式截断</li><li>文本溢出范围才显示省略号，否则不显示省略号</li></ol><p>缺点：</p><ol><li>只支持单行文本截断</li></ol><p>适用场景：</p><ol><li>适用于单行文本溢出显示省略号的情况</li></ol><h3 id="多行文本溢出省略"><a href="#多行文本溢出省略" class="headerlink" title="多行文本溢出省略"></a>多行文本溢出省略</h3><pre><code>-webkit-line-clamp: 2;/* （用来限制在一个块元素显示的文本的行数,2表示最多显示2行。 为了实现该效果，它需要组合其他的WebKit属性） */display: -webkit-box;/* （和1结合使用，将对象作为弹性伸缩盒子模型显示 ） */-webkit-box-orient: vertical;/* （和1结合使用 ，设置或检索伸缩盒对象的子元素的排列方式 ） */overflow: hidden;/* （文本溢出限定的宽度就隐藏内容） */text-overflow: ellipsis;/* （多行文本的情况下，用省略号“…”隐藏溢出范围的文本) */</code></pre><p>查看<a href="https://xypecho.github.io/test/ellipsis/demo1.html" target="_blank" rel="noopener">示例</a></p><p>优点：</p><ol><li>响应式截断</li><li>文本溢出范围才显示省略号，否则不显示省略号</li></ol><p>缺点：</p><ol><li>兼容性一般： -webkit-line-clamp 属性只有 WebKit 内核的浏览器才支持</li></ol><p>适用场景：</p><ol><li>多适用于移动端页面，因为移动设备浏览器更多是基于 WebKit 内核</li></ol><h3 id="flex布局下超出显示省略号"><a href="#flex布局下超出显示省略号" class="headerlink" title="flex布局下超出显示省略号"></a>flex布局下超出显示省略号</h3><h4 id="方案1：min-width-0"><a href="#方案1：min-width-0" class="headerlink" title="方案1：min-width: 0"></a>方案1：min-width: 0</h4><p>页面布局</p><pre><code>&lt;div class=&quot;father&quot;&gt;    &lt;div class=&quot;son&quot;&gt;1&lt;/div&gt;    &lt;div class=&quot;son&quot;&gt;        &lt;div class=&quot;text&quot;&gt;            这里是你想要超过长度显示省略号的一段文字这里是你想要超过长度显示省略号的一段文字这里是你想要超过长度显示省略号的一段文字        &lt;/div&gt;    &lt;/div&gt;    &lt;div class=&quot;son&quot;&gt;3&lt;/div&gt;&lt;/div&gt;</code></pre><p>css样式</p><pre><code>.father {    width: 500px;    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;}.son {    flex: 1;    height: 50px;    display: flex;    flex-direction: row;    justify-content: center;    align-items: center;}.son:nth-child(2) {    min-width: 0;}.text {    overflow: hidden;    text-overflow: ellipsis;    white-space: nowrap;}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>css实现帧动画</title>
       <link href="/2020/07/07/css%E5%AE%9E%E7%8E%B0%E5%B8%A7%E5%8A%A8%E7%94%BB/"/>
       <url>/2020/07/07/css%E5%AE%9E%E7%8E%B0%E5%B8%A7%E5%8A%A8%E7%94%BB/</url>
