@@ -3,6 +3,27 @@
   
     
     <entry>
+      <title>css最强布局方案-grid</title>
+      <link href="/2020/08/26/css%E6%9C%80%E5%BC%BA%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%88-grid/"/>
+      <url>/2020/08/26/css%E6%9C%80%E5%BC%BA%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%88-grid/</url>
+      <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p><code>flex</code>已经强大到足够实现很多种布局方案了，为什么又出来一个新的布局方案<code>grid</code>呢?<br>一个新的技术的出现必然是为了解决现有技术的不足之处的。<br>与flex的一纬布局不同，grid布局是一个二维布局系统，也就意味着它可以同时处理列和行。</p><h3 id="通过一个示例来窥探grid的神奇之处"><a href="#通过一个示例来窥探grid的神奇之处" class="headerlink" title="通过一个示例来窥探grid的神奇之处"></a>通过一个示例来窥探grid的神奇之处</h3><center><br>    <img style="border-radius: 0.3125em;    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="layout.png"><br>    <br><br>    <div style="color:orange; border-bottom: 1px solid #d9d9d9;    display: inline-block;    color: #999;    padding: 2px">实现这样一个经典布局</div><br></center><p>grid有着更加语义化的属性，可以让我们像搭积木一样进行的网页布局。<br>grid的还有一个特性就是grid可以让我们的布局与html语义结构解耦出来，不用根据html所定义的结构顺序来渲染。</p><pre><code>body {    font-weight: 900;    color: #ffffff;}.wrapper {    width: 100vw;    height: 100vh;    display: grid;    grid-template-columns: 200px auto; // 定义每一列的列宽    grid-template-rows: 60px auto 60px; // 定义每一行的行高    grid-template-areas:        &quot;header header header&quot;        &quot;menu content content&quot;        &quot;footer footer footer&quot;;}.header,.footer {    background: #5b5b8e;}.header {    grid-area: header;}.footer {    grid-area: footer;}.menu {    background: #66cc99;    grid-area: menu;}.content {    background: #f9cc6e;    grid-area: content;}&lt;div class=&quot;wrapper&quot;&gt;    &lt;div class=&quot;header&quot;&gt;HEADER&lt;/div&gt;    &lt;div class=&quot;menu&quot;&gt;MENU&lt;/div&gt;    &lt;div class=&quot;content&quot;&gt;CONTENT&lt;/div&gt;    &lt;div class=&quot;footer&quot;&gt;FOOTER&lt;/div&gt;&lt;/div&gt;</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>文字超出显示省略号最全攻略</title>
       <link href="/2020/08/05/%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7%E6%9C%80%E5%85%A8%E6%94%BB%E7%95%A5/"/>
       <url>/2020/08/05/%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7%E6%9C%80%E5%85%A8%E6%94%BB%E7%95%A5/</url>
