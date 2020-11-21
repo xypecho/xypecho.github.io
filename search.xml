@@ -3,6 +3,21 @@
   
     
     <entry>
+      <title>小程序踩坑指北</title>
+      <link href="/2020/11/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8C%97/"/>
+      <url>/2020/11/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8C%97/</url>
+      <content type="html"><![CDATA[<h3 id="iOS端border-radius失效"><a href="#iOS端border-radius失效" class="headerlink" title="iOS端border-radius失效"></a>iOS端border-radius失效</h3><p>一般我们想设置圆角，都是父元素设置border-radius然后overflow:hidden，然鹅iOS上这个基础属性却并不是支持的很好，需要<a href="https://blog.csdn.net/wangshuo0407/article/details/79844596" target="_blank" rel="noopener">hack</a>一下。</p><pre><code>// 给父元素加上如下属性即可.father_wrapper {    border-radius: 50%;    overflow: hidden;    -webkit-backface-visibility: hidden;    -moz-backface-visibility: hidden;    -webkit-transform: translate3d(0, 0, 0);    -moz-transform: translate3d(0, 0, 0);}</code></pre><h3 id="iOS端滑动特性引起的遮罩失效、白屏"><a href="#iOS端滑动特性引起的遮罩失效、白屏" class="headerlink" title="iOS端滑动特性引起的遮罩失效、白屏"></a>iOS端滑动特性引起的遮罩失效、白屏</h3><center><br>    <img style="border-radius: 0.3125em;    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="微信图片_20201121152323.jpg"><br>    <br><br></center><p>如上图，商品栏是一个横向滚动的scroll-view，父容器position:relation,子容器内的商品状态遮罩(已售罄、已售33%)position:absolute。在iOS端需要滑动到可视区域才会出现，且最后一个元素始终不能出现遮罩。</p><pre><code>// 给父元素加上如下属性即可.father_wrapper {  will-change: transform;}</code></pre><h3 id="cover-view文字截断问题"><a href="#cover-view文字截断问题" class="headerlink" title="cover-view文字截断问题"></a>cover-view文字截断问题</h3><p>这个在Android上出现的更频繁，出现的原因是cover-view自带overflow:hidden属性，如果是固定文字则直接写死cover-view的宽度即可。<br>如果不是固定的文字，是从接口获取的则需要动态设置宽度。</p><h4 id="解决方法1-动态设置宽度"><a href="#解决方法1-动态设置宽度" class="headerlink" title="解决方法1 动态设置宽度"></a>解决方法1 动态设置宽度</h4><pre><code>// 封装一下获取宽度的函数setCoverViewWidth(dom, cb) {    wx.createSelectorQuery().in(this).select(dom).boundingClientRect((rects) =&gt; {    typeof cb === &quot;function&quot; &amp;&amp; cb(rects);    }).exec()}// 调用this.setCoverViewWidth(&#39;#cash-dom&#39;, rects =&gt; {    this.setData({        coverViewWidth: `${Math.ceil(rects.width + 1)}px`    })})</code></pre><h4 id="解决方法2"><a href="#解决方法2" class="headerlink" title="解决方法2"></a>解决方法2</h4><p>给cover-view加上样式white-space: pre-wrap;不过这个有大部分情况下会引起更多问题。</p>]]></content>
+      
+      
+        <tags>
+            
+            <tag> 小程序 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>检查嵌套对象属性是否为空的优雅方法</title>
       <link href="/2020/10/15/%E6%A3%80%E6%9F%A5%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%E7%9A%84%E4%BC%98%E9%9B%85%E6%96%B9%E6%B3%95/"/>
       <url>/2020/10/15/%E6%A3%80%E6%9F%A5%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%E7%9A%84%E4%BC%98%E9%9B%85%E6%96%B9%E6%B3%95/</url>
