@@ -45,7 +45,7 @@
     
     <title>
         
-            npm的一些常用命令 | 
+            搞懂Javascript闭包概念(二) | 
         
         小小切图仔也有大大的梦想
     </title>
@@ -56,7 +56,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="小切图仔的前端生涯记录博客">
-    <meta name="keywords" content=",npm">
+    <meta name="keywords" content=",JS技巧">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -222,7 +222,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="小小切图仔也有大大的梦想">
-    <meta name="msapplication-starturl" content="http://yoursite.com/2018/05/18/npm的一些常用命令/">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="小小切图仔也有大大的梦想">
@@ -237,16 +237,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://yoursite.com/2018/05/18/npm的一些常用命令/">
+    <meta property="og:url" content="http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="npm的一些常用命令 | 小小切图仔也有大大的梦想">
+    <meta property="og:title" content="搞懂Javascript闭包概念(二) | 小小切图仔也有大大的梦想">
     <meta property="og:image" content="/img/avatar.jpg">
     <meta property="og:description" content="小切图仔的前端生涯记录博客">
-    <meta property="og:article:tag" content="npm"> 
+    <meta property="og:article:tag" content="JS技巧"> 
 
     
-        <meta property="article:published_time" content="Fri May 18 2018 21:18:06 GMT+0800">
-        <meta property="article:modified_time" content="Wed Dec 25 2019 21:23:08 GMT+0800">
+        <meta property="article:published_time" content="Sun Jan 31 2021 22:10:20 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 31 2021 22:54:08 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -254,7 +254,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://yoursite.com/2018/05/18/npm的一些常用命令/index.html" />
+        <link rel="canonical" href="http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -266,10 +266,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://yoursite.com/2018/05/18/npm的一些常用命令/index.html",
-    "headline": "npm的一些常用命令",
-    "datePublished": "Fri May 18 2018 21:18:06 GMT+0800",
-    "dateModified": "Wed Dec 25 2019 21:23:08 GMT+0800",
+    "mainEntityOfPage": "http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/index.html",
+    "headline": "搞懂Javascript闭包概念(二)",
+    "datePublished": "Sun Jan 31 2021 22:10:20 GMT+0800",
+    "dateModified": "Sun Jan 31 2021 22:54:08 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -287,7 +287,7 @@
             "url": "/img/avatar.jpg"
         }
     },
-    "keywords": ",npm",
+    "keywords": ",JS技巧",
     "description": "小切图仔的前端生涯记录博客",
 }
 </script>
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、初始化项目"><span class="post-toc-number">1.</span> <span class="post-toc-text">1、初始化项目</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、安装模块"><span class="post-toc-number">2.</span> <span class="post-toc-text">2、安装模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3、查看某个包的所有版本"><span class="post-toc-number">3.</span> <span class="post-toc-text">3、查看某个包的所有版本</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、升级某个包"><span class="post-toc-number">4.</span> <span class="post-toc-text">4、升级某个包</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1-升级package-json中的包"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">4.1 升级package.json中的包</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-2-升级全局安装的包"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">4.2 升级全局安装的包</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5、卸载某个包"><span class="post-toc-number">5.</span> <span class="post-toc-text">5、卸载某个包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6、查看所有安装的包"><span class="post-toc-number">6.</span> <span class="post-toc-text">6、查看所有安装的包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#7、查看全局安装过的包"><span class="post-toc-number">7.</span> <span class="post-toc-text">7、查看全局安装过的包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8、查看哪些包有更新"><span class="post-toc-number">8.</span> <span class="post-toc-text">8、查看哪些包有更新</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#9、查看全局安装的包的位置"><span class="post-toc-number">9.</span> <span class="post-toc-text">9、查看全局安装的包的位置</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#首先我们先来理解几个概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">首先我们先来理解几个概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#作用域"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">作用域</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -385,7 +385,7 @@
         
     
             <p class="article-headline-p">
-                npm的一些常用命令
+                搞懂Javascript闭包概念(二)
             </p>
         </div>
 
@@ -404,7 +404,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>很青的青蛙</strong>
-        <span>5月 18, 2018</span>
+        <span>1月 31, 2021</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -428,7 +428,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/npm/">npm</a>
+        <a class="post_tag-link" href="/tags/JS技巧/">JS技巧</a>
     </ul>
     
 
@@ -456,7 +456,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=npm的一些常用命令&url=http://yoursite.com/2018/05/18/npm的一些常用命令/index.html&pic=http://yoursite.com/img/avatar.jpg&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=搞懂Javascript闭包概念(二)&url=http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/index.html&pic=http://yoursite.com/img/avatar.jpg&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -474,7 +474,7 @@
 
     <!-- Share LinkedIn -->
     
-        <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://yoursite.com/2018/05/18/npm的一些常用命令/index.html&title=npm的一些常用命令" target="_blank">
+        <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/index.html&title=搞懂Javascript闭包概念(二)" target="_blank">
             <li class="mdl-menu__item">
                 分享到 LinkedIn
             </li>
@@ -483,7 +483,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=小小切图仔也有大大的梦想&title=npm的一些常用命令&summary=小切图仔的前端生涯记录博客&pics=http://yoursite.com/img/avatar.jpg&url=http://yoursite.com/2018/05/18/npm的一些常用命令/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=小小切图仔也有大大的梦想&title=搞懂Javascript闭包概念(二)&summary=小切图仔的前端生涯记录博客&pics=http://yoursite.com/img/avatar.jpg&url=http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -502,34 +502,18 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="1、初始化项目"><a href="#1、初始化项目" class="headerlink" title="1、初始化项目"></a>1、初始化项目</h3><pre><code>npm init //初始化项目，生成package.json文件
-npm init -y //生成的默认的package.json(无需一直按yes)
-</code></pre><h3 id="2、安装模块"><a href="#2、安装模块" class="headerlink" title="2、安装模块"></a>2、安装模块</h3><pre><code>npm install // 用于下载package.json里面的模块
-npm install vue vuex vue-router -S // 同时下载多个包
-npm install -g express // 全局安装express模块，即在其他文件夹里面也可以require进来
-npm install –save-dev xxx // 表示将该模块写入devDependencies(开发时运行的依赖)属性，可以简写为npm install  xxx -D
-npm install --save xxx // 表示将该模块写入dependencies(上线和开发都需要的依赖)属性,可以简写为npm install  xxx -S
-</code></pre><h3 id="3、查看某个包的所有版本"><a href="#3、查看某个包的所有版本" class="headerlink" title="3、查看某个包的所有版本"></a>3、查看某个包的所有版本</h3><pre><code>npm view &#39;xxx&#39; versions 
-例：
-npm view video.js versions
-</code></pre><h3 id="4、升级某个包"><a href="#4、升级某个包" class="headerlink" title="4、升级某个包"></a>4、升级某个包</h3><h4 id="4-1-升级package-json中的包"><a href="#4-1-升级package-json中的包" class="headerlink" title="4.1 升级package.json中的包"></a>4.1 升级package.json中的包</h4><pre><code>npm update xxx
-例：
-npm update video.js //这种升级方式只能升级对应的版本里面的最高的，例：现在的版本的 6.0.1  用该指令最高只能手机到 6.9.x，不能升级到7.0以后的
-</code></pre><h4 id="4-2-升级全局安装的包"><a href="#4-2-升级全局安装的包" class="headerlink" title="4.2 升级全局安装的包"></a>4.2 升级全局安装的包</h4><pre><code>npm i xxx -g // 例如npm i webpack -g
-npm update -g // 升级全部可以升级的包
-</code></pre><h3 id="5、卸载某个包"><a href="#5、卸载某个包" class="headerlink" title="5、卸载某个包"></a>5、卸载某个包</h3><pre><code>npm uninstall -g xxx //删除xxx全局模块
-npm uninstall 模块：删除模块，但不删除模块留在package.json中的对应信息
-npm uninstall 模块 --save 删除模块，同时删除模块留在package.json中dependencies下的对应信息
-npm uninstall 模块 --save-dev 删除模块，同时删除模块留在package.json中devDependencies下的对应信息
-例：
-npm uninstall -g vue
-如果要卸载所有包，直接删除node_modules文件夹即可。。。
-</code></pre><h3 id="6、查看所有安装的包"><a href="#6、查看所有安装的包" class="headerlink" title="6、查看所有安装的包"></a>6、查看所有安装的包</h3><pre><code>npm ls
-</code></pre><h3 id="7、查看全局安装过的包"><a href="#7、查看全局安装过的包" class="headerlink" title="7、查看全局安装过的包"></a>7、查看全局安装过的包</h3><pre><code>npm list -g --depth 0
-</code></pre><h3 id="8、查看哪些包有更新"><a href="#8、查看哪些包有更新" class="headerlink" title="8、查看哪些包有更新"></a>8、查看哪些包有更新</h3><pre><code>npm outdated // 在项目所在文件夹执行的话，可以看到当前项目中的node_modules中的包，是否有更新
-npm outdated -g --depth=0 // 查看全局(-g)安装的包是否有更新
-</code></pre><h3 id="9、查看全局安装的包的位置"><a href="#9、查看全局安装的包的位置" class="headerlink" title="9、查看全局安装的包的位置"></a>9、查看全局安装的包的位置</h3><pre><code>npm root -g  // 输出C:\Program Files\nodejs\node_modules
-</code></pre>
+        <p>这是闭包系列的第二章，<a href="https://xypecho.github.io/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/" target="_blank" rel="noopener">第一章</a>只是囫囵吞枣般的记笔记，根本没多深入理解，最近在看了<a href="https://developer.mozilla.org/zh-cn/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">MDN上关于闭包的文章</a>以及<a href="https://www.bilibili.com/video/BV1YJ411R7ap?p=4" target="_blank" rel="noopener">B站几个闭包视频</a>后有了些许理解，于是用小本本记下来。</p>
+<h3 id="首先我们先来理解几个概念"><a href="#首先我们先来理解几个概念" class="headerlink" title="首先我们先来理解几个概念"></a>首先我们先来理解几个概念</h3><h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><blockquote>
+<p>作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p>
+</blockquote>
+<pre><code>let a = 1; // 定义一个全局变量
+console.log(a); // 1
+
+(function () {
+    console.log(a) // 函数内部输出了a，此时，找不到a，按照作用域链特性向外层寻找，找到了a为‘1’；所以结果输出的是‘1’
+})();
+</code></pre><p>参考资料：<br><a href="https://www.cnblogs.com/gaosirs/p/10579059.html" target="_blank" rel="noopener">JS 作用域及作用域链</a></p>
+
         
     
 
@@ -549,21 +533,13 @@ npm outdated -g --depth=0 // 查看全局(-g)安装的包是否有更新
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2018/05/29/package-json的理解与学习/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2018/05/17/常见的Http状态显示/" id="post_nav-older" class="next-content">
+        <a href="/2021/01/26/一些优雅的代码/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
