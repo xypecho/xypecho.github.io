@@ -6,7 +6,7 @@
       <title>搞懂Javascript闭包概念(二)</title>
       <link href="/2021/01/31/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5-%E4%BA%8C/"/>
       <url>/2021/01/31/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5-%E4%BA%8C/</url>
-      <content type="html"><![CDATA[<p>这是闭包系列的第二章，<a href="https://xypecho.github.io/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/" target="_blank" rel="noopener">第一章</a>只是囫囵吞枣般的记笔记，根本没多深入理解，最近在看了<a href="https://developer.mozilla.org/zh-cn/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">MDN上关于闭包的文章</a>以及<a href="https://www.bilibili.com/video/BV1YJ411R7ap?p=4" target="_blank" rel="noopener">B站几个闭包视频</a>后有了些许理解，于是用小本本记下来。</p><h3 id="首先我们先来理解几个概念"><a href="#首先我们先来理解几个概念" class="headerlink" title="首先我们先来理解几个概念"></a>首先我们先来理解几个概念</h3><h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><blockquote><p>作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p></blockquote><pre><code>let a = 1; // 定义一个全局变量console.log(a); // 1(function () {    console.log(a) // 函数内部输出了a，此时，找不到a，按照作用域链特性向外层寻找，找到了a为‘1’；所以结果输出的是‘1’})();</code></pre><p>参考资料：<br><a href="https://www.cnblogs.com/gaosirs/p/10579059.html" target="_blank" rel="noopener">JS 作用域及作用域链</a></p>]]></content>
+      <content type="html"><![CDATA[<p>这是闭包系列的第二章，<a href="https://xypecho.github.io/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/" target="_blank" rel="noopener">第一章</a>只是囫囵吞枣般的记笔记，根本没多深入理解，最近在看了<a href="https://developer.mozilla.org/zh-cn/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">MDN上关于闭包的文章</a>以及<a href="https://www.bilibili.com/video/BV1YJ411R7ap?p=4" target="_blank" rel="noopener">B站几个闭包视频</a>后有了些许理解，于是用小本本记下来。</p><h3 id="首先我们先来理解几个概念"><a href="#首先我们先来理解几个概念" class="headerlink" title="首先我们先来理解几个概念"></a>首先我们先来理解几个概念</h3><h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><blockquote><p>作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p></blockquote><pre><code>let a = 1; // 定义一个全局变量，全局变量在js文件任意位置均可使用(在chrome的控制台也是可以输出的)，会一直存在，直到网页也就是window对象关闭后释放console.log(a); // 1function fn() {    let b = 2;    console.log(a) // 函数内部输出了a，此时，找不到a，按照作用域链特性向外层寻找，找到了a为‘1’；所以结果输出的是1    console.log(b) // 2}console.log(b) // b is not defined,执行fn函数计算机会为函数开辟一个新的内存地址，在函数内部创建变量并赋值为2，函数执行完即释放，所以在函数外部不可访问fn()fn() // 调用多次即会生成多个内存地址</code></pre><h4 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h4><p>上面的代码形象的解释了全局作用域和局部作用域这两个概念。接下来看看下面这个例子。</p><pre><code>function fn() {    var a = 0;    function sum() {        console.log(++a)    }    sum();}fn(); // 1fn(); // 1，因为上面提到，每次调用是新开辟内存地址，也是重新给a赋值为0，所以不管调用多少次，结果都是1</code></pre><p>那么，有没有什么办法可以实现每次调用fn，输出值就自增1呢，我们把代码修改一下</p><pre><code>function fn() {    var a = 0;    return function sum() {        console.log(++a)    }}let test = fn();test(); // 1test(); // 2test(); // 3</code></pre><p>为什么每次调用都会自增而不是一直输出1呢，我们来分析一下上面的代码:</p><ol><li>执行fn函数而fn函数的返回值还是一个函数就相当于将sum函数赋值给一个全局变量test，全局变量我们上文提到过，只有当网页关闭时才会卸载，这就导致sum函数始终在内存中。</li><li>那么此时的test是什么呢，我们来打印一下看看,输出如下</li></ol><pre><code>ƒ sum() {            console.log(++a)        }</code></pre><ol><li>每次执行test()即相当于执行sum函数，++a则相当于a=a+1，代码可简化下</li></ol><pre><code>// test() 相当于执行一次  a = a + 1// test() 相当于再执行一次  a = a + 1</code></pre><ol><li>因为sum一直在内存中，而fn是sum的父函数，sum的存在依赖于fn，因此fn也始终在内存中，不会在调用结束后，被垃圾回收机制（garbage collection）回收，所以整个fn函数内部数据都会被保留，a自增的结果也就一直存在</li></ol><p><strong>仔细回想一下刚刚我们查找变量a的过程发生了什么？</strong></p><ul><li>先从当前上下文的变量对象中查找</li><li>如果没有找到，就会从父级(词法层面上的父级)执行上下文的变量对象中查找</li><li>一直找到全局上下文的变量对象，也就是全局对象(ps:作用域链的顶端就是全局对象)</li></ul><p><strong>这样由多个执行上下文的变量对象构成的链表就叫做作用域链。</strong></p><p><strong>课外小拓展：fn函数中不return函数，直接return变量a行不行</strong></p><p>答案是：<strong>不行</strong>，上代码，每次调用完fn，内部的变量a就会被释放，所以每次调用都是返回1</p><pre><code>function fn() {    var a = 0;    return ++a;}let test = fn();console.log(test) // 1console.log(test) // 1console.log(test) // 1</code></pre><h3 id="主角登场-闭包"><a href="#主角登场-闭包" class="headerlink" title="主角登场-闭包"></a>主角登场-闭包</h3><h4 id="面试题问什么是闭包"><a href="#面试题问什么是闭包" class="headerlink" title="面试题问什么是闭包"></a>面试题问什么是闭包</h4><p>现在我们来尝试回答一下：</p><ol><li>闭包就是函数嵌套，内部函数调用外部函数的变量</li><li>闭包就是能够读取其他函数内部变量的函数，在本质上是函数内部和函数外部链接的桥梁</li><li>当函数可以记住并访问所在的词法作用域时，就产生了闭包，即使函数是在当前词法作用域之外执行</li><li>函数和对其周围状态（词法环境）的引用捆绑在一起构成闭包（closure）（ps：回答最官方最靠谱的一个）</li></ol><p>参考资料：<br><a href="https://www.cnblogs.com/gaosirs/p/10579059.html" target="_blank" rel="noopener">JS 作用域及作用域链</a><br><a href="https://blog.csdn.net/ther_su/article/details/108479789" target="_blank" rel="noopener">前端知识总结（二） 闭包</a><br><a href="https://webbj97.github.io/summary/blog/js-basics/3.html#%E5%8F%82%E8%80%83" target="_blank" rel="noopener">JavaScript基础（三）作用域</a></p>]]></content>
       
       <categories>
           
@@ -335,9 +335,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
         </tags>
       
@@ -508,9 +508,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
             <tag> canvas </tag>
             
@@ -631,9 +631,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> nginx </tag>
-            
             <tag> linux </tag>
+            
+            <tag> nginx </tag>
             
         </tags>
       
@@ -945,9 +945,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> linux </tag>
-            
             <tag> node.js </tag>
+            
+            <tag> linux </tag>
             
         </tags>
       
@@ -1834,9 +1834,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
         </tags>
       
