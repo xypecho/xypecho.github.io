@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Mon May 11 2020 20:57:26 GMT+0800">
-        <meta property="article:modified_time" content="Sun Jan 31 2021 10:47:41 GMT+0800">
+        <meta property="article:modified_time" content="Thu Feb 18 2021 21:16:33 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2020/05/11/小程序常用操作/index.html",
     "headline": "小程序常用操作",
     "datePublished": "Mon May 11 2020 20:57:26 GMT+0800",
-    "dateModified": "Sun Jan 31 2021 10:47:41 GMT+0800",
+    "dateModified": "Thu Feb 18 2021 21:16:33 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -513,6 +513,11 @@ this.setData({
 // 也可以写成这样
 this.setData({
   [`people[${index}].age`]: 25
+})
+
+// 动态设置变量，filed为动态设置的变量
+this.setData({
+  [filed]: 25
 })
 </code></pre><h4 id="下拉加载更多避免直接使用concat或者push等方法"><a href="#下拉加载更多避免直接使用concat或者push等方法" class="headerlink" title="下拉加载更多避免直接使用concat或者push等方法"></a>下拉加载更多避免直接使用concat或者push等方法</h4><pre><code>// 核心思想是使用二维数组的方式去存储列表，不过这样渲染时就需要渲染两层了
 wx.request({
