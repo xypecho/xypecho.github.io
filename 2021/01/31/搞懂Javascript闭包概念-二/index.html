@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sun Jan 31 2021 22:10:20 GMT+0800">
-        <meta property="article:modified_time" content="Wed Feb 03 2021 20:18:34 GMT+0800">
+        <meta property="article:modified_time" content="Mon Feb 22 2021 20:57:18 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2021/01/31/搞懂Javascript闭包概念-二/index.html",
     "headline": "搞懂Javascript闭包概念(二)",
     "datePublished": "Sun Jan 31 2021 22:10:20 GMT+0800",
-    "dateModified": "Wed Feb 03 2021 20:18:34 GMT+0800",
+    "dateModified": "Mon Feb 22 2021 20:57:18 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#首先我们先来理解几个概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">首先我们先来理解几个概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#作用域"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">作用域</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#作用域链"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">作用域链</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主角登场-闭包"><span class="post-toc-number">2.</span> <span class="post-toc-text">主角登场-闭包</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#面试题问什么是闭包"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">面试题问什么是闭包</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#利用闭包搞点事"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">利用闭包搞点事</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闭包中的历史遗留问题"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">闭包中的历史遗留问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闭包的一些缺陷"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">闭包的一些缺陷</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#首先我们先来理解几个概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">首先我们先来理解几个概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#作用域"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">作用域</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#作用域链"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">作用域链</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主角登场-闭包"><span class="post-toc-number">2.</span> <span class="post-toc-text">主角登场-闭包</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#面试题问什么是闭包"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">面试题问什么是闭包</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#利用闭包搞点事"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">利用闭包搞点事</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闭包中的历史遗留问题"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">闭包中的历史遗留问题</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闭包的优点"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">闭包的优点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#闭包的一些缺陷"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">闭包的一些缺陷</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -633,8 +633,12 @@ let hd = {
 }
 let a = hd.get();
 console.log(a()) //test
-</code></pre><h4 id="闭包的一些缺陷"><a href="#闭包的一些缺陷" class="headerlink" title="闭包的一些缺陷"></a>闭包的一些缺陷</h4><p>由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退出函数之前，将不使用的局部变量手动删除。</p>
-<p>参考资料：<br><a href="https://developer.mozilla.org/zh-cn/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">MDN 闭包</a><br><a href="https://www.cnblogs.com/gaosirs/p/10579059.html" target="_blank" rel="noopener">JS 作用域及作用域链</a><br><a href="https://blog.csdn.net/ther_su/article/details/108479789" target="_blank" rel="noopener">前端知识总结（二） 闭包</a><br><a href="https://webbj97.github.io/summary/blog/js-basics/3.html#%E5%8F%82%E8%80%83" target="_blank" rel="noopener">JavaScript基础（三）作用域</a></p>
+</code></pre><h4 id="闭包的优点"><a href="#闭包的优点" class="headerlink" title="闭包的优点"></a>闭包的优点</h4><p>延长外部函数局部变量生命周期</p>
+<h4 id="闭包的一些缺陷"><a href="#闭包的一些缺陷" class="headerlink" title="闭包的一些缺陷"></a>闭包的一些缺陷</h4><p>由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退出函数之前，将不使用的局部变量手动删除。</p>
+<pre><code>// 手动释放f的引用
+
+fn = null
+</code></pre><p>参考资料：<br><a href="https://developer.mozilla.org/zh-cn/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">MDN 闭包</a><br><a href="https://www.cnblogs.com/gaosirs/p/10579059.html" target="_blank" rel="noopener">JS 作用域及作用域链</a><br><a href="https://blog.csdn.net/ther_su/article/details/108479789" target="_blank" rel="noopener">前端知识总结（二） 闭包</a><br><a href="https://webbj97.github.io/summary/blog/js-basics/3.html#%E5%8F%82%E8%80%83" target="_blank" rel="noopener">JavaScript基础（三）作用域</a></p>
 
         
     
