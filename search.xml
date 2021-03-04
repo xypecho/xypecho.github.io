@@ -3,10 +3,31 @@
   
     
     <entry>
+      <title>css踩坑集锦</title>
+      <link href="/2021/03/04/css%E8%B8%A9%E5%9D%91%E9%9B%86%E9%94%A6/"/>
+      <url>/2021/03/04/css%E8%B8%A9%E5%9D%91%E9%9B%86%E9%94%A6/</url>
+      <content type="html"><![CDATA[<h4 id="flex布局分成两行，设置两行之间的间距"><a href="#flex布局分成两行，设置两行之间的间距" class="headerlink" title="flex布局分成两行，设置两行之间的间距"></a>flex布局分成两行，设置两行之间的间距</h4><p><a href="https://segmentfault.com/q/1010000009817671#" target="_blank" rel="noopener">如何设置flex两行之间的间距？</a></p><p>给父容器设置固定的高度，然后加上属性<code>align-content: space-between;</code></p><h4 id="css中mixin怎么理解"><a href="#css中mixin怎么理解" class="headerlink" title="css中mixin怎么理解"></a>css中mixin怎么理解</h4><p>less，sass这类css预处理语言中的混合，可以理解成自定义了一段代码，后面可以用@include调用，如设置一个有默认宽高的mixin</p><pre><code>// scss@mixin box-size($width:100px,$height:100px) {    width: $width;    height: $height;}.demo{    @include box-size;}.demo2{    @include box-size(200px,300px);}// 编译成css后.demo{    width: 100px;    height: 100px;}.demo2{    width: 200px;    height: 300px;}</code></pre>]]></content>
+      
+      <categories>
+          
+          <category> CSS相关 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSS相关 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>理解JavaScript中的原型和原型链(二)</title>
       <link href="/2021/02/03/%E7%90%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE-%E4%BA%8C/"/>
       <url>/2021/02/03/%E7%90%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE-%E4%BA%8C/</url>
-      <content type="html"><![CDATA[<p><a href="https://xypecho.github.io/2018/05/30/%E7%90%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" target="_blank" rel="noopener">之前关于原型和原型链</a>的笔记现在看来理解还是浮于表面，于是新开一章。</p><h3 id="通俗易懂的介绍下原型和原型链"><a href="#通俗易懂的介绍下原型和原型链" class="headerlink" title="通俗易懂的介绍下原型和原型链"></a>通俗易懂的介绍下原型和原型链</h3><p>刚毕业的小王没有自己的房子，但是可以住父母的房子，父母就可以看作是小王的<strong>原型</strong>，父母的爸爸妈妈也就是爷爷奶奶也有自己的房子(原型)。自己、父母、爷爷奶奶这一条链条就是<strong>原型链</strong>。</p><h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><h4 id="面试题：什么是原型"><a href="#面试题：什么是原型" class="headerlink" title="面试题：什么是原型"></a>面试题：什么是原型</h4><p>每个对象在其内部初始化拥有的一个属性，就是原型(prototype)。<br>对象以其原型为模板，从原型继承方法和属性，这些属性和方法定义在对象的构造器函数的 prototype 属性上，而非对象实例本身</p><p>ps:也有例外，看下面的代码</p><pre><code>// Object.creat第一个参数为创建的对象指定原型，我们赋值为null// obj是完全的数据字典对象let obj = Object.create(null, {    name: {        value: &#39;jack&#39;    }});console.log(obj) // {name: &quot;jack&quot;}console.log(Object.getPrototypeOf(obj)) // null</code></pre><h4 id="prototype-和-proto区别"><a href="#prototype-和-proto区别" class="headerlink" title="prototype 和 proto区别"></a>prototype 和 <strong>proto</strong>区别</h4><ol><li>prototype是函数的属性,<strong>proto</strong>是对象的，除了字符串、数字、true、false、null和undefined外，JavaScript中的其他值都是对象，所以函数两个都有</li></ol><h4 id="对象自身的方法和原型上的方法冲突了？"><a href="#对象自身的方法和原型上的方法冲突了？" class="headerlink" title="对象自身的方法和原型上的方法冲突了？"></a>对象自身的方法和原型上的方法冲突了？</h4><p>引用文章开头的例子，自己有房子了当然不需要住在父母的房子里了呀。</p><pre><code>let hd = {    show() {        console.log(1)    }}console.dir(hd)hd.__proto__.show = function () {    console.log(2)}console.dir(hd)hd.show() // 1</code></pre><p>### </p>]]></content>
+      <content type="html"><![CDATA[<p><a href="https://xypecho.github.io/2018/05/30/%E7%90%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" target="_blank" rel="noopener">之前关于原型和原型链</a>的笔记现在看来理解还是浮于表面，于是新开一章。</p><h3 id="通俗易懂的介绍下原型和原型链"><a href="#通俗易懂的介绍下原型和原型链" class="headerlink" title="通俗易懂的介绍下原型和原型链"></a>通俗易懂的介绍下原型和原型链</h3><p>刚毕业的小王没有自己的房子，但是可以住父母的房子，父母就可以看作是小王的<strong>原型</strong>，父母的爸爸妈妈也就是爷爷奶奶也有自己的房子(原型)。自己、父母、爷爷奶奶这一条链条就是<strong>原型链</strong>。</p><h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><h4 id="面试题：什么是原型"><a href="#面试题：什么是原型" class="headerlink" title="面试题：什么是原型"></a>面试题：什么是原型</h4><p>每个对象在其内部初始化拥有的一个属性，就是原型(prototype)。<br>对象以其原型为模板，从原型继承方法和属性，这些属性和方法定义在对象的构造器函数的 prototype 属性上，而非对象实例本身</p><p>ps:也有例外，看下面的代码</p><pre><code>// Object.creat第一个参数为创建的对象指定原型，我们赋值为null// obj是完全的数据字典对象let obj = Object.create(null, {    name: {        value: &#39;jack&#39;    }});console.log(obj) // {name: &quot;jack&quot;}console.log(Object.getPrototypeOf(obj)) // null</code></pre><h4 id="prototype-和-proto区别"><a href="#prototype-和-proto区别" class="headerlink" title="prototype 和 proto区别"></a>prototype 和 <strong>proto</strong>区别</h4><ol><li>prototype是函数的属性,<code>__proto__</code>是对象的，除了字符串、数字、true、false、null和undefined外，JavaScript中的其他值都是对象，所以函数两个都有</li></ol><h4 id="对象自身的方法和原型上的方法冲突了？"><a href="#对象自身的方法和原型上的方法冲突了？" class="headerlink" title="对象自身的方法和原型上的方法冲突了？"></a>对象自身的方法和原型上的方法冲突了？</h4><p>引用文章开头的例子，自己有房子了当然不需要住在父母的房子里了呀。</p><pre><code>let hd = {    show() {        console.log(1)    }}console.dir(hd)hd.__proto__.show = function () {    console.log(2)}console.dir(hd)hd.show() // 1</code></pre><h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><blockquote><p>原型链：是指一个对象继承的所有对象，称为这个对象的原型链</p></blockquote><h3 id="衍生出的一些面试题"><a href="#衍生出的一些面试题" class="headerlink" title="衍生出的一些面试题"></a>衍生出的一些面试题</h3><h4 id="如何实现继承"><a href="#如何实现继承" class="headerlink" title="如何实现继承"></a>如何实现继承</h4><blockquote><p>先说下继承的概念：继承是面向对象编程中的一个重要概念，通过继承可以使子类的实例使用在父类中定义的属性和方法。</p></blockquote>]]></content>
       
       <categories>
           
@@ -356,9 +377,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
         </tags>
       
@@ -529,9 +550,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
             <tag> canvas </tag>
             
@@ -652,9 +673,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> linux </tag>
-            
             <tag> nginx </tag>
+            
+            <tag> linux </tag>
             
         </tags>
       
@@ -966,9 +987,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> node.js </tag>
-            
             <tag> linux </tag>
+            
+            <tag> node.js </tag>
             
         </tags>
       
@@ -1855,9 +1876,9 @@
       
         <tags>
             
-            <tag> CSS相关 </tag>
-            
             <tag> JS技巧 </tag>
+            
+            <tag> CSS相关 </tag>
             
         </tags>
       
