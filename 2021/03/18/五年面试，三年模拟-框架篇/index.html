@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu Mar 18 2021 23:34:52 GMT+0800">
-        <meta property="article:modified_time" content="Tue Mar 23 2021 22:19:35 GMT+0800">
+        <meta property="article:modified_time" content="Wed Mar 24 2021 00:26:02 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2021/03/18/五年面试，三年模拟-框架篇/index.html",
     "headline": "五年面试，三年模拟(框架篇)",
     "datePublished": "Thu Mar 18 2021 23:34:52 GMT+0800",
-    "dateModified": "Tue Mar 23 2021 22:19:35 GMT+0800",
+    "dateModified": "Wed Mar 24 2021 00:26:02 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue-相关"><span class="post-toc-number">1.</span> <span class="post-toc-text">vue 相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#v-if-与-v-for可以一起使用吗？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">v-if 与 v-for可以一起使用吗？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-和-computed-区别"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">watch 和 computed 区别</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-deep属性实现原理"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">watch deep属性实现原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#keep-alive刷新前一个页面"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">keep-alive刷新前一个页面</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue-相关"><span class="post-toc-number">1.</span> <span class="post-toc-text">vue 相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#v-if-与-v-for可以一起使用吗？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">v-if 与 v-for可以一起使用吗？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-和-computed-区别"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">watch 和 computed 区别</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-deep属性实现原理"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">watch deep属性实现原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#keep-alive刷新前一个页面"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">keep-alive刷新前一个页面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vue按钮级别鉴权"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">vue按钮级别鉴权</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vuex多个模块之间action如何调用"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">vuex多个模块之间action如何调用</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -522,7 +522,36 @@
 </ol>
 <h3 id="watch-deep属性实现原理"><a href="#watch-deep属性实现原理" class="headerlink" title="watch deep属性实现原理"></a>watch deep属性实现原理</h3><p>vue会一层层遍历，给这个对象的所有属性都加上这个监听器。但是这样性能开销会比较大，修改任何一个属性，都会出发这个监听器里的handler.</p>
 <h3 id="keep-alive刷新前一个页面"><a href="#keep-alive刷新前一个页面" class="headerlink" title="keep-alive刷新前一个页面"></a>keep-alive刷新前一个页面</h3><p>使用keep-alive时，再次进入了缓存页面会走以下生命周期：beforeRouteEnter –&gt;activated –&gt; deactivated，<br>所以如果需要在进入页面时刷新数据就在activated 里面做操作</p>
+<h3 id="vue按钮级别鉴权"><a href="#vue按钮级别鉴权" class="headerlink" title="vue按钮级别鉴权"></a>vue按钮级别鉴权</h3><ol>
+<li>储存权限数据</li>
+<li>自定义指令传入当前权限的参数<pre><code>// 示例代码
+&lt;el-button type=&quot;primary&quot; v-has=&quot;&#39;line_add&#39;&quot;&gt;新增&lt;/el-button&gt;
+</code></pre></li>
+<li>遍历对比权限数据中字段是否与标签中的自定义参数line_add相等，匹配成功则表明有权限，失败没有权限，返回false</li>
+</ol>
+<pre><code>function permissionJudge(value) {
+    let list = store.getters.getMenuBtnList;
+    for (let item of list) {
+    if (item.permission === value) {
+        return true;
+    }
+    }
+    return false;
+}
 
+// 注册一个全局自定义指令 `v-has`
+Vue.directive(&#39;has&#39;, {
+  // 当被绑定的元素插入到 DOM 中时触发bind钩子
+  bind: function (el, binding) {
+    if (permissionJudge(binding.value)) {
+      el.parentNode.removeChild(el);
+    }
+  }
+});
+</code></pre><h3 id="vuex多个模块之间action如何调用"><a href="#vuex多个模块之间action如何调用" class="headerlink" title="vuex多个模块之间action如何调用"></a>vuex多个模块之间action如何调用</h3><pre><code>// 用dispatch调用，总共三个参数，每个都必须写，第一个就是action名，第二个是需要传递的参数，第三个代表的是非本模块内的action
+
+dispatch(“tagsView/delAllViews”, {}, { root: true });
+</code></pre>
         
     
 
