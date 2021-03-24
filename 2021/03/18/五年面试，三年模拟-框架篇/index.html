@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu Mar 18 2021 23:34:52 GMT+0800">
-        <meta property="article:modified_time" content="Wed Mar 24 2021 00:26:02 GMT+0800">
+        <meta property="article:modified_time" content="Wed Mar 24 2021 22:07:12 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://yoursite.com/2021/03/18/五年面试，三年模拟-框架篇/index.html",
     "headline": "五年面试，三年模拟(框架篇)",
     "datePublished": "Thu Mar 18 2021 23:34:52 GMT+0800",
-    "dateModified": "Wed Mar 24 2021 00:26:02 GMT+0800",
+    "dateModified": "Wed Mar 24 2021 22:07:12 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "很青的青蛙",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue-相关"><span class="post-toc-number">1.</span> <span class="post-toc-text">vue 相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#v-if-与-v-for可以一起使用吗？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">v-if 与 v-for可以一起使用吗？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-和-computed-区别"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">watch 和 computed 区别</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-deep属性实现原理"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">watch deep属性实现原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#keep-alive刷新前一个页面"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">keep-alive刷新前一个页面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vue按钮级别鉴权"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">vue按钮级别鉴权</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vuex多个模块之间action如何调用"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">vuex多个模块之间action如何调用</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#vue-相关"><span class="post-toc-number">1.</span> <span class="post-toc-text">vue 相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#v-if-与-v-for可以一起使用吗？"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">v-if 与 v-for可以一起使用吗？</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-和-computed-区别"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">watch 和 computed 区别</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#watch-deep属性实现原理"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">watch deep属性实现原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#keep-alive刷新前一个页面"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">keep-alive刷新前一个页面</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vue按钮级别鉴权"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">vue按钮级别鉴权</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vuex多个模块之间action如何调用"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">vuex多个模块之间action如何调用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vue-循环时-加key的作用"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">vue 循环时 加key的作用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#vue中data为什么是函数"><span class="post-toc-number">1.8.</span> <span class="post-toc-text">vue中data为什么是函数</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -551,7 +551,9 @@ Vue.directive(&#39;has&#39;, {
 </code></pre><h3 id="vuex多个模块之间action如何调用"><a href="#vuex多个模块之间action如何调用" class="headerlink" title="vuex多个模块之间action如何调用"></a>vuex多个模块之间action如何调用</h3><pre><code>// 用dispatch调用，总共三个参数，每个都必须写，第一个就是action名，第二个是需要传递的参数，第三个代表的是非本模块内的action
 
 dispatch(“tagsView/delAllViews”, {}, { root: true });
-</code></pre>
+</code></pre><h3 id="vue-循环时-加key的作用"><a href="#vue-循环时-加key的作用" class="headerlink" title="vue 循环时 加key的作用"></a>vue 循环时 加key的作用</h3><p>vue组件高度复用，增加Key可以标识组件的唯一性，可以更高效的更新虚拟DOM</p>
+<h3 id="vue中data为什么是函数"><a href="#vue中data为什么是函数" class="headerlink" title="vue中data为什么是函数"></a>vue中data为什么是函数</h3><p>函数return的形式会return出不同地址的对象，不会干扰组件之间的数据绑定</p>
+
         
     
 
