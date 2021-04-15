@@ -545,9 +545,9 @@
       
         <tags>
             
-            <tag> JS技巧 </tag>
-            
             <tag> CSS相关 </tag>
+            
+            <tag> JS技巧 </tag>
             
         </tags>
       
@@ -718,9 +718,9 @@
       
         <tags>
             
-            <tag> JS技巧 </tag>
-            
             <tag> CSS相关 </tag>
+            
+            <tag> JS技巧 </tag>
             
             <tag> canvas </tag>
             
@@ -841,9 +841,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> nginx </tag>
-            
             <tag> linux </tag>
+            
+            <tag> nginx </tag>
             
         </tags>
       
@@ -1155,9 +1155,9 @@
             
             <tag> 项目部署 </tag>
             
-            <tag> linux </tag>
-            
             <tag> node.js </tag>
+            
+            <tag> linux </tag>
             
         </tags>
       
@@ -2044,9 +2044,9 @@
       
         <tags>
             
-            <tag> JS技巧 </tag>
-            
             <tag> CSS相关 </tag>
+            
+            <tag> JS技巧 </tag>
             
         </tags>
       
@@ -2223,7 +2223,7 @@
       <title>实现图片懒加载</title>
       <link href="/2018/01/06/%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/"/>
       <url>/2018/01/06/%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD/</url>
-      <content type="html"><![CDATA[<p>&#8194;&#8194;在电商网站中，首页经常需要一次性加载很多图片，但有些不在可视区域内的图片也在刚进来就加载未免太浪费资源。于是在前几天的公司项目中我就实验性的试了下懒加载。</p><blockquote><p>懒加载核心思路：将页面里所有img属性src属性用data-xx代替，当页面滚动直至此图片出现在可视区域时，用js取到该图片的data-xx的值赋给src。</p></blockquote><a id="more"></a><p>&#8194;&#8194;上项目代码</p><pre><code>&lt;div class=&quot;box_left&quot;&gt;  &lt;img src=&quot;/public/static/img/default.jpg&quot; data-src=&quot;${imgpath[0]}&quot; alt=&quot;&quot; class=&quot;lazyimg&quot;&gt;&lt;/div&gt;</code></pre><p>default.jpg是一张灰色背景的公司logo，ajax加载时先把真实路径放到“data-url”里面，然后滚动的高度加上网页可视区域的高度有没有大于该图片距离网页顶部的高度。</p><pre><code>var imgs = document.getElementsByClassName(&#39;lazyimg&#39;);var scrollheight=$(document).scrollTop();//滚动的高度var screenheight=document.documentElement.clientHeight;//网页可视区域高度for (var j = 0; j &lt; imgs.length; j++) {  var imgheight=imgs[j].offsetTop;//图片的div盒子距离顶部的高  if (imgheight&lt; scrollheight+screenheight) {    imgs[j].src=imgs[j].getAttribute(&quot;data-src&quot;);//把真实路径赋值给src  }}</code></pre><p>以上，就是一个简易版本的JS懒加载了。</p>]]></content>
+      <content type="html"><![CDATA[<p>&#8194;&#8194;在电商网站中，首页经常需要一次性加载很多图片，但有些不在可视区域内的图片也在刚进来就加载未免太浪费资源。于是在前几天的公司项目中我就实验性的试了下懒加载。</p><blockquote><p>懒加载核心思路：将页面里所有img属性src属性用data-xx代替，当页面滚动直至此图片出现在可视区域时，用js取到该图片的data-xx的值赋给src。</p></blockquote><a id="more"></a><p>&#8194;&#8194;上项目代码</p><pre><code>&lt;div class=&quot;box_left&quot;&gt;  &lt;img src=&quot;/public/static/img/default.jpg&quot; data-src=&quot;${imgpath[0]}&quot; alt=&quot;&quot; class=&quot;lazyimg&quot;&gt;&lt;/div&gt;</code></pre><p>default.jpg是一张灰色背景的公司logo，ajax加载时先把真实路径放到“data-url”里面，然后滚动的高度加上网页可视区域的高度有没有大于该图片距离网页顶部的高度。</p><pre><code>var imgs = document.getElementsByClassName(&#39;lazyimg&#39;);var scrollheight=$(document).scrollTop();//滚动的高度var screenheight=document.documentElement.clientHeight;//网页可视区域高度for (var j = 0; j &lt; imgs.length; j++) {  var imgheight=imgs[j].offsetTop;//图片的div盒子距离顶部的高  if (imgheight&lt; scrollheight+screenheight) {    imgs[j].src=imgs[j].getAttribute(&quot;data-src&quot;);//把真实路径赋值给src  }}</code></pre><p>以上，就是一个简易版本的JS懒加载了。</p><hr><p>上面是<em>2018-01-06</em>时我写的实现图片懒加载的方法，时至今日新出的一些api可以简单方便的实现我们的需求了。</p><h3 id="IntersectionObserver"><a href="#IntersectionObserver" class="headerlink" title="IntersectionObserver"></a>IntersectionObserver</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API" target="_blank" rel="noopener">MDN上关于IntersectionObserver的一些介绍</a></p><p>先上一个简单的<a href="https://xypecho.github.io/test/lazyLoad/index1.html" target="_blank" rel="noopener">demo</a></p>]]></content>
       
       <categories>
           
