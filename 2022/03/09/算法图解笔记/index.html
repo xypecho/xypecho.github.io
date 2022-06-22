@@ -1,0 +1,786 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bitbug_favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="很青的青蛙">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="二分查找 二分查找是一种算法，其输入是一个有序的元素列表（必须有序的是因为每次二分后，能通过中间值与目标值得大小关系判断出答案所在区间）。如果要查找的元素包含在列表中，二分查找返回其位置；否则返回null。  时间复杂度：log2n(如果不知道什么是时间复杂度可以看这篇) 使用场景1：假设要在电话簿中找一个名字以K打头的人，（现在谁还用电话簿！）可以从头开始翻页，直到进入以K打头的部分。但你很可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法图解笔记">
+<meta property="og:url" content="http://example.com/2022/03/09/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="小小切图仔也有大大的梦想">
+<meta property="og:description" content="二分查找 二分查找是一种算法，其输入是一个有序的元素列表（必须有序的是因为每次二分后，能通过中间值与目标值得大小关系判断出答案所在区间）。如果要查找的元素包含在列表中，二分查找返回其位置；否则返回null。  时间复杂度：log2n(如果不知道什么是时间复杂度可以看这篇) 使用场景1：假设要在电话簿中找一个名字以K打头的人，（现在谁还用电话簿！）可以从头开始翻页，直到进入以K打头的部分。但你很可能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/epub_22806916_75.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3%E7%AC%94%E8%AE%B0/epub_22806916_199.jpg">
+<meta property="og:image" content="http://example.com/2022/03/09/%E7%AE%97%E6%B3%95%E5%9B%BE%E8%A7%A3%E7%AC%94%E8%AE%B0/epub_22806916_235.jpg">
+<meta property="article:published_time" content="2022-03-09T13:53:00.000Z">
+<meta property="article:modified_time" content="2022-06-22T12:52:40.323Z">
+<meta property="article:author" content="很青的青蛙">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/epub_22806916_75.jpg">
+  
+  
+  
+  <title>算法图解笔记 - 小小切图仔也有大大的梦想</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小小切图仔也有大大的梦想</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="算法图解笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-09 21:53" pubdate>
+          星期三, 三月 9日 2022, 9:53 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          6.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          54 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">算法图解笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h3><blockquote>
+<p>二分查找是一种算法，其输入是一个有序的元素列表（必须有序的是因为每次二分后，能通过中间值与目标值得大小关系判断出答案所在区间）。如果要查找的元素包含在列表中，二分查找返回其位置；否则返回null。</p>
+</blockquote>
+<p><strong>时间复杂度：log2n</strong>(<a target="_blank" rel="noopener" href="https://xypecho.github.io/2019/12/11/%E7%90%86%E8%A7%A3%E7%AE%97%E6%B3%95%E4%B8%AD%E7%9A%84%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E4%B8%8E%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/">如果不知道什么是时间复杂度可以看这篇</a>)</p>
+<p>使用场景1：假设要在电话簿中找一个名字以K打头的人，（现在谁还用电话簿！）可以从头开始翻页，直到进入以K打头的部分。但你很可能不这样做，而是从中间开始，因为你知道以K打头的名字在电话簿中间。</p>
+<p>使用场景2：1-100内随便想一个数字，不管我心里想的是哪个数字，你在7次之内都能猜到，因为每次猜测都将排除很多数字。（假设猜想的数字为1，猜测过程则为50 -&gt; 25 -&gt; 13 -&gt; 7 -&gt; 4 -&gt; 2 -&gt; 1）</p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xquery">/**<br>    * 获取数组开始位置(索引值，一般为<span class="hljs-number">0</span>)，结束位置(数组的长度减<span class="hljs-number">1</span>)，中间位置(向下取整(<span class="hljs-keyword">start</span> + <span class="hljs-keyword">end</span>) / <span class="hljs-number">2</span>)<br>    * 判断中间位置的值是否是需要猜测的值，如果中间位置的值大于需要猜测的值则修改结束位置(<span class="hljs-keyword">end</span> - <span class="hljs-number">1</span>)，反之则修改开始位置(<span class="hljs-keyword">start</span> + <span class="hljs-number">1</span>)<br>*/<br>const binary_search = (<span class="hljs-keyword">array</span>, <span class="hljs-type">item</span>) =&gt; &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">start</span> = <span class="hljs-number">0</span>,<br>        <span class="hljs-keyword">end</span> = <span class="hljs-keyword">array</span>.length - <span class="hljs-number">1</span>;<br>    while (<span class="hljs-keyword">start</span> &lt;= <span class="hljs-keyword">end</span>) &#123;<br>        const middle = Math<span class="hljs-built_in">.floor</span>((<span class="hljs-keyword">start</span> + <span class="hljs-keyword">end</span>) / <span class="hljs-number">2</span>),<br>            guess = <span class="hljs-keyword">array</span>[middle];<br>        <span class="hljs-keyword">if</span> (guess === <span class="hljs-type">item</span>) &#123;<br>            <span class="hljs-keyword">return</span> middle;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (guess &gt; <span class="hljs-type">item</span>) &#123;<br>            <span class="hljs-keyword">end</span> = middle - <span class="hljs-number">1</span>;<br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (guess &lt; <span class="hljs-type">item</span>) &#123;<br>            <span class="hljs-keyword">start</span> = middle + <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="数组和链表"><a href="#数组和链表" class="headerlink" title="数组和链表"></a>数组和链表</h3><blockquote>
+<p>需要存储多项数据时，有两种基本方式——数组和链表。但它们并非都适用于所有的情形，因此知道它们的差别很重要。接下来介绍数组和链表以及它们的优缺点。</p>
+</blockquote>
+<h4 id="数组的优缺点"><a href="#数组的优缺点" class="headerlink" title="数组的优缺点"></a>数组的优缺点</h4><p>数组在内存中存储的数据都是相连的，编程中数组用得更多一点，因为它支持随机访问。</p>
+<p>数组的缺陷在于插入元素时则必须将后面的元素都向后移，删除元素时所有的元素都要往前移。</p>
+<h4 id="链表的优缺点"><a href="#链表的优缺点" class="headerlink" title="链表的优缺点"></a>链表的优缺点</h4><p>链表中的元素可存储在内存的任何地方，链表的每个元素都存储了下一个元素的地址，从而使一系列随机的内存地址串在一起。<br>使用链表时，插入元素很简单，只需修改它前面的那个元素指向的地址。删除同理，只需修改前一个元素的指向地址即可。</p>
+<p>链表的缺陷在于，需要读取链表的最后一个元素时，你不能直接读取，因为你不知道它所处的地址，必须先访问元素#1，从中获取元素#2的地址，再访问元素#2并从中获取元素#3的地址，以此类推，直到访问最后一个元素。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>❑ 数组的读取速度很快。❑ 链表的插入和删除速度很快。</p>
+<h4 id="常见的数组和链表操作的运行时间"><a href="#常见的数组和链表操作的运行时间" class="headerlink" title="常见的数组和链表操作的运行时间"></a>常见的数组和链表操作的运行时间</h4><p>| 数组 | 链表<br>:- | :- | :-<br>读取 | O(1) | O(n)<br>插入 | O(n) | O(1)<br>删除 | O(n) | O(1)</p>
+<h3 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h3><p>选择排序是一种灵巧的算法，但其速度不是很快。</p>
+<p>有一个歌单，里面有歌曲和播放次数。现在有一个需求，需要对歌单按照播放次数进行排序。<br>实现思路，遍历这个列表，找出作品播放次数最多的乐队，并将该乐队添加到一个新列表中。然后继续再次这样做，找出播放次数第二多的乐队，如此循环…<br>其实这就是选择排序。</p>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs inform7">const selectionSort = arr =&gt; &#123;<br>    let smallest = 0,<br>        len = arr.length;<br>    for (let i = 0; i &lt; len; i++) &#123;<br>        smallest = i<br>        for (let j = i + 1; j &lt; len; j++) &#123;<br>            if (arr<span class="hljs-comment">[j]</span> &lt; arr<span class="hljs-comment">[smallest]</span>) &#123;<br>                smallest = j<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">[arr<span class="hljs-comment">[i]</span>, arr<span class="hljs-comment">[smallest]</span>]</span> = <span class="hljs-comment">[arr<span class="hljs-comment">[smallest]</span>, arr<span class="hljs-comment">[i]</span>]</span>;<br>    &#125;<br>    return arr<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>书中的代码则是另外一个版本，虽然代码冗余，但是…似乎更通俗易懂？</p>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs zephir"><span class="hljs-keyword">const</span> findSmallestIndex = arr =&gt; &#123;<br>    <span class="hljs-keyword">let</span> smallestIndex = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) &#123;<br>        <span class="hljs-keyword">if</span> (arr[i] &lt; arr[smallestIndex]) &#123;<br>            smallestIndex = i<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> smallestIndex<br>&#125;<br><span class="hljs-keyword">const</span> selectionSort = arr =&gt; &#123;<br>    <span class="hljs-keyword">let</span> copyArr = [...arr], <span class="hljs-comment">// 浅拷贝防止改变原数组</span><br>        len = copyArr.length,<br>        ans = []<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; len; i++) &#123;<br>        <span class="hljs-keyword">let</span> smallestIndex = findSmallestIndex(copyArr);<br>        ans.push(copyArr.splice(smallestIndex, <span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]) <span class="hljs-comment">// opyArr.splice(smallestIndex, 1)[0]就是最小的元素</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> ans<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h3><blockquote>
+<p>编写递归函数时，必须告诉它何时停止递归。正因为如此，每个递归函数都有两部分：基线条件（base case）和递归条件（recursive case）。递归条件指的是函数调用自己，而基线条件则指的是函数不再调用自己，从而避免形成无限循环。</p>
+</blockquote>
+<p><img src="/epub_22806916_75.jpg" srcset="/img/loading.gif" lazyload alt="alt text" title="Title"></p>
+<h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><blockquote>
+<p>栈（stack）又名堆栈，是一种遵循后进先出（last-in，first-out，LIFO）原则的有序集合。新添加或待删除的元素都保存在栈的末尾，称作栈顶，另一端称作栈底。在栈里，新元素都靠近栈顶，旧元素都接近栈底。<br>就好比：一个死胡同，前面是“此路不通”，只有一个入口，如果一队人进入，只能队尾变对首出去。</p>
+</blockquote>
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><h4 id="分而治之"><a href="#分而治之" class="headerlink" title="分而治之"></a>分而治之</h4><blockquote>
+<p>分而治之（divide and conquer, D&amp;C）——一种著名的递归式问题解决方法。<br>使用D&amp;C解决问题的过程包括两个步骤：<br>(1) 找出基线条件，这种条件必须尽可能简单。<br>(2) 不断将问题分解（或者说缩小规模），直到符合基线条件。</p>
+</blockquote>
+<h5 id="代码实现1-数组求和"><a href="#代码实现1-数组求和" class="headerlink" title="代码实现1 数组求和"></a>代码实现1 数组求和</h5><p>给定一个数字数组。将这些数字相加，并返回结果。</p>
+<p>基线条件，数组为空或者数组只有一个元素<br>递归条件，每次相加后剔除当前元素</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">sum</span>(<span class="hljs-params">array</span>) &#123;<br>  let ans = <span class="hljs-number">0</span><br>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">array</span>.<span class="hljs-built_in">length</span> === <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>  &#125;<br>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">array</span>.<span class="hljs-built_in">length</span> &gt; <span class="hljs-number">0</span>) &#123;<br>    ans = <span class="hljs-built_in">array</span>[<span class="hljs-number">0</span>] + <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">array</span>.<span class="hljs-built_in">slice</span>(<span class="hljs-number">1</span>))<br>  &#125;<br>  <span class="hljs-keyword">return</span> ans<br>&#125;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">sum</span>([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])) <span class="hljs-comment">// 15</span><br><br><span class="hljs-comment">// es6写法</span><br>const <span class="hljs-built_in">sum</span> = <span class="hljs-function">(<span class="hljs-params"><span class="hljs-built_in">array</span></span>) =&gt;</span> <span class="hljs-built_in">array</span>.<span class="hljs-built_in">length</span> === <span class="hljs-number">0</span> ? <span class="hljs-number">0</span> : (<span class="hljs-built_in">array</span>[<span class="hljs-number">0</span>] += <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">array</span>.<span class="hljs-built_in">slice</span>(<span class="hljs-number">1</span>)))<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">sum</span>([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])) <span class="hljs-comment">// 15</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="代码实现2-找出数组中最大的数字"><a href="#代码实现2-找出数组中最大的数字" class="headerlink" title="代码实现2 找出数组中最大的数字"></a>代码实现2 找出数组中最大的数字</h5><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const findMax = <span class="hljs-function">(<span class="hljs-params"><span class="hljs-built_in">array</span>, <span class="hljs-built_in">max</span> = <span class="hljs-number">0</span></span>) =&gt;</span> <span class="hljs-built_in">array</span>.<span class="hljs-built_in">length</span> === <span class="hljs-number">0</span> ? <span class="hljs-built_in">max</span> : findMax(<span class="hljs-built_in">array</span>.<span class="hljs-built_in">slice</span>(<span class="hljs-number">1</span>), <span class="hljs-built_in">array</span>[<span class="hljs-number">0</span>] &gt; <span class="hljs-built_in">max</span> ? <span class="hljs-built_in">array</span>[<span class="hljs-number">0</span>] : <span class="hljs-built_in">max</span>)<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(findMax([<span class="hljs-number">0</span>, <span class="hljs-number">12</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>])) <span class="hljs-comment">// 12</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="快速排序算法"><a href="#快速排序算法" class="headerlink" title="快速排序算法"></a>快速排序算法</h4><p>快速排序是最快的排序算法之一，也是D&amp;C典范。<br>D&amp;C将问题逐步分解。使用D&amp;C处理列表时，基线条件很可能是空数组或只包含一个元素的数组。</p>
+<h5 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h5><p>原理及es5版本可以看<a target="_blank" rel="noopener" href="https://xypecho.github.io/2019/12/12/javascript%E4%B8%AD%E5%8D%81%E5%A4%A7%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#6%E3%80%81-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F-Quick-Sort">这里</a></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const quicksort = <span class="hljs-function"><span class="hljs-params">array</span> =&gt;</span> &#123;<br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">array</span>.<span class="hljs-built_in">length</span> &lt; <span class="hljs-number">2</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">array</span><br>    &#125;<br>    const pivot = <span class="hljs-built_in">array</span>[<span class="hljs-number">0</span>]; <span class="hljs-comment">// 基准值</span><br>    <span class="hljs-comment">// slice(1)是为了去除当前基准值</span><br>    const <span class="hljs-built_in">left</span> = <span class="hljs-built_in">array</span>.<span class="hljs-built_in">slice</span>(<span class="hljs-number">1</span>).<span class="hljs-built_in">filter</span>(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item &lt;= pivot);<br>    const <span class="hljs-built_in">right</span> = <span class="hljs-built_in">array</span>.<span class="hljs-built_in">slice</span>(<span class="hljs-number">1</span>).<span class="hljs-built_in">filter</span>(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item &gt; pivot);<br>    <span class="hljs-keyword">return</span> [...quicksort(<span class="hljs-built_in">left</span>), pivot, ...quicksort(<span class="hljs-built_in">right</span>)]<br>&#125;<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(quicksort([<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">55</span>, <span class="hljs-number">23</span>, <span class="hljs-number">4</span>, <span class="hljs-number">23</span>, <span class="hljs-number">2</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-3</span>, <span class="hljs-number">0</span>]))<br></code></pre></td></tr></table></figure>
+
+<h3 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h3><h4 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h4><blockquote>
+<p>哈希表(Hash table，也叫散列表)，是根据关键码值(Key value)而直接进行访问的数据结构。也就是说，它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射函数叫做散列函数，存放记录的数组叫做散列表。</p>
+</blockquote>
+<h5 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h5><p>假设你负责管理一个投票站。显然，每人只能投一票，但如何避免重复投票呢？</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs stylus">const voted = &#123;&#125;<br><br>const checkVoter = (name) =&gt; &#123;<br>  <span class="hljs-keyword">if</span> (voted<span class="hljs-selector-attr">[name]</span>) &#123;<br>    console<span class="hljs-selector-class">.log</span>(<span class="hljs-string">&quot;kick them out!&quot;</span>)<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    voted<span class="hljs-selector-attr">[name]</span> = true<br>    console<span class="hljs-selector-class">.log</span>(<span class="hljs-string">&quot;let them vote!&quot;</span>)<br>  &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-title">checkVoter</span><span class="hljs-params">(<span class="hljs-string">&quot;tom&quot;</span>)</span></span> <span class="hljs-comment">// let them vote!</span><br><span class="hljs-function"><span class="hljs-title">checkVoter</span><span class="hljs-params">(<span class="hljs-string">&quot;mike&quot;</span>)</span></span> <span class="hljs-comment">// let them vote!</span><br><span class="hljs-function"><span class="hljs-title">checkVoter</span><span class="hljs-params">(<span class="hljs-string">&quot;mike&quot;</span>)</span></span> <span class="hljs-comment">// kick them out!</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h5><h6 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h6><blockquote>
+<p>假设你有个侄女，总是没完没了地问你有关星球的问题。火星离地球多远？月球呢？木星呢？每次你都得在Google搜索，再告诉她答案。这需要几分钟。现在假设她老问你月球离地球多远，很快你就记住了月球离地球238900英里。因此不必再去Google搜索，你就可以直接告诉她答案。这就是缓存的工作原理：网站将数据记住，而不再重新计算。</p>
+</blockquote>
+<p>缓存如下两个优点。❑ 用户能够更快地看到网页，就像你记住了月球与地球之间的距离时一样。下次你侄女再问你时，你就不用再使用Google搜索，立刻就可以告诉她答案。❑ Facebook需要做的工作更少。</p>
+<p>缓存是一种常用的加速方式，所有大型网站都使用缓存，而缓存的数据则存储在散列表中！</p>
+<p>散列表适合用于：❑ 模拟映射关系；❑ 防止重复；❑ 缓存&#x2F;记住数据，以免服务器再通过处理来生成它们。</p>
+<h4 id="哈希冲突"><a href="#哈希冲突" class="headerlink" title="哈希冲突"></a>哈希冲突</h4><blockquote>
+<p>由于散列函数具有无限的输入长度和预定义的输出长度，因此不可避免地存在两个不同的输入产生相同输出散列的可能性。如果两个单独的输入产生相同的哈希输出，则称为冲突。</p>
+</blockquote>
+<p>散列表、数组和链表操作的运行时间</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>散列表(平均情况)</th>
+<th>散列表(最糟情况)</th>
+<th>数组</th>
+<th>链表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>查找</td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>插入</td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>O(1)</td>
+<td>O(n)</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<p>在平均情况下，散列表的查找（获取给定索引处的值）速度与数组一样快，而插入和删除速度与链表一样快，因此它兼具两者的优点！但在最糟情况下，散列表的各种操作的速度都很慢。因此，在使用散列表时，避开最糟情况至关重要。而要避免冲突，需要有：❑ 较低的填装因子；❑ 良好的散列函数。</p>
+<h4 id="填装因子"><a href="#填装因子" class="headerlink" title="填装因子"></a>填装因子</h4><blockquote>
+<p>散列表的填装因子很容易计算，计算方式：散列表包含的元素数 &#x2F; 散列表位置总数</p>
+</blockquote>
+<center>
+    <img style="border-radius: 0.3125em;
+    width:30%;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="epub_22806916_199.jpg" srcset="/img/loading.gif" lazyload>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">填装因子2/5，即0.4</div>
+</center>
+
+<p>假设你要在散列表中存储100种商品的价格，而该散列表包含100个位置。那么在最佳情况下，每个商品都将有自己的位置。这个散列表的填装因子则为1<br>如果这个散列表只有50个位置呢？填充因子将为2。不可能让每种商品都有自己的位置，因为没有足够的位置！填装因子大于1意味着商品数量超过了数组的位置数。一旦填装因子开始增大，你就需要在散列表中添加位置，这被称为调整长度（resizing）。</p>
+<p>一个不错的经验规则是：一旦填装因子大于0.7，就调整散列表的长度。</p>
+<h3 id="广度优先搜索"><a href="#广度优先搜索" class="headerlink" title="广度优先搜索"></a>广度优先搜索</h3><blockquote>
+<p>广度优先搜索(breadth-first search,BFS)是一种图算法，能找出两样东西之间的最短距离。<br>可帮助回答两类问题:<br>❑ 第一类问题：从节点A出发，有前往节点B的路径吗？<br>❑ 第二类问题：从节点A出发，前往节点B的哪条路径最短？</p>
+</blockquote>
+<h4 id="代码实现-4"><a href="#代码实现-4" class="headerlink" title="代码实现"></a>代码实现</h4><p>假设你经营着一个芒果农场，需要寻找芒果销售商，以便将芒果卖给他。如何在好友及好友的好友中寻找到芒果销售商？</p>
+<center>
+    <img style="border-radius: 0.3125em;
+    width:30%;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="epub_22806916_235.jpg" srcset="/img/loading.gif" lazyload>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">实现原理</div>
+</center>
+
+<p>ps:更新队列时，我使用术语“入队”和“出队”，但你也可能遇到术语“压入”和“弹出”。压入大致相当于入队，而弹出大致相当于出队。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">const</span> <span class="hljs-keyword">graph</span> = &#123;&#125;;<br><span class="hljs-keyword">graph</span>.you = [<span class="hljs-string">&quot;alice&quot;</span>, <span class="hljs-string">&quot;bob&quot;</span>, <span class="hljs-string">&quot;claire&quot;</span>];<br><span class="hljs-keyword">graph</span>.bob = [<span class="hljs-string">&quot;anuj&quot;</span>, <span class="hljs-string">&quot;peggy&quot;</span>];<br><span class="hljs-keyword">graph</span>.alice = [<span class="hljs-string">&quot;peggy&quot;</span>];<br><span class="hljs-keyword">graph</span>.claire = [<span class="hljs-string">&quot;thom&quot;</span>, <span class="hljs-string">&quot;jonny&quot;</span>];<br><span class="hljs-keyword">graph</span>.anuj = [];<br><span class="hljs-keyword">graph</span>.peggy = [];<br><span class="hljs-keyword">graph</span>.thom = [];<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">* 这个函数检查人的姓名是否以m结尾：如果是，他就是芒果销售商。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">const</span> isSeller = name =&gt; name[name.length - 1] === <span class="hljs-string">&quot;m&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">search</span> = name =&gt; &#123;<br>    let searchQueue = [...<span class="hljs-keyword">graph</span>[name]];<br>    <span class="hljs-comment">// 已经查找过的人</span><br>    <span class="hljs-keyword">const</span> searched = [];<br>    <span class="hljs-keyword">while</span> (searchQueue.length &gt; 0) &#123;<br>        <span class="hljs-comment">// person为当前查找的人</span><br>        <span class="hljs-keyword">const</span> person = searchQueue.shift();<br>        <span class="hljs-keyword">if</span> (searched.indexOf(person) === -1) &#123;<br>            <span class="hljs-keyword">if</span> (isSeller(person)) &#123;<br>                console.<span class="hljs-built_in">log</span>(`<span class="hljs-variable">$&#123;person&#125;</span>是芒果商人`)<br>                <span class="hljs-keyword">return</span> true<br>            &#125;<br>            searched.push(person)<br>            <span class="hljs-comment">// 将当前查找人的好友加入查找队列</span><br>            searchQueue = searchQueue.concat(<span class="hljs-keyword">graph</span>[person])<br>        &#125;<br>    &#125;<br>&#125;;<br><span class="hljs-keyword">search</span>(&#x27;you&#x27;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><blockquote>
+<p>队列是一种先进先出（First In First Out, FIFO）的数据结构，而栈是一种后进先出（Last In First Out, LIFO）的数据结构。</p>
+</blockquote>
+<p>你需要按加入顺序检查搜索列表中的人，否则找到的就不是最短路径，因此搜索列表必须是队列。</p>
+<h3 id="狄克斯特拉算法"><a href="#狄克斯特拉算法" class="headerlink" title="狄克斯特拉算法"></a>狄克斯特拉算法</h3><ol>
+<li>狄克斯特拉算法用于在加权图中查找最短路径。</li>
+<li>仅当权重为正时狄克斯特拉算法才管用。</li>
+<li>如果图中包含负权边，请使用贝尔曼-福德算法。</li>
+</ol>
+<h3 id="贪婪算法"><a href="#贪婪算法" class="headerlink" title="贪婪算法"></a>贪婪算法</h3><blockquote>
+<p>贪婪算法很简单：每步都采取最优的做法。用专业术语说，就是你每步都选择局部最优解，最终得到的就是全局最优解。</p>
+</blockquote>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>算法图解笔记</div>
+      <div>http://example.com/2022/03/09/算法图解笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>很青的青蛙</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年3月9日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/16/windows%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/" title="windows软件推荐">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">windows软件推荐</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/12/26/2021%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/" title="2021年终总结">
+                        <span class="hidden-mobile">2021年终总结</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

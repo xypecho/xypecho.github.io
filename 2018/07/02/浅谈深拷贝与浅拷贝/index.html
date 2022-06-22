@@ -1,0 +1,683 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bitbug_favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="很青的青蛙">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一开始看到深拷贝与浅拷贝我是完全一脸懵逼的，之前只在掘金的热门文章看到过，不过当时也没深究。 最近项目有个需求才让我真正认识深拷贝，项目需求是这样的，有一个用来存储element多选下拉框选中的值的数组，传往后台是后台需要字符串，于是机智的我立马加上一个join(&#39;,&#39;)然后这边传往后台，万万没想到，因为我用了element的rules来验证表单是否非空的，将数组改成字符串之后验证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈深拷贝与浅拷贝">
+<meta property="og:url" content="http://example.com/2018/07/02/%E6%B5%85%E8%B0%88%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/index.html">
+<meta property="og:site_name" content="小小切图仔也有大大的梦想">
+<meta property="og:description" content="一开始看到深拷贝与浅拷贝我是完全一脸懵逼的，之前只在掘金的热门文章看到过，不过当时也没深究。 最近项目有个需求才让我真正认识深拷贝，项目需求是这样的，有一个用来存储element多选下拉框选中的值的数组，传往后台是后台需要字符串，于是机智的我立马加上一个join(&#39;,&#39;)然后这边传往后台，万万没想到，因为我用了element的rules来验证表单是否非空的，将数组改成字符串之后验证">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-02T12:49:30.000Z">
+<meta property="article:modified_time" content="2022-06-22T12:52:40.008Z">
+<meta property="article:author" content="很青的青蛙">
+<meta property="article:tag" content="JS技巧">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>浅谈深拷贝与浅拷贝 - 小小切图仔也有大大的梦想</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小小切图仔也有大大的梦想</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="浅谈深拷贝与浅拷贝"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2018-07-02 20:49" pubdate>
+          星期一, 七月 2日 2018, 8:49 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          3.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          31 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">浅谈深拷贝与浅拷贝</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>一开始看到深拷贝与浅拷贝我是完全一脸懵逼的，之前只在掘金的热门文章看到过，不过当时也没深究。</p>
+<p>最近项目有个需求才让我真正认识深拷贝，项目需求是这样的，有一个用来存储element多选下拉框选中的值的数组，传往后台是后台需要字符串，于是机智的我立马加上一个<code>join(&#39;,&#39;)</code>然后这边传<br>往后台，万万没想到，因为我用了element的<code>rules</code>来验证表单是否非空的，将数组改成字符串之后验证就不通过了，因为element的验证还会验证数据的类型。然后我就准备用一个临时变量来存储表单数据，然后修改临时变量里面的数组(将其变成字符串),改好后准备再次提交时，又验证失败了，当时又一脸懵逼了，为什么这样也报错。于是百度了一翻知道了深拷贝。</p>
+<h2 id="1、-为什么修改临时变量form表单的数据也会修改？"><a href="#1、-为什么修改临时变量form表单的数据也会修改？" class="headerlink" title="1、 为什么修改临时变量form表单的数据也会修改？"></a>1、 为什么修改临时变量form表单的数据也会修改？</h2><p>下面来一个demo</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>];<br>let arr1 = arr;<br>arr1[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;a&#x27;</span>;<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr);<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr1);<br></code></pre></td></tr></table></figure>
+<p>看到这个例子，大多数人的答案肯定是arr是<code>[1, 2, 3, 4]</code>,arr1是<code>[&quot;a&quot;, 2, 3, 4]</code>,然而情况确是</p>
+
+
+<p>再来一个demo</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abnf">let a <span class="hljs-operator">=</span> <span class="hljs-number">1</span><span class="hljs-comment">;</span><br>let b <span class="hljs-operator">=</span> a<span class="hljs-comment">;</span><br><span class="hljs-attribute">b</span><span class="hljs-operator">=</span><span class="hljs-number">2</span><span class="hljs-comment">;</span><br>console.log(a)<br>console.log(b)<br></code></pre></td></tr></table></figure>
+<p>有了上面例子的经验，机智的小伙伴们一定以为输出的都是2，然而</p>
+
+
+<p>简单粗暴的回答就是：数组是引用类型，修改数组中值会修改内存地址中的数据。</p>
+<p>下面的详细的讲解以下:</p>
+<h3 id="1-1数据类型"><a href="#1-1数据类型" class="headerlink" title="1.1数据类型"></a>1.1数据类型</h3><p>javascript中有基本类型和引用类型两种数据类型</p>
+<blockquote>
+<p>5种基本类型分别为Undefined、Null、Boolean、Number 和 String，变量是直接按值存放的，存放在栈内存中的简单数据段，可以直接访问。</p>
+</blockquote>
+<blockquote>
+<p>引用类型为Function,Array,Object，是存放在堆内存中的对象，变量保存的是一个指针，这个指针指向另一个位置。当需要访问引用类型（如对象，数组等）的值时，首先从栈中获得该对象的地址指针，然后再从堆内存中取得所需的数据。</p>
+</blockquote>
+<p>所以赋值时，基本类型是直接复制了一个新的变量，新旧两个变量之间没有关系；而引用类型也复制了新的变量，但这个变量是一个指针，新旧两个指针指向同一个对象，所以修改临时变量也会改动原有的form表单的数据</p>
+<h2 id="2、如果想实现项目里面的那个需求的话要怎么做？"><a href="#2、如果想实现项目里面的那个需求的话要怎么做？" class="headerlink" title="2、如果想实现项目里面的那个需求的话要怎么做？"></a>2、如果想实现项目里面的那个需求的话要怎么做？</h2><h3 id="2-1深拷贝的实现"><a href="#2-1深拷贝的实现" class="headerlink" title="2.1深拷贝的实现"></a>2.1深拷贝的实现</h3><h4 id="2-1-1利用JSON对象来实现最简单的深拷贝"><a href="#2-1-1利用JSON对象来实现最简单的深拷贝" class="headerlink" title="2.1.1利用JSON对象来实现最简单的深拷贝"></a>2.1.1利用JSON对象来实现最简单的深拷贝</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>];<br><span class="hljs-keyword">let</span> arr1 = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(arr));<br>arr1[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;a&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr) <br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr1) <br></code></pre></td></tr></table></figure>
+<p>输出为</p>
+<p>这种方法使用较为简单，可以满足基本的深拷贝需求，而且能够处理JSON格式能表示的所有数据类型，但是对于正则表达式类型、函数类型等无法进行深拷贝(而且会直接丢失相应的值)。还有一点不好的地方是它会抛弃对象的constructor。也就是深拷贝之后，不管这个对象原来的构造函数是什么，在深拷贝之后都会变成Object。同时如果对象中存在循环引用的情况也无法正确处理。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">// 来一个JSON深拷贝的坑的示例</span><br>const obj = &#123;<br>    <span class="hljs-attr">arr</span>: [<span class="hljs-number">111</span>, <span class="hljs-number">222</span>],<br>    <span class="hljs-attr">obj</span>: &#123;<span class="hljs-attr">key</span>: <span class="hljs-string">&#x27;对象&#x27;</span>&#125;,<br>    <span class="hljs-attr">a</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&#x27;函数&#x27;</span>)&#125;,<br>    <span class="hljs-attr">date</span>: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(),<br>    <span class="hljs-attr">reg</span>: <span class="hljs-regexp">/正则/ig</span><br>&#125;;<br>let obj1 = JSON.parse(JSON.stringify(obj));<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(obj);<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(obj1);<br></code></pre></td></tr></table></figure>
+<p>输出为<br>可以从中看出，obj中的普通对象和数组都能拷贝，然而date对象成了字符串，函数直接就不见了，正则成了一个空对象。</p>
+<h4 id="2-1-2-for-in-实现深拷贝"><a href="#2-1-2-for-in-实现深拷贝" class="headerlink" title="2.1.2 for in 实现深拷贝"></a>2.1.2 for in 实现深拷贝</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">deepClone</span>(<span class="hljs-params">source</span>)&#123;<br>   <span class="hljs-keyword">if</span>(!source || <span class="hljs-keyword">typeof</span> source !== <span class="hljs-string">&#x27;object&#x27;</span>)&#123;<br>     <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;数据不是引用类型&#x27;</span>);<br>   &#125;<br>   <span class="hljs-keyword">var</span> targetObj = source.<span class="hljs-property">constructor</span> === <span class="hljs-title class_">Array</span> ? [] : &#123;&#125;;<br>   <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> keys <span class="hljs-keyword">in</span> source)&#123;<br>      <span class="hljs-keyword">if</span>(source.<span class="hljs-title function_">hasOwnProperty</span>(keys))&#123;<br>         <span class="hljs-keyword">if</span>(source[keys] &amp;&amp; <span class="hljs-keyword">typeof</span> source[keys] === <span class="hljs-string">&#x27;object&#x27;</span>)&#123;<br>           targetObj[keys] = source[keys].<span class="hljs-property">constructor</span> === <span class="hljs-title class_">Array</span> ? [] : &#123;&#125;;<br>           targetObj[keys] = <span class="hljs-title function_">deepClone</span>(source[keys]);<br>         &#125;<span class="hljs-keyword">else</span>&#123;<br>           targetObj[keys] = source[keys];<br>         &#125;<br>      &#125; <br>   &#125;<br>   <span class="hljs-keyword">return</span> targetObj;<br>&#125;<br><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>];<br><span class="hljs-keyword">let</span> arr1 = <span class="hljs-title function_">deepClone</span>(arr);<br>arr1[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;a&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr1)<br></code></pre></td></tr></table></figure>
+<p>输出为</p>
+<h2 id="3、拓展，浅拷贝的实现"><a href="#3、拓展，浅拷贝的实现" class="headerlink" title="3、拓展，浅拷贝的实现"></a>3、拓展，浅拷贝的实现</h2><h3 id="3-1-最简单的浅拷贝"><a href="#3-1-最简单的浅拷贝" class="headerlink" title="3.1 最简单的浅拷贝"></a>3.1 最简单的浅拷贝</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">// 对象</span><br><span class="hljs-keyword">var</span> o1 = &#123;<span class="hljs-attr">a</span>: <span class="hljs-number">1</span>&#125;;<br><span class="hljs-keyword">var</span> o2 = o1;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(o1 === o2);  <span class="hljs-comment">// =&gt;true</span><br>o2.a = <span class="hljs-number">2</span>; <br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(o1.a); <span class="hljs-comment">// =&gt; 2</span><br><br><span class="hljs-comment">// 数组</span><br><span class="hljs-keyword">var</span> o1 = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>];<br><span class="hljs-keyword">var</span> o2 = o1;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(o1 === o2); <span class="hljs-comment">// =&gt; true</span><br>o2.<span class="hljs-built_in">push</span>(<span class="hljs-number">4</span>);<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(o1); <span class="hljs-comment">// =&gt; [1,2,3,4]</span><br></code></pre></td></tr></table></figure>
+<p>拷贝原对象的引用，这是最简单的浅拷贝。</p>
+<h3 id="3-2-Object-assign"><a href="#3-2-Object-assign" class="headerlink" title="3.2 Object.assign()"></a>3.2 Object.assign()</h3><blockquote>
+<p>Object.assign是ES6的新函数。Object.assign() 方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。但是 Object.assign() 进行的是浅拷贝，拷贝的是对象的属性的引用，而不是对象本身。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>];<br><span class="hljs-keyword">let</span> arr1 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>([], arr)<br>arr1[<span class="hljs-number">0</span>] = <span class="hljs-string">&#x27;a&#x27;</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr) <span class="hljs-comment">// [1, 2, 3, 4, 5]</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(arr1) <span class="hljs-comment">//  [&quot;a&quot;, 2, 3, 4, 5]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-扩展运算符-amp-解构赋值"><a href="#3-3-扩展运算符-amp-解构赋值" class="headerlink" title="3.3 扩展运算符&amp;解构赋值"></a>3.3 扩展运算符&amp;解构赋值</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];<br>const newArr = [...arr]<br>arr.<span class="hljs-built_in">push</span>(<span class="hljs-number">4</span>)<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr); <span class="hljs-comment">// [1, 2, 3, 4]</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(newArr); <span class="hljs-comment">// [1, 2, 3]</span><br><br><br>const a = &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;1&#x27;</span>,<br>    <span class="hljs-attr">address</span>: &#123;<br>        <span class="hljs-attr">province</span>: <span class="hljs-string">&#x27;sichuan&#x27;</span>,<br>        <span class="hljs-attr">city</span>: <span class="hljs-string">&#x27;chengdu&#x27;</span><br>    &#125;<br>&#125;<br><br>let &#123;<br>    name,<br>    address<br>&#125; = a<br><br>name = <span class="hljs-string">&#x27;myname&#x27;</span><br>address.province = <span class="hljs-string">&#x27;shanghai&#x27;</span><br>address.city = <span class="hljs-string">&#x27;shanghai&#x27;</span><br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(name, address) <span class="hljs-comment">// myname &#123;province: &#x27;shanghai&#x27;, city: &#x27;shanghai&#x27;&#125;</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a) <span class="hljs-comment">// &#123; address: &#123;province: &#x27;shanghai&#x27;, city: &#x27;shanghai&#x27;&#125;  name: &quot;1&quot; &#125;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4、深拷贝与浅拷贝的区别"><a href="#4、深拷贝与浅拷贝的区别" class="headerlink" title="4、深拷贝与浅拷贝的区别"></a>4、深拷贝与浅拷贝的区别</h2><p>浅拷贝是复制,两个对象指向同一个地址;</p>
+<p>深拷贝是新开栈,两个对象指向不同的地址</p>
+<p> | 和原数据是否指向同一对象 | 第一层数据为基本数据类型 | 原数据中包含子对象<br>:- | :- | :- | :-<br>赋值 | 是 | 改变会使原数据一起改变 | 改变会使原数据一起改变<br>浅拷贝 | 否 | 不会改变原数据 | 改变会使原数据一起改变<br>深拷贝 | 否 | 不会改变原数据 | 不会改变原数据</p>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://github.com/wengjq/Blog/issues/3">javaScript中浅拷贝和深拷贝的实现</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000008637489">JavaScript中的浅拷贝和深拷贝</a><br><a target="_blank" rel="noopener" href="https://www.jb51.net/article/87751.htm">再谈Javascript中的基本类型和引用类型(推荐)</a><br><a target="_blank" rel="noopener" href="https://juejin.im/post/5b235b726fb9a00e8a3e4e88">JavaScript深拷贝的一些坑</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JS%E6%8A%80%E5%B7%A7/" class="category-chain-item">JS技巧</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/JS%E6%8A%80%E5%B7%A7/">#JS技巧</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>浅谈深拷贝与浅拷贝</div>
+      <div>http://example.com/2018/07/02/浅谈深拷贝与浅拷贝/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>很青的青蛙</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2018年7月2日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/07/23/mysql%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E8%AF%AD%E5%8F%A5/" title="mysql中的一些常用语句">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">mysql中的一些常用语句</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/06/27/%E8%A7%A3%E5%86%B3v-for%E5%BE%AA%E7%8E%AF%E5%9B%BE%E7%89%87%EF%BC%8C%E5%9C%B0%E5%9D%80%E6%B2%A1%E8%A2%AB%E7%BC%96%E8%AF%91%E7%9A%84bug/" title="解决v-for循环图片，地址没被编译的bug">
+                        <span class="hidden-mobile">解决v-for循环图片，地址没被编译的bug</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

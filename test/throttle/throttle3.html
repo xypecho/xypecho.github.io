@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>综合版本的节流</title>
+</head>
+
+<body>
+    <h1>记得按f12哦(定时器&时间戳综合版本的节流)</h1>
+    <p>用户名：<input type="text" name="" id=""></p>
+    <p>密码：<input type="password" name="" id=""></p>
+    <p><button id="login">登录</button></p>
+</body>
+<script>
+    function throttle(fn, delay) {
+        let timer, last;
+        return function () {
+            let _self = this;
+            let _args = arguments;
+            let now = +Date.now();
+            console.log(`时间过去了${now - last}毫秒`);
+            if (last && now < last + delay) {
+                clearTimeout(timer)
+                timer = setTimeout(function () {
+                    last = now;
+                    fn.apply(_self, _args);
+                }, delay)
+            } else {
+                last = now;
+                fn.apply(_self, _args);
+            }
+        }
+    }
+    function login() {
+        console.log('======================正在调用登录接口======================')
+    }
+    document.querySelector('#login').addEventListener('click', throttle(login, 3000));
+</script>
+
+</html>

@@ -1,0 +1,736 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bitbug_favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="很青的青蛙">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="当初转行入门时直接上手的jquery然后就不停的写业务，学vue、react框架，基础很薄弱，于是打算记录一下平常看到的基础小知识，连载中…  1. 什么是变量提升(Hoisting) 展开查看   b()  &#x2F;&#x2F; undefined console.log(a) &#x2F;&#x2F; undefined var a &#x3D; &#39;Hello world&#39; function b() &amp;#123;     console">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS基础知识查漏补缺">
+<meta property="og:url" content="http://example.com/2019/11/29/JS%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA/index.html">
+<meta property="og:site_name" content="小小切图仔也有大大的梦想">
+<meta property="og:description" content="当初转行入门时直接上手的jquery然后就不停的写业务，学vue、react框架，基础很薄弱，于是打算记录一下平常看到的基础小知识，连载中…  1. 什么是变量提升(Hoisting) 展开查看   b()  &#x2F;&#x2F; undefined console.log(a) &#x2F;&#x2F; undefined var a &#x3D; &#39;Hello world&#39; function b() &amp;#123;     console">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-29T08:08:45.000Z">
+<meta property="article:modified_time" content="2022-06-22T12:52:39.428Z">
+<meta property="article:author" content="很青的青蛙">
+<meta property="article:tag" content="JS技巧">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>JS基础知识查漏补缺 - 小小切图仔也有大大的梦想</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小小切图仔也有大大的梦想</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="JS基础知识查漏补缺"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-11-29 16:08" pubdate>
+          星期五, 十一月 29日 2019, 4:08 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JS基础知识查漏补缺</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>当初转行入门时直接上手的jquery然后就不停的写业务，学vue、react框架，基础很薄弱，于是打算记录一下平常看到的基础小知识，连载中…</p>
+</blockquote>
+<h2 id="1-什么是变量提升-Hoisting"><a href="#1-什么是变量提升-Hoisting" class="headerlink" title="1. 什么是变量提升(Hoisting)"></a>1. 什么是变量提升(Hoisting)</h2><details>
+<summary>展开查看</summary>
+<pre>
+<code>
+b()  // undefined
+console.log(a) // undefined
+var a = 'Hello world'
+function b() &#123;
+    console.log(a)
+&#125;
+</code>
+**函数和变量相比，会被优先提升。这意味着函数会被提升到更靠前的位置。**所以上面的栗子会输出两个undefined
+
+<p>变量提升并不是在物理层面将函数或者变量放到代码的最前面，而是在编译阶段提前在内存中为期开辟空间，变量只声明并且赋值为 undefined</p>
+<p>es6的<code>let</code>并不是不会提前开辟空间，而是由于let的特性(报错<code>Reference Error: Cannot access &#39;a&#39; before initialization</code>)导致并不能提前使用</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Hoisting">变量提升 - 术语表 | MDN</a><br></pre></p>
+</details>
+
+<h2 id="2-call、apply-区别"><a href="#2-call、apply-区别" class="headerlink" title="2. call、apply 区别"></a>2. call、apply 区别</h2><details>
+<summary>展开查看</summary>
+<pre>
+<code>
+let a = &#123;
+    value: 1
+&#125;
+function getValue(name, age) &#123;
+    console.log(name)
+    console.log(age)
+    console.log(this.value)
+    console.log(this)
+&#125;
+getValue.call(a, 'yck', '24')   // 分别输出yck 24 1 &#123;value: 1&#125;
+getValue.apply(a, ['yck', '24']) // 分别输出yck 24 1 &#123;value: 1&#125;
+getValue() // undefined undefined undefined window对象
+</code>
+call 和 apply 都是改变 this 的指向的，作用都是相同的，只是传参的方式不同。
+
+<p>除了第一个参数外，call 可以接收一个参数列表，apply 只接受一个参数数组。<br></pre></p>
+</details>
+
+<h2 id="3-如何判断数据类型"><a href="#3-如何判断数据类型" class="headerlink" title="3. 如何判断数据类型"></a>3. 如何判断数据类型</h2><details>
+<summary>展开查看</summary>
+<pre>
+在 ECMAScript 规范中，共定义了 7 种数据类型，分为 基本类型 和 引用类型 两大类，如下所示：
+
+<p>基本类型：String、Number、Boolean、Symbol、Undefined、Null<br>引用类型：Object</p>
+<h3 id="使用typeof判断"><a href="#使用typeof判断" class="headerlink" title="使用typeof判断"></a>使用typeof判断</h3><code>
+typeof ''; // string 有效
+typeof 1; // number 有效
+typeof Symbol(); // symbol 有效
+typeof true; //boolean 有效
+typeof undefined; //undefined 有效
+typeof null; //object 无效
+typeof [] ; //object 无效
+typeof new Function(); // function 有效
+typeof new Date(); //object 无效
+typeof new RegExp(); //object 无效
+</code>
+
+<h3 id="使用toString"><a href="#使用toString" class="headerlink" title="使用toString"></a>使用toString</h3><p>toString() 是 Object 的原型方法，调用该方法，默认返回当前对象的 [[Class]] 。这是一个内部属性，其格式为 [object Xxx] ，其中 Xxx 就是对象的类型。<br><code><br>Object.prototype.toString.call('') ;   // [object String]<br>Object.prototype.toString.call(1) ;    // [object Number]<br>Object.prototype.toString.call(true) ; // [object Boolean]<br>Object.prototype.toString.call(Symbol()); //[object Symbol]<br>Object.prototype.toString.call(undefined) ; // [object Undefined]<br>Object.prototype.toString.call(null) ; // [object Null]<br>Object.prototype.toString.call(new Function()) ; // [object Function]<br>Object.prototype.toString.call(new Date()) ; // [object Date]<br>Object.prototype.toString.call([]) ; // [object Array]<br>Object.prototype.toString.call(new RegExp()) ; // [object RegExp]<br>Object.prototype.toString.call(new Error()) ; // [object Error]<br>Object.prototype.toString.call(document) ; // [object HTMLDocument]<br>Object.prototype.toString.call(window) ; //[object global] window 是全局对象 global 的引用<br></code><br></pre></p>
+</details>
+
+<h2 id="4-x3D-x3D-和-x3D-x3D-x3D-的区别以及新增的-Object-is"><a href="#4-x3D-x3D-和-x3D-x3D-x3D-的区别以及新增的-Object-is" class="headerlink" title="4. &#x3D;&#x3D; 和 &#x3D;&#x3D;&#x3D; 的区别以及新增的 Object.is"></a>4. &#x3D;&#x3D; 和 &#x3D;&#x3D;&#x3D; 的区别以及新增的 Object.is</h2><details>
+<summary>展开查看</summary>
+<pre>
+`==`  抽象相等，比较时，会先进行隐式强制类型转换，然后再比较值
+`===` 严格相等，会比较两个值的类型和值
+ps：es6中新增了一个新的方法`Object.is()`来比较两个值严格相等，它与严格比较运算符（===）基本一致，不同之处只有两个：一是+0不等于-0，二是NaN等于自身。
+
+<h3 id="“1”-x3D-x3D-1返回true，’true’-x3D-x3D-true-为什么返回false"><a href="#“1”-x3D-x3D-1返回true，’true’-x3D-x3D-true-为什么返回false" class="headerlink" title="“1” &#x3D;&#x3D; 1返回true，’true’ &#x3D;&#x3D; true 为什么返回false?"></a>“1” &#x3D;&#x3D; 1返回true，’true’ &#x3D;&#x3D; true 为什么返回false?</h3><p>在转换不同的数据类型时，相等和不相等操作符遵循下列基本规则：</p>
+<ol>
+<li>如果有一个操作数是布尔值，则在比较相等性之前先将其转换为数值——false转换为0，而true转换为1；</li>
+<li>如果一个操作数是字符串，另一个操作数是数值，在比较相等性之前先将字符串转换为数值；</li>
+<li>如果一个操作数是对象，另一个操作数不是，则调用对象的valueOf()方法，用得到的基本类型值按照前面的规则进行比较；</li>
+<li>其次，NaN与任何值都不相等，包括NaN本身。<br></pre></details></li>
+</ol>
+<h2 id="5-什么是解构赋值"><a href="#5-什么是解构赋值" class="headerlink" title="5. 什么是解构赋值?"></a>5. 什么是解构赋值?</h2><details>
+<summary>展开查看</summary>
+<pre>
+将`=`右边的结构分解(解构)，然后按照格式给`=`左边进行赋值，主要分为数组的解构赋值和对象的解构赋值。
+
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs llvm">let a<span class="hljs-punctuation">,</span>b<span class="hljs-punctuation">,</span><span class="hljs-keyword">c</span><span class="hljs-comment">;</span><br>[a<span class="hljs-punctuation">,</span>b<span class="hljs-punctuation">,</span>...<span class="hljs-keyword">c</span>]<span class="hljs-operator">=</span>[<span class="hljs-number">1</span><span class="hljs-punctuation">,</span><span class="hljs-number">2</span><span class="hljs-punctuation">,</span><span class="hljs-number">3</span><span class="hljs-punctuation">,</span><span class="hljs-number">4</span><span class="hljs-punctuation">,</span><span class="hljs-number">5</span><span class="hljs-punctuation">,</span><span class="hljs-number">6</span><span class="hljs-punctuation">,</span><span class="hljs-number">7</span>]<span class="hljs-comment">;</span><br>console.log(a<span class="hljs-punctuation">,</span>b<span class="hljs-punctuation">,</span><span class="hljs-keyword">c</span>)<span class="hljs-comment">;//1 2  [3, 4, 5, 6, 7]</span><br></code></pre></td></tr></table></figure>
+<p></pre></p>
+</details>
+
+<h2 id="6-写-React-x2F-Vue-项目时为什么要在列表组件中写-key，其作用是什么？"><a href="#6-写-React-x2F-Vue-项目时为什么要在列表组件中写-key，其作用是什么？" class="headerlink" title="6. 写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？"></a>6. 写 React &#x2F; Vue 项目时为什么要在列表组件中写 key，其作用是什么？</h2><details>
+<summary>展开查看</summary>
+<pre>
+key 的特殊属性主要用在 Vue/React 的虚拟DOM算法，在新旧nodes对比时辨识VNodes。
+但是注意，不要用遍历时的index做key，容易引发[奇怪的bug](Vue2.0 v-for 中 :key 到底有什么用？ - 方应杭的回答 - 知乎
+https://www.zhihu.com/question/61064119/answer/766607894)。
+</pre>
+</details>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JS%E6%8A%80%E5%B7%A7/" class="category-chain-item">JS技巧</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/JS%E6%8A%80%E5%B7%A7/">#JS技巧</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>JS基础知识查漏补缺</div>
+      <div>http://example.com/2019/11/29/JS基础知识查漏补缺/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>很青的青蛙</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2019年11月29日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/" title="搞懂Javascript闭包概念">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">搞懂Javascript闭包概念</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/10/15/%E4%BD%BF%E7%94%A8canvas%E5%AE%9E%E7%8E%B0%E6%B0%B4%E5%8D%B0%E5%8A%9F%E8%83%BD/" title="使用canvas实现水印功能">
+                        <span class="hidden-mobile">使用canvas实现水印功能</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

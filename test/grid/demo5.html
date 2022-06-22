@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>place-items </title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <style>
+        .wrapper {
+            margin: 50px;
+        }
+        
+        .wrapper {
+            display: grid;
+            grid-template-columns: 100px 200px 100px;
+            grid-gap: 5px;
+            grid-auto-rows: 50px;
+            background: #cccccc;
+        }
+        
+        .one {
+            background: #19CAAD;
+        }
+        
+        .two {
+            background: #8CC7B5;
+        }
+        
+        .three {
+            background: #D1BA74;
+        }
+        
+        .four {
+            background: #BEE7E9;
+        }
+        
+        .five {
+            background: #E6CEAC;
+        }
+        
+        .six {
+            background: #ECAD9E;
+        }
+        
+        .seven {
+            background: #BEEDC7;
+        }
+        
+        .eight {
+            background: #F4606C;
+        }
+        
+        .nine {
+            background: #A0EEE1;
+        }
+        
+        .item {
+            text-align: center;
+            font-size: 200%;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="select">
+        选择align-items的属性（垂直位置）
+        <br /><br />
+        <select name="align-items" id="">
+            <option value=""></option>
+            <option value="center">center</option>
+            <option value="start">start</option>
+            <option value="end">end</option>
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="self-start">self-start</option>
+            <option value="self-end">self-end</option>
+        </select>
+        <br /><br /> 选择justify-items的属性（水平位置）
+        <br /><br />
+
+        <select name="justify-items" id="">
+            <option value=""></option>
+            <option value="center">center</option>
+            <option value="start">start</option>
+            <option value="end">end</option>
+            <option value="flex-start">flex-start</option>
+            <option value="flex-end">flex-end</option>
+            <option value="self-start">self-start</option>
+            <option value="self-end">self-end</option>
+            <option value="left">left</option>
+            <option value="right">right</option>
+        </select>
+    </div>
+    <div class="wrapper">
+        <div class="one item">One</div>
+        <div class="two item">Two</div>
+        <div class="three item">Three</div>
+        <div class="four item">Four</div>
+        <div class="five item">Five</div>
+        <div class="six item">Six</div>
+        <div class="seven item">Seven</div>
+        <div class="eight item">eight</div>
+        <div class="nine item">Nine</div>
+    </div>
+</body>
+<script>
+    $("select[name='align-items']").change(function() {
+        var opt = $("select[name='align-items']").val();
+        $('.wrapper').css('align-items', opt)
+    });
+
+    $("select[name='justify-items']").change(function() {
+        var opt = $("select[name='justify-items']").val();
+        $('.wrapper').css('justify-items', opt)
+    });
+</script>
+
+</html>

@@ -1,0 +1,14 @@
+<img src="" id='imgfile'>
+<input type='file' id='fileObj' onchange='fileupload()'>
+<script>
+	fileupload=function(){
+		var fileImage = document.getElementById('fileObj'); 
+		var imgObjPreview = document.getElementById("imgfile"); 
+		if (window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1) { 
+			imgObjPreview.src = window.webkitURL.createObjectURL(fileImage.files[0]); 
+		} 
+		else { 
+			imgObjPreview.src = window.URL.createObjectURL(fileImage.files[0]); 
+		} 
+	}
+</script>

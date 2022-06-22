@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet">
+    <style>
+        body {
+            font-weight: 900;
+            color: #ffffff;
+        }
+        
+        .wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 200px auto;
+            grid-template-rows: 60px auto 60px;
+            grid-template-areas: "header header header" "menu content content" "footer footer footer";
+        }
+        
+        .header,
+        .footer {
+            background: #5b5b8e;
+        }
+        
+        .header {
+            grid-area: header;
+        }
+        
+        .footer {
+            grid-area: footer;
+        }
+        
+        .menu {
+            background: #66cc99;
+            grid-area: menu;
+        }
+        
+        .content {
+            background: #f9cc6e;
+            grid-area: content;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="wrapper">
+        <div class="header">HEADER</div>
+        <div class="menu">MENU</div>
+        <div class="content">CONTENT</div>
+        <div class="footer">FOOTER</div>
+    </div>
+</body>
+
+</html>

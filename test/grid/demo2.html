@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <style>
+        body {
+            margin-top: 200px;
+            height: 100vh;
+        }
+        
+        .one {
+            background: #19CAAD;
+        }
+        
+        .two {
+            background: #8CC7B5;
+        }
+        
+        .three {
+            background: #D1BA74;
+        }
+        
+        .four {
+            background: #BEE7E9;
+        }
+        
+        .five {
+            background: #E6CEAC;
+        }
+        
+        .six {
+            background: #ECAD9E;
+        }
+        
+        .item {
+            text-align: center;
+            font-size: 200%;
+            color: #fff;
+        }
+        
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, 100px);
+            grid-template-rows: repeat(2, 100px);
+            background-color: #cccccc;
+            margin-left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="item one">1</div>
+        <div class="item two">2</div>
+        <div class="item three">3</div>
+        <div class="item four">4</div>
+    </div>
+
+    选择item1的justify-self的属性（水平位置）
+    <br /><br />
+    <select name="justify-self" id="">
+        <option value=""></option>
+        <option value="center">center</option>
+        <option value="start">start</option>
+        <option value="end">end</option>
+        <option value="stretch">stretch(默认值)</option>
+    </select>
+    <br> 选择item1的align-self的属性（水平位置）
+    <br /><br />
+    <select name="align-self" id="">
+    <option value=""></option>
+    <option value="center">center</option>
+    <option value="start">start</option>
+    <option value="end">end</option>
+    <option value="stretch">stretch(默认值)</option>
+</select>
+</body>
+<script>
+    $("select[name='justify-self']").change(function() {
+        var opt = $("select[name='justify-self']").val();
+        $('.one').css('justify-self', opt)
+    });
+
+    $("select[name='align-self']").change(function() {
+        var opt = $("select[name='align-self']").val();
+        $('.one').css('align-self', opt)
+    });
+</script>
+
+</html>

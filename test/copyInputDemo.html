@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<input type="" name="" id="inp">
+	<button id='btn' onclick='copytext()'>点击复制input里面的内容</button>
+	<textarea placeholder='在这里粘贴试试' rows="3" cols="100"></textarea>
+</body>
+	<script type="text/javascript">
+		let inp = document.getElementById('inp');
+		let btn = document.getElementById('btn');
+		function copytext(){
+			inp.select();
+			document.execCommand("copy");
+			alert("复制成功");
+		}
+	</script>
+</html>

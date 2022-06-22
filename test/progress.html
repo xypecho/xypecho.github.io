@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.5.15/vue.js"></script>
+	<style type="text/css">
+		.progress_wrapper{
+			width: 400px;
+			height: 20px;
+			background:#ccc;
+			text-align: center;
+		}
+		.progress{
+			width: 0%;
+			height: 20px;
+			background:#409EFF;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<button @click='start'>start</button>
+		<div class="progress_wrapper">
+			<div class="progress" :style='{width:`${percentage}%`}'>{{percentage}}%</div>
+		</div>
+		<p>下面是用h5的新标签progress生成的进度条</p>
+		<progress :value='percentage' max='100'></progress>
+	</div>
+	<script type="text/javascript">
+		var app =new Vue({
+			el:'#app',
+			data:{
+				percentage:0,
+			},
+			methods:{
+				start(){
+					setInterval(()=>{
+						if (this.percentage<100) {
+							this.percentage +=1;
+						}
+					},100)
+				}
+			}
+		})
+	</script>
+</body>
+</html>

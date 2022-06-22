@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+	<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+	<style type="text/css">
+		body,html{
+			margin: 0;
+			padding: 0;
+		}
+		.father{
+			width: 100%;
+			display: flex;
+		}
+		.father span{
+			flex:1;
+			text-align: center;
+			background-color: #31c27c;
+			color:#fff;
+			height: 40px;
+			line-height: 40px;
+		}
+		.active{
+			color:red!important;
+			background-color: blue!important;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div class="father">
+			<span :class="isshow==0?'active':''" @click='changetag(0)'>我是tab1</span>
+			<span :class="isshow==1?'active':''" @click='changetag(1)'>我是tab2</span>
+		</div>
+		<div class="son">
+			<div v-show='isshow==0'>我是tab1里面的内容</div>
+			<div v-show='isshow==1'>我是tab2里面的内容啊啊啊啊啊</div>
+		</div>
+	</div>
+</body>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:'#app',
+			data:{
+				isshow:0
+			},
+			methods:{
+				changetag:function(idx){
+					this.isshow=idx;
+				}
+			}
+		})
+	</script>
+</html>

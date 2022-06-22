@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+	<style type="text/css">
+		.active{
+			color:red;
+			font-size: 22px;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<p @click='change(1)' :class="tag==1?'active':''">我是红色</p>
+		<p @click='change(2)' :class="tag==2?'active':''">我是红色</p>
+		<p @click='change(3)' :class="tag==3?'active':''">我是红色</p>
+	</div>
+</body>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:'#app',
+			data:{
+				tag:0
+			},
+			methods:{
+				change:function(id){
+					if (this.tag==id) {
+						this.tag=0;
+					} else {
+						this.tag=id;
+					}
+				}
+			}
+		})
+	</script>
+</html>

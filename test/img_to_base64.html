@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+	<div  class="upload_img_content"></div>
+	<input type="file" name="" class="upload_img_content_file" value="">
+	<input type="hidden" name="logoimg_base64"  value="">
+</body>
+	<script type="text/javascript">
+		//图片转成base64
+		function readAsDataURL(parm, file) {
+		  if (!file) {
+		    return false;
+		  }
+		  var reader = new FileReader();
+		  reader.readAsDataURL(file);
+		  reader.onload = function(e) {
+		    var index_local = e.target.result.indexOf(',');
+		    console.log(index_local);
+		    $("input[name='" + parm + "']").val(e.target.result.substring(index_local + 1));//此处删除了base64头部的信息
+		  }
+		};
+		//上传图片并显示
+		$('.upload_img_content_file').change(function() {
+		  let img = this.files[0];
+		  let img_src;
+		  if (img.type.indexOf('image') < 0) {
+		    alert('请选择图片类型文件');
+		    return false;
+		  }
+		  //判断兼容性
+		  if (window.navigator.userAgent.indexOf('Chrome') > 0 || window.navigator.userAgent.indexOf('Safari') > 0) {
+		    img_src = window.webkitURL.createObjectURL(img);
+		  } else {
+		    img_src = window.URL.createObjectURL(img);
+		  }
+		  $(".upload_img_content").html(`<img src=${img_src}>`);
+		  readAsDataURL("logoimg_base64", img);
+		})
+	</script>
+</html>

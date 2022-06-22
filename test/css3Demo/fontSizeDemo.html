@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        :root {
+            --fontSize: 20px;
+        }
+
+        p {
+            font-size: var(--fontSize);
+        }
+    </style>
+    <select name="" id="" onchange="changeFontSize(this)">
+        <option value="large">大</option>
+        <option value="medium">中</option>
+        <option value="small">小</option>
+    </select>
+    <p>
+        天文学家捕获的首张黑洞照片（事件视界望远镜合作组织提供）
+        4月10日，通过协调召开全球新闻发布会，事件视界望远镜（EHT）宣布已经成功获得了超大黑洞的第一个直接视觉证据。EHT是一个通过国际合作而实现的、由八个地面射电望远镜组成的观测阵列，主要旨在通过形成一个口径如地球大小的“虚拟”望远镜来捕捉黑洞的图像。
+    </p>
+</body>
+<script>
+    function changeFontSize(data) {
+        const docStyle = document.documentElement.style;
+        switch (data.value) {
+            case 'large':
+                docStyle.setProperty('--fontSize', '20px');
+                break;
+            case 'medium':
+                docStyle.setProperty('--fontSize', '16px');
+                break;
+            case 'small':
+                docStyle.setProperty('--fontSize', '13px');
+                break;
+        }
+        const body = document.querySelector('body')
+        var cssVarColor = getComputedStyle(body).getPropertyValue('--fontSize');
+        console.log(cssVarColor) // 这是获取css变量的方法
+    }
+</script>
+
+</html>

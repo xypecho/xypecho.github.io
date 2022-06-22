@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+	<style type="text/css">
+		p{
+			width: 100px;
+			height: 100px;
+			background: red;
+		}
+		.slider-enter-active, .slider-leave-active {
+		  transition: all .5s;
+		}
+		.slider-enter, .slider-leave-to /* .slider-leave-active below version 2.1.8 */ {
+		  transform: translate3d(100%,0,0)
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<button @click="show = !show">
+		  Toggle
+		</button>
+		<transition name="slider">
+		  <p v-if="show">hello</p>
+		</transition>
+	</div>
+</body>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:'#app',
+			data:{
+				show:true
+			}
+		})
+	</script>
+</html>

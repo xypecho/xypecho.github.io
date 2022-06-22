@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            flex-direction: row;
+            width: 500px;
+        }
+
+        .list {
+            height: 100px;
+            background-color: skyblue;
+            margin: 10px;
+        }
+
+        .list:nth-child(2n) {
+            background: rosybrown;
+        }
+
+        .container::after {
+            content: '';
+            flex: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="list" style="width: 30px"></div>
+        <div class="list" style="width: 40px"></div>
+        <div class="list" style="width: 50px"></div>
+        <div class="list" style="width: 60px"></div>
+        <div class="list" style="width: 70px"></div>
+        <div class="list" style="width: 80px"></div>
+        <div class="list" style="width: 90px"></div>
+        <div class="list" style="width: 90px"></div>
+        <div class="list" style="width: 20px"></div>
+        <div class="list" style="width: 40px"></div>
+        <div class="list" style="width: 80px"></div>
+        <div class="list" style="width: 30px"></div>
+        <div class="list" style="width: 80px"></div>
+        <div class="list" style="width: 90px"></div>
+        <div class="list" style="width: 90px"></div>
+    </div>
+</body>
+
+</html>

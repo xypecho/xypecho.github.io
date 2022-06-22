@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>grid-auto-flow 属性</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <style>
+        .wrapper {
+            margin: 50px;
+        }
+        
+        .wrapper {
+            display: grid;
+            grid-template-columns: 100px 200px 100px;
+            grid-auto-flow: row;
+            grid-gap: 5px;
+            grid-auto-rows: 50px;
+        }
+        
+        .one {
+            background: #19CAAD;
+        }
+        
+        .two {
+            background: #8CC7B5;
+        }
+        
+        .three {
+            background: #D1BA74;
+        }
+        
+        .four {
+            background: #BEE7E9;
+        }
+        
+        .five {
+            background: #E6CEAC;
+        }
+        
+        .six {
+            grid-column-start: span 2;
+            background: #ECAD9E;
+        }
+        
+        .seven {
+            background: #BEEDC7;
+        }
+        
+        .eight {
+            background: #F4606C;
+        }
+        
+        .nine {
+            background: #A0EEE1;
+        }
+        
+        .item {
+            text-align: center;
+            font-size: 200%;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="select">
+        选择grid-auto-flow的属性<br /><br />
+        <label><input name="grid-auto-flow" type="radio" value="row" />row(默认值)</label>
+        <label><input name="grid-auto-flow" type="radio" value="column" />column</label>
+        <label><input name="grid-auto-flow" type="radio" value="dense" />dense</label>
+        <label><input name="grid-auto-flow" type="radio" value="row dense" />row dense</label>
+        <label><input name="grid-auto-flow" type="radio" value="column dense" />column dense</label>
+        <label><input name="grid-auto-flow" type="radio" value="inherit" />inherit</label>
+        <label><input name="grid-auto-flow" type="radio" value="initial" />initial</label>
+        <label><input name="grid-auto-flow" type="radio" value="unset" />unset</label>
+    </div>
+    <div class="wrapper">
+        <div class="one item">One</div>
+        <div class="two item">Two</div>
+        <div class="three item">Three</div>
+        <div class="four item">Four</div>
+        <div class="five item">Five</div>
+        <div class="six item">Six</div>
+        <div class="seven item">Seven</div>
+        <div class="eight item">eight</div>
+        <div class="nine item">Nine</div>
+    </div>
+</body>
+<script>
+    $("input:radio[name='grid-auto-flow']").change(function() {
+        var opt = $("input:radio[name='grid-auto-flow']:checked").val();
+        $('.wrapper').css('grid-auto-flow', opt)
+    });
+</script>
+
+</html>

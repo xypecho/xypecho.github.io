@@ -1,0 +1,831 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bitbug_favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="很青的青蛙">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="面试时经常被问到，记录一下数组的所有遍历方法(持续更新中…) 截止目前(2020年2月28日)，数组的遍历方法共15个： 1234ES5：    for、forEach、every 、some、 filter、map、reduce、reduceRight、for...inES6：    find、findIndex、keys、values、entries、for...of   经典遍历方法for1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数组里面的那些遍历方法">
+<meta property="og:url" content="http://example.com/2020/02/28/%E6%95%B0%E7%BB%84%E9%87%8C%E9%9D%A2%E7%9A%84%E9%82%A3%E4%BA%9B%E9%81%8D%E5%8E%86%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="小小切图仔也有大大的梦想">
+<meta property="og:description" content="面试时经常被问到，记录一下数组的所有遍历方法(持续更新中…) 截止目前(2020年2月28日)，数组的遍历方法共15个： 1234ES5：    for、forEach、every 、some、 filter、map、reduce、reduceRight、for...inES6：    find、findIndex、keys、values、entries、for...of   经典遍历方法for1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-28T06:51:13.000Z">
+<meta property="article:modified_time" content="2022-06-22T12:52:39.977Z">
+<meta property="article:author" content="很青的青蛙">
+<meta property="article:tag" content="JS技巧">
+<meta property="article:tag" content="数组">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>数组里面的那些遍历方法 - 小小切图仔也有大大的梦想</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+    <!-- Baidu Analytics -->
+    <script async>
+      if (!Fluid.ctx.dnt) {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+      }
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>小小切图仔也有大大的梦想</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="数组里面的那些遍历方法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-28 14:51" pubdate>
+          星期五, 二月 28日 2020, 2:51 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">数组里面的那些遍历方法</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>面试时经常被问到，记录一下数组的所有遍历方法(持续更新中…)</p>
+<p>截止目前(2020年2月28日)，数组的遍历方法共15个：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">ES5：<br>    <span class="hljs-keyword">for</span>、forEach、every 、some、 <span class="hljs-built_in">filter</span>、<span class="hljs-keyword">map</span>、reduce、reduceRight、<span class="hljs-keyword">for</span>...in<br>ES6：<br>    <span class="hljs-keyword">find</span>、findIndex、<span class="hljs-built_in">keys</span>、<span class="hljs-built_in">values</span>、entries、<span class="hljs-keyword">for</span>...of<br></code></pre></td></tr></table></figure>
+
+
+<h3 id="经典遍历方法"><a href="#经典遍历方法" class="headerlink" title="经典遍历方法"></a>经典遍历方法</h3><h4 id="for"><a href="#for" class="headerlink" title="for"></a>for</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-keyword">for</span> (let i = <span class="hljs-number">0</span>; i &lt; arr.length; i++) &#123;<br>    <span class="hljs-regexp">//</span> <span class="hljs-keyword">do</span> something<br>&#125;<br><br><span class="hljs-regexp">//</span> 优化版写法<br><span class="hljs-regexp">//</span> 使用临时变量，将长度缓存起来，避免重复获取数组长度<br><span class="hljs-keyword">for</span> (let i = <span class="hljs-number">0</span>, len = arr.length; i &lt; len; i++) &#123;<br>    <span class="hljs-regexp">//</span> <span class="hljs-keyword">do</span> something<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h4><p>针对每一个元素执行提供的函数。会修改原来的数组，不会返回执行结果</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs smali">let arr = [1, 2, 3]<br>arr.forEach((currentValue, index, array) =&gt; &#123;<br>    // currentValue 当前元素<br>    // index 索引<br>    //<span class="hljs-built_in"> array </span>正在操作的数组<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h4 id="every"><a href="#every" class="headerlink" title="every"></a>every</h4><p>测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值</p>
+<p>ps:<strong>若收到一个空数组，此方法在一切情况下都会返回 true</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.every(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">1</span>)) <span class="hljs-comment">// false</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.every(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">0</span>)) <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="some"><a href="#some" class="headerlink" title="some"></a>some</h4><p>测试数组中是不是至少有1个元素通过了被提供的函数测试。它返回一个布尔值</p>
+<p>ps:<strong>若收到一个空数组，此方法在一切情况下都会返回 false</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.some(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">1</span>)) <span class="hljs-comment">// true</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.some(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">4</span>)) <span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><p>创建一个新数组, 返回通过所提供函数实现的测试的所有元素</p>
+<p>ps:<strong>如果数组中没有元素符合函数测试条件，则返回空数组</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.filte(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">4</span>)) <span class="hljs-comment">// []</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.<span class="hljs-built_in">filter</span>(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">1</span>)) <span class="hljs-comment">// [2, 3]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><p>创建一个新数组，其结果是该数组中的每个元素都调用一个提供的函数后返回的结果。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.<span class="hljs-built_in">map</span>(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue * <span class="hljs-number">2</span>)) <span class="hljs-comment">// [2, 4, 6]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><p>对数组中的每个元素执行一个由您提供的reducer函数(升序执行)，将其结果汇总为单个返回值。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br>let res = arr.<span class="hljs-built_in">reduce</span>(<span class="hljs-function">(<span class="hljs-params">acc, cur, idx, src</span>) =&gt;</span> &#123;<br>    <span class="hljs-comment">// Accumulator (acc) (累计器)，它是上一次调用回调时返回的累积值，如果没有return值则为undefined</span><br>    <span class="hljs-comment">// Current Value (cur) (当前值)</span><br>    <span class="hljs-comment">// Current Index (idx) (当前索引)</span><br>    <span class="hljs-comment">// Source Array (src) (源数组)</span><br>    <span class="hljs-keyword">return</span> acc + cur<br>&#125;)<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(res) <span class="hljs-comment">// 6</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="reduceRight"><a href="#reduceRight" class="headerlink" title="reduceRight"></a>reduceRight</h4><p>与reduce基本相同，唯一的区别就是：reduceRight是从右向左遍历</p>
+<h4 id="for…in"><a href="#for…in" class="headerlink" title="for…in"></a>for…in</h4><p>遍历数组循环出key</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> arr) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(key) <span class="hljs-comment">// 0 1 2</span><br>&#125;<br><br><span class="hljs-keyword">let</span> obj = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;呆呆&#x27;</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">17</span>, <span class="hljs-attr">job</span>: <span class="hljs-string">&#x27;coder&#x27;</span> &#125;<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> key <span class="hljs-keyword">in</span> obj) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(key)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="es6后新增遍历方法"><a href="#es6后新增遍历方法" class="headerlink" title="es6后新增遍历方法"></a>es6后新增遍历方法</h3><h4 id="find"><a href="#find" class="headerlink" title="find"></a>find</h4><p>返回数组中满足提供的测试函数的第一个元素的值</p>
+<p>ps:<strong>如果数组中没有元素符合函数测试条件，则返回undefined</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.<span class="hljs-built_in">find</span>(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">0</span>)) <span class="hljs-comment">// 1</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.<span class="hljs-built_in">find</span>(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">10</span>)) <span class="hljs-comment">// undefined</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="findIndex"><a href="#findIndex" class="headerlink" title="findIndex"></a>findIndex</h4><p>返回数组中满足提供的测试函数的第一个元素的索引</p>
+<p>ps:<strong>如果数组中没有元素符合函数测试条件，则返回-1</strong></p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.findIndex(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">20</span>)) <span class="hljs-comment">// -1</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(arr.findIndex(<span class="hljs-function">(<span class="hljs-params">currentValue, index, <span class="hljs-built_in">array</span></span>) =&gt;</span> currentValue &gt; <span class="hljs-number">0</span>)) <span class="hljs-comment">// 0</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="keys"><a href="#keys" class="headerlink" title="keys"></a>keys</h4><p>返回一个由一个给定对象的自身可枚举属性组成的数组</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br>console.<span class="hljs-built_in">log</span>(Object.<span class="hljs-built_in">keys</span>(arr)) // [<span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-string">&quot;2&quot;</span>]<br><br><span class="hljs-keyword">let</span> arr = &#123; name: <span class="hljs-string">&#x27;呆呆&#x27;</span>, age: <span class="hljs-number">17</span>, job: <span class="hljs-string">&#x27;coder&#x27;</span> &#125;<br>console.<span class="hljs-built_in">log</span>(Object.<span class="hljs-built_in">keys</span>(arr)) //  [<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;age&quot;</span>, <span class="hljs-string">&quot;job&quot;</span>]<br></code></pre></td></tr></table></figure>
+
+<h4 id="values"><a href="#values" class="headerlink" title="values"></a>values</h4><p>返回一个给定对象自身的所有可枚举属性值的数组</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br>console.log(<span class="hljs-keyword">Object</span>.<span class="hljs-keyword">values</span>(arr)) // [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><br>let arr1 = &#123; <span class="hljs-type">name</span>: <span class="hljs-string">&#x27;呆呆&#x27;</span>, age: <span class="hljs-number">17</span>, job: <span class="hljs-string">&#x27;coder&#x27;</span> &#125;<br>console.log(<span class="hljs-keyword">Object</span>.<span class="hljs-keyword">values</span>(arr1)) //  [&quot;呆呆&quot;, <span class="hljs-number">17</span>, &quot;coder&quot;]<br></code></pre></td></tr></table></figure>
+
+<h4 id="entries"><a href="#entries" class="headerlink" title="entries"></a>entries</h4><p>返回一个给定对象自身可枚举属性的键值对数组</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs prolog">let arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br>console.log(<span class="hljs-symbol">Object</span>.entries(arr)) //  [[<span class="hljs-string">&quot;0&quot;</span>, <span class="hljs-number">1</span>],[<span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-number">2</span>],[<span class="hljs-string">&quot;2&quot;</span>, <span class="hljs-number">3</span>]]<br><br>let arr1 = &#123; name: <span class="hljs-string">&#x27;呆呆&#x27;</span>, age: <span class="hljs-number">17</span>, job: <span class="hljs-string">&#x27;coder&#x27;</span> &#125;<br>console.log(<span class="hljs-symbol">Object</span>.entries(arr1)) //  [[<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;呆呆&quot;</span>],[<span class="hljs-string">&quot;age&quot;</span>, <span class="hljs-number">17</span>],[<span class="hljs-string">&quot;job&quot;</span>, <span class="hljs-string">&quot;coder&quot;</span>]]<br></code></pre></td></tr></table></figure>
+
+<h4 id="for…of"><a href="#for…of" class="headerlink" title="for…of"></a>for…of</h4><p>遍历数组循环出value</p>
+<p>ps:<strong>for…of不能循环普通的对象</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> iterator <span class="hljs-keyword">of</span> arr) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(iterator) <span class="hljs-comment">// 1 2 3</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p>*是否修改原数组是指：在该方法的遍历中做操作，是否会影响原数组</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法</th>
+<th align="left">是否修改原数组</th>
+<th align="left">是否有返回值</th>
+<th align="left">返回值内容</th>
+<th align="left">是否可以跳出循环</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">for</td>
+<td align="left">是</td>
+<td align="left">否</td>
+<td align="left">无</td>
+<td align="left">break可跳出</td>
+</tr>
+<tr>
+<td align="left">forEach</td>
+<td align="left">是</td>
+<td align="left">否</td>
+<td align="left">无</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">every</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Boolean</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">some</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Boolean</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">filter</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Array</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">map</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Array</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">reduce</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Any</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">reduceRight</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Any</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">for…in</td>
+<td align="left">否</td>
+<td align="left">否</td>
+<td align="left">无</td>
+<td align="left">break可跳出</td>
+</tr>
+<tr>
+<td align="left">find</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Any</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">findIndex</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Number</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">keys</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Array</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">values</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Array</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">entries</td>
+<td align="left">否</td>
+<td align="left">是</td>
+<td align="left">Array</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">for…of</td>
+<td align="left">否</td>
+<td align="left">否</td>
+<td align="left">无</td>
+<td align="left">break可跳出</td>
+</tr>
+</tbody></table>
+<h3 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h3><p>&#x2F;&#x2F; 单纯地遍历<br>Array.prototype.forEach</p>
+<p>&#x2F;&#x2F; 检测数组中是否有元素符合条件<br>Array.prototype.some</p>
+<p>&#x2F;&#x2F; 检测数组中是否所有元素符合条件<br>Array.prototype.every</p>
+<p>&#x2F;&#x2F; 用来将一个列表转换成另一个等长的列表<br>Array.prototype.map</p>
+<p>&#x2F;&#x2F; 用来将一个列表转换成一个值<br>Array.prototype.reduce</p>
+<p>&#x2F;&#x2F; 从列表中找出符合条件的一个元素<br>Array.prototype.find</p>
+<p>&#x2F;&#x2F; 从列表中找出符合条件的若干元素<br>Array.prototype.filter</p>
+<p>&#x2F;&#x2F; 拍平列表<br>Array.prototype.flat</p>
+<p>&#x2F;&#x2F; map 和 flat 的结合，适合用来将一个列表转换成另一个不等长的列表<br>Array.prototype.flatMap</p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array">更多api使用</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/JS%E6%8A%80%E5%B7%A7/" class="category-chain-item">JS技巧</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/JS%E6%8A%80%E5%B7%A7/%E6%95%B0%E7%BB%84/" class="category-chain-item">数组</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/JS%E6%8A%80%E5%B7%A7/">#JS技巧</a>
+      
+        <a href="/tags/%E6%95%B0%E7%BB%84/">#数组</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>数组里面的那些遍历方法</div>
+      <div>http://example.com/2020/02/28/数组里面的那些遍历方法/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>很青的青蛙</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2020年2月28日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/11/JavaScript%E4%B8%AD%E5%88%A4%E6%96%AD%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" title="JavaScript中判断数据类型的几种方法">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaScript中判断数据类型的几种方法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/27/apply%E3%80%81call%E3%80%81bind%E7%9A%84%E7%94%A8%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%8C%BA%E5%88%AB/" title="apply、call、bind的用法以及区别">
+                        <span class="hidden-mobile">apply、call、bind的用法以及区别</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

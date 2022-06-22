@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>记得打开控制台哦</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+    <h1>12</h1>
+</body>
+<script>
+    // 需求：一个单位时间内，只能触发一次函数
+    const throttle = (fn, awaitTime) => {
+        let last = Date.now();
+        return (...args) => {
+            const now = Date.now();
+            if (now - last >= awaitTime) {
+                fn(...args);
+                last = now;
+            }
+        }
+    }
+
+    // 调用
+    const throttleScroll = throttle(test, 3000);
+    window.onscroll = function () {
+        throttleScroll('1', '呆呆', 3, 'asd');
+    }
+
+    // 需要节流的函数
+    function test(a, b, c, d) {
+        console.log(a, b, c, d)
+        // console.log(a)
+    }
+</script>
+
+</html>

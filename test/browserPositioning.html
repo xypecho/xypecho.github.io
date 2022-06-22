@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no">
+    <title>基于浏览器的HTML5地理定位</title>
+</head>
+
+<body>
+    <script>
+        function getLocation() {
+            var options = {
+                enableHighAccuracy: true, //boolean 是否要求高精度的地理信息，默认为false
+                maximumAge: 1000 //应用程序的缓存时间
+            }
+
+            if (navigator.geolocation) {
+                //浏览器支持geolocation
+                navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+
+            } else {
+                //浏览器不支持geolocation
+                console.log("浏览器不支持!");
+            }
+        }
+
+        //成功时
+        function onSuccess(position) {
+            console.log(position);
+            //经度
+            var longitude = position.coords.longitude;
+            //纬度
+            var latitude = position.coords.latitude;
+            return false;
+        }
+        //失败时
+        function onError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("用户拒绝对获取地理位置的请求");
+                    break;
+
+                case error.POSITION_UNAVAILABLE:
+                    alert("位置信息是不可用的");
+                    break;
+
+                case error.TIMEOUT:
+                    alert("请求用户地理位置超时");
+                    break;
+
+                case error.UNKNOWN_ERROR:
+                    alert("未知错误");
+                    break;
+            }
+        }
+        window.onload = getLocation;
+    </script>
+</body>
+
+</html>

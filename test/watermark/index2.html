@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+</body>
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = "https://xypecho.github.io/2019/06/24/%E6%AF%95%E4%B8%9A%E6%95%B4%E6%95%B4%E4%B8%89%E5%B9%B4%E4%BA%86/TIM%E5%9B%BE%E7%89%8720190624205011.png";
+    img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        watermarkedDataURL(canvas, ctx);
+    }
+    function watermarkedDataURL(canvas) {
+        const tempImg = new Image();
+        tempImg.crossOrigin = 'anonymous';
+        tempImg.src = "https://xypecho.github.io/test/watermark/watermark.png";
+        tempImg.onload = function () {
+            ctx.drawImage(tempImg, 1, 1, tempImg.width / 2, tempImg.height / 2)
+        }
+    }
+</script>
+
+</html>
