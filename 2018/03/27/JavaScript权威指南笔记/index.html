@@ -23,11 +23,14 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="在函数体内，局部变量优先级高于全局变量12345678910111213141516171819var scope &#x3D; &amp;#x27;global&amp;#x27;;function checkscope() &amp;#123;	var scope &#x3D; &amp;#x27;local&amp;#x27;;	return scope;&amp;#125;checkscope(); &#x2F;&#x2F;输出‘local’&#x2F;&#x2F;下面是局部作用域嵌套的例子va">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530094624.png">
+<meta property="og:image" content="http://example.com/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530102003.png">
 <meta property="article:published_time" content="2018-03-27T04:55:30.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.444Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JavaScript权威指南">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530094624.png">
   
   
   
@@ -316,11 +319,11 @@
 <p>throw语句用来抛出一个用户自定义的异常。当前函数的执行将被停止（throw之后的语句将不会执行），并且控制将被传递到调用堆栈中的第一个catch块。如果调用者函数中没有catch块，程序将会终止。</p>
 </blockquote>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs scss">function <span class="hljs-built_in">add</span>(num) &#123;<br>	if (num &lt; <span class="hljs-number">0</span>) &#123;<br>		throw new <span class="hljs-built_in">Error</span>(&#x27;num不能是负数&#x27;);<br>	&#125;<br>	for (let i = <span class="hljs-number">0</span>; i &lt; num; i++) &#123;<br>		console<span class="hljs-selector-class">.log</span>(i);<br>	&#125;<br>&#125;<br><span class="hljs-built_in">add</span>(-<span class="hljs-number">1</span>); <span class="hljs-comment">// 报错</span><br></code></pre></td></tr></table></figure>
-
+<img src="/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530094624.png" srcset="/img/loading.gif" lazyload class="">
 <p>当抛出异常时，JavaScript解释器会立即停止当前正在执行的逻辑，并跳转至就近的异常处理程序。</p>
 <h4 id="try-x2F-catch-x2F-finally语句"><a href="#try-x2F-catch-x2F-finally语句" class="headerlink" title="try&#x2F;catch&#x2F;finally语句"></a>try&#x2F;catch&#x2F;finally语句</h4><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">try</span> &#123;<br>  <span class="hljs-comment">// 需要被执行的语句。</span><br>&#125;<br><span class="hljs-keyword">catch</span> (e) &#123;<br>  <span class="hljs-comment">// 如果在try块里有异常被抛出时执行的语句。</span><br>&#125;<br><span class="hljs-keyword">finally</span> &#123;<br>  <span class="hljs-comment">// 无论是否有异常抛出或捕获这些语句都将执行。</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">try</span>&#123;<br>	<span class="hljs-keyword">let</span> num = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Number</span>(<span class="hljs-title function_">prompt</span>(<span class="hljs-string">&#x27;请输入一个正整数&#x27;</span>));<br>	<span class="hljs-keyword">if</span> (num &lt; <span class="hljs-number">0</span>) &#123;<br>		<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&#x27;num不是正整数&#x27;</span>);<br>	&#125;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num * num);<br>&#125;<br><span class="hljs-keyword">catch</span>(e)&#123;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(e);<br>&#125;<br><span class="hljs-keyword">finally</span>&#123;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;执行结束&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
+<img src="/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530102003.png" srcset="/img/loading.gif" lazyload class="">
 
 <h4 id="with语句"><a href="#with语句" class="headerlink" title="with语句"></a>with语句</h4><blockquote>
 <p>JavaScript查找某个未使用命名空间的变量时，会通过作用域链来查找，作用域链是跟执行代码的context或者包含这个变量的函数有关。’with’语句將某个对象添加的作用域链的顶部，如果在statement中有某个未使用命名空间的变量，跟作用域链中的某个属性同名，则这个变量将指向这个属性值。如果沒有同名的属性，则将拋出ReferenceError异常。</p>

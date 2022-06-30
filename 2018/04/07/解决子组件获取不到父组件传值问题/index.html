@@ -23,11 +23,14 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="最近自己在用vue仿写QQ音乐是遇到一个问题：父组件往子组件里面传了3个值，前两个在子组件里面能获取到，最后一个怎么都获取不到。      (上图这是父组件往子组件传的三个值)">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/04/07/%E8%A7%A3%E5%86%B3%E5%AD%90%E7%BB%84%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180407205309.png">
+<meta property="og:image" content="http://example.com/2018/04/07/%E8%A7%A3%E5%86%B3%E5%AD%90%E7%BB%84%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180407210049.png">
 <meta property="article:published_time" content="2018-04-07T12:47:11.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:40.339Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="vue.js">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/04/07/%E8%A7%A3%E5%86%B3%E5%AD%90%E7%BB%84%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180407205309.png">
   
   
   
@@ -300,10 +303,10 @@
               <div class="markdown-body">
                 
                 <p>最近自己在用vue仿写QQ音乐是遇到一个问题：父组件往子组件里面传了3个值，前两个在子组件里面能获取到，最后一个怎么都获取不到。  </p>
-  
+<img src="/2018/04/07/%E8%A7%A3%E5%86%B3%E5%AD%90%E7%BB%84%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180407205309.png" srcset="/img/loading.gif" lazyload class="">  
 <p>(上图这是父组件往子组件传的三个值)</p>
 <span id="more"></span>
-  
+<img src="/2018/04/07/%E8%A7%A3%E5%86%B3%E5%AD%90%E7%BB%84%E4%BB%B6%E8%8E%B7%E5%8F%96%E4%B8%8D%E5%88%B0%E7%88%B6%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180407210049.png" srcset="/img/loading.gif" lazyload class="">  
 <p>(这是父组件里面获取song这个字段的方式)<br>在百度之后才知道 <font color='red'>异步从接口里取的，那这个组件在任何生命周期里都取不到，而应该在接口调取后取到。</font><br>但是如果在子组件再调一次接口虽然能解决问题，但明显很不优雅，于是有了如下两个解决方案</p>
 <ul>
 <li>在组件上加上v-if&#x3D;”song.length”，可以确保song有值后调用，然后你就可以在生命周期created里面取到值了。</li>

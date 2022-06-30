@@ -23,11 +23,15 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="今天下午实现一个保留用户换行的功能的时候意外的遇到的一个bug      上图是输入的内容，希望展示的时候能够带有换行，于是机智的我给span加上了一个css属性white-space: pre然后打开页面看效果却发现      什么鬼？？？为什么会出现了首行的空格，于是各种debug无果之后… 1&lt;span style&#x3D;&quot;white-space: pre;&quot;&gt;&amp;#">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/TIM%E5%9B%BE%E7%89%8720180512163926.png">
+<meta property="og:image" content="http://example.com/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/TIM%E5%9B%BE%E7%89%8720180512164136.png">
+<meta property="og:image" content="http://example.com/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/TIM%E5%9B%BE%E7%89%8720180512164358.png">
 <meta property="article:published_time" content="2018-05-12T08:38:00.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:40.339Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="BUG集锦">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/TIM%E5%9B%BE%E7%89%8720180512163926.png">
   
   
   
@@ -300,13 +304,13 @@
               <div class="markdown-body">
                 
                 <p>今天下午实现一个保留用户换行的功能的时候意外的遇到的一个bug  </p>
-  
+<img src="/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/TIM%E5%9B%BE%E7%89%8720180512163926.png" srcset="/img/loading.gif" lazyload class="">  
 <p>上图是输入的内容，希望展示的时候能够带有换行，于是机智的我给span加上了一个css属性<code>white-space: pre</code><br>然后打开页面看效果却发现  </p>
-  
+<img src="/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/TIM%E5%9B%BE%E7%89%8720180512164136.png" srcset="/img/loading.gif" lazyload class="">  
 <p>什么鬼？？？为什么会出现了首行的空格，于是各种debug无果之后…</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;span style=<span class="hljs-string">&quot;white-space: pre;&quot;</span>&gt;&#123;&#123; qa_comment &#125;&#125;&lt;/span&gt;<br></code></pre></td></tr></table></figure>
 <p>发现把span写在一行竟然神奇的解决了bug…</p>
-
+<img src="/2018/05/12/%E8%A7%A3%E5%86%B3span%E6%A0%87%E7%AD%BE%E5%86%85%E6%84%8F%E5%A4%96%E5%87%BA%E7%8E%B0%E7%9A%84%E7%A9%BA%E6%A0%BC/TIM%E5%9B%BE%E7%89%8720180512164358.png" srcset="/img/loading.gif" lazyload class="">
 <p>记录一下，防止以后再遇到不知道怎么解决…</p>
 
                 

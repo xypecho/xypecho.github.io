@@ -23,11 +23,14 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="最近项目里面遇到的一个bug,这样一个表格点击编辑选项，">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/03/23/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%A2%91%E7%B9%81%E6%89%93%E5%BC%80%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180323125513.png">
+<meta property="og:image" content="http://example.com/2018/03/23/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%A2%91%E7%B9%81%E6%89%93%E5%BC%80%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180323125826.png">
 <meta property="article:published_time" content="2018-03-23T04:53:44.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.789Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="vue.js">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/03/23/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%A2%91%E7%B9%81%E6%89%93%E5%BC%80%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180323125513.png">
   
   
   
@@ -299,7 +302,7 @@
             
               <div class="markdown-body">
                 
-                <p>最近项目里面遇到的一个bug,这样一个表格点击编辑选项，<span id="more"></span><br>里面会出现一个模态框里面会展示该行的数据，但是点击下一行里面的编辑的时候经常会出现这样一个bug：<br>点第一行的编辑后，关闭模态框，然后点击第二行的编辑出现的模态框里面的数据仍然是第一行的。<br>解决方案</p>
+                <p>最近项目里面遇到的一个bug,<img src="/2018/03/23/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%A2%91%E7%B9%81%E6%89%93%E5%BC%80%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180323125513.png" srcset="/img/loading.gif" lazyload class="">这样一个表格点击编辑选项，<span id="more"></span><br>里面会出现一个模态框<img src="/2018/03/23/vue%E9%A1%B9%E7%9B%AE%E9%87%8C%E9%9D%A2%E9%A2%91%E7%B9%81%E6%89%93%E5%BC%80%E7%BB%84%E4%BB%B6%E6%95%B0%E6%8D%AE%E5%BC%82%E5%B8%B8%E9%97%AE%E9%A2%98/TIM%E5%9B%BE%E7%89%8720180323125826.png" srcset="/img/loading.gif" lazyload class="">里面会展示该行的数据，但是点击下一行里面的编辑的时候经常会出现这样一个bug：<br>点第一行的编辑后，关闭模态框，然后点击第二行的编辑出现的模态框里面的数据仍然是第一行的。<br>解决方案</p>
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-comment">//用vue里的watch钩子，观测点击编辑时传入的id，一旦id发生变化重新加载模态框里面的数据</span><br>watch: &#123;<br>  id: <span class="hljs-keyword">function</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">this</span>.getFilamentDetail();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
                 
               </div>

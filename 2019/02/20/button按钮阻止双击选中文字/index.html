@@ -23,11 +23,13 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="一般我们用span标签模拟按钮时总会遇到这样一种情况，即双击按钮时会触发系统的选中文字。解决方案给按钮加上user-select: none;这个属性。 这样就结束了吗？并没有！我们拓展一下，除了点击触发的事件以外如何让用户感知到他是实实在在的点击了按钮？当然是加上一些小动画了，来看demo关键代码如下： 12345678.btn:active &amp;#123;    transform: trans">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/02/20/button%E6%8C%89%E9%92%AE%E9%98%BB%E6%AD%A2%E5%8F%8C%E5%87%BB%E9%80%89%E4%B8%AD%E6%96%87%E5%AD%97/TIM%E5%9B%BE%E7%89%8720190220215402.png">
 <meta property="article:published_time" content="2019-02-20T13:48:49.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.475Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="CSS相关">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2019/02/20/button%E6%8C%89%E9%92%AE%E9%98%BB%E6%AD%A2%E5%8F%8C%E5%87%BB%E9%80%89%E4%B8%AD%E6%96%87%E5%AD%97/TIM%E5%9B%BE%E7%89%8720190220215402.png">
   
   
   
@@ -299,7 +301,7 @@
             
               <div class="markdown-body">
                 
-                <p>一般我们用<code>span</code>标签模拟按钮时总会遇到这样一种情况，即双击按钮时会触发系统的选中文字。<br>解决方案给按钮加上<code>user-select: none;</code>这个属性。</p>
+                <p>一般我们用<code>span</code>标签模拟按钮时总会遇到这样一种情况，<img src="/2019/02/20/button%E6%8C%89%E9%92%AE%E9%98%BB%E6%AD%A2%E5%8F%8C%E5%87%BB%E9%80%89%E4%B8%AD%E6%96%87%E5%AD%97/TIM%E5%9B%BE%E7%89%8720190220215402.png" srcset="/img/loading.gif" lazyload class="">即双击按钮时会触发系统的选中文字。<br>解决方案给按钮加上<code>user-select: none;</code>这个属性。</p>
 <p>这样就结束了吗？并没有！我们拓展一下，除了点击触发的事件以外如何让用户感知到他是实实在在的点击了按钮？当然是加上一些小动画了，来看<a target="_blank" rel="noopener" href="https://xypecho.github.io/test/button.html">demo</a><br>关键代码如下：</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.btn</span><span class="hljs-selector-pseudo">:active</span> &#123;<br>    <span class="hljs-attribute">transform</span>: <span class="hljs-built_in">translate</span>(<span class="hljs-number">0px</span>, <span class="hljs-number">5px</span>);<br>    <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0px</span> <span class="hljs-number">1px</span> <span class="hljs-number">0px</span> <span class="hljs-number">0px</span>;<br>&#125;<br><span class="hljs-selector-class">.btn</span>&#123;<br>    <span class="hljs-attribute">position</span>: relative;<br>    <span class="hljs-attribute">box-shadow</span>: <span class="hljs-number">0px</span> <span class="hljs-number">5px</span> <span class="hljs-number">0px</span> <span class="hljs-number">0px</span> <span class="hljs-number">#67C23A</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
                 

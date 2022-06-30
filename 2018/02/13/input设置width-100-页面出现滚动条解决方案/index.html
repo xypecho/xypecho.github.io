@@ -23,11 +23,15 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="先上解决方案：input 设置 width:100% 和padding后宽度超出父节点,加上下面这行css到超出的元素身上即可 123box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box; 下面是原理:">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/2513564615-5a333910664fe_articlex.png">
+<meta property="og:image" content="http://example.com/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/content-box.png">
+<meta property="og:image" content="http://example.com/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/border-box.png">
 <meta property="article:published_time" content="2018-02-13T12:34:36.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.585Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="CSS相关">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/2513564615-5a333910664fe_articlex.png">
   
   
   
@@ -305,12 +309,12 @@
 <span id="more"></span>
 <h2 id="box-sizing是什么"><a href="#box-sizing是什么" class="headerlink" title="box-sizing是什么"></a>box-sizing是什么</h2><p>一言以蔽之，box-sizing用来控制元素的内容区域的宽&#x2F;高与padding，border之间的关系；<br>正常的盒模型：</p>
 <p>元素的内容区域宽度&#x3D;width；<br>元素的内容区域高度&#x3D;height；<br>元素实际占的宽度&#x3D;width+padding+border；<br>元素实际占的高度&#x3D;height+padding+border；</p>
-<h4 id="正常显示"><a href="#正常显示" class="headerlink" title="正常显示"></a>正常显示</h4>
+<h4 id="正常显示"><a href="#正常显示" class="headerlink" title="正常显示"></a>正常显示</h4><img src="/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/2513564615-5a333910664fe_articlex.png" srcset="/img/loading.gif" lazyload class="">
 <p>从图中可以看出 元素实际占的宽度为 420px（10px+50px+300px+50px+10px）。</p>
 <h4 id="box-sizing-content-box"><a href="#box-sizing-content-box" class="headerlink" title="box-sizing:content-box"></a>box-sizing:content-box</h4><p>当我们在该div上设置一个 box-sizing:content-box;效果跟默认的一致，也就是说默认的盒子模型就是<br>box-sizing:content-box; 如下图所示：</p>
-
+<img src="/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/content-box.png" srcset="/img/loading.gif" lazyload class="">
 <h4 id="box-sizing-border-box"><a href="#box-sizing-border-box" class="headerlink" title="box-sizing:border-box"></a>box-sizing:border-box</h4><p>当设置 box-sizing:border-box;时，元素的实际宽度就为 300px了，也就是实际宽度值就是 width的值，而该div的内容区的宽度则为除去 padding 和border后的宽度；如下图所示：</p>
-
+<img src="/2018/02/13/input%E8%AE%BE%E7%BD%AEwidth-100-%E9%A1%B5%E9%9D%A2%E5%87%BA%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/border-box.png" srcset="/img/loading.gif" lazyload class="">
                 
               </div>
             

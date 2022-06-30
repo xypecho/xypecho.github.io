@@ -23,12 +23,17 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="前段时间腾讯云有优惠，买了个1核1G的云主机来放练手的项目，经过一波操作终于部署成功了，but首屏打开贼慢，于是来一波性能优化之旅。  首先看看项目加载了哪些文件  打马的部分是服务器的公网ip，我们发现加载最耗时的主要是两个文件一个是首屏的大图，另一个是vendor.2b23f6448b79423c7a25.js这个文件。下面我们来着手优化: 1、vue路由懒加载 当打包构建应用时，Javas">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181024212254.png">
+<meta property="og:image" content="http://example.com/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181024220419.png">
+<meta property="og:image" content="http://example.com/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181025211556.png">
+<meta property="og:image" content="http://example.com/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181025220637.png">
 <meta property="article:published_time" content="2018-10-24T13:07:36.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.773Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="vue.js">
 <meta property="article:tag" content="性能优化">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181024212254.png">
   
   
   
@@ -304,7 +309,7 @@
 <p>前段时间腾讯云有优惠，买了个1核1G的云主机来放练手的项目，经过一波操作终于部署成功了，but首屏打开贼慢，于是来一波性能优化之旅。</p>
 </blockquote>
 <p>首先看看项目加载了哪些文件</p>
-
+<img src="/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181024212254.png" srcset="/img/loading.gif" lazyload class="">
 <p>打马的部分是服务器的公网ip，我们发现加载最耗时的主要是两个文件一个是首屏的大图，另一个是<code>vendor.2b23f6448b79423c7a25.js</code>这个文件。下面我们来着手优化:</p>
 <h3 id="1、vue路由懒加载"><a href="#1、vue路由懒加载" class="headerlink" title="1、vue路由懒加载"></a>1、vue路由懒加载</h3><blockquote>
 <p>当打包构建应用时，Javascript 包会变得非常大，影响页面加载。如果我们能把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件，这样就更加高效了。</p>
@@ -316,17 +321,17 @@
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">export const normalRouter = [<br>  &#123;<br>    <span class="hljs-type">path</span>: <span class="hljs-string">&#x27;/&#x27;</span>,<br>    component: <span class="hljs-keyword">login</span><br>  &#125;,<br>  &#123;<br>    <span class="hljs-type">path</span>: <span class="hljs-string">&#x27;/index&#x27;</span>,<br>    component: resolve =&gt; require([<span class="hljs-string">&#x27;@/pages/index/index&#x27;</span>], resolve),<br>    redirect: <span class="hljs-string">&#x27;/home&#x27;</span>,<br>    <span class="hljs-type">name</span>: <span class="hljs-string">&#x27;首页&#x27;</span>,<br>    children: [<br>      &#123;<br>        <span class="hljs-type">path</span>: <span class="hljs-string">&#x27;/home&#x27;</span>,<br>        component: resolve =&gt; require([<span class="hljs-string">&#x27;@/pages/home/home&#x27;</span>], resolve),<br>        <span class="hljs-type">name</span>: <span class="hljs-string">&#x27;工作台&#x27;</span>,<br>        icon: <span class="hljs-string">&#x27;el-icon-menu&#x27;</span><br>      &#125;,<br>    <br>      &#123;<br>        <span class="hljs-type">path</span>: <span class="hljs-string">&#x27;/404&#x27;</span>,<br>        component: resolve =&gt; require([<span class="hljs-string">&#x27;@/components/404/404&#x27;</span>], resolve),<br>        <span class="hljs-type">name</span>: <span class="hljs-string">&#x27;404&#x27;</span>,<br>        icon: <span class="hljs-string">&#x27;el-icon-menu&#x27;</span><br>      &#125;<br>    ]<br>  &#125;,<br>  &#123;<br>    <span class="hljs-type">path</span>: <span class="hljs-string">&#x27;*&#x27;</span>,<br>    redirect: <span class="hljs-string">&#x27;/404&#x27;</span><br>  &#125;<br>];<br></code></pre></td></tr></table></figure>
 
 <p>配置完路由后，执行<code>npm run build</code>就会发现不同路由对应的组件分割成不同的代码块</p>
-
+<img src="/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181024220419.png" srcset="/img/loading.gif" lazyload class="">
 
 <h3 id="2、代码压缩-gzip"><a href="#2、代码压缩-gzip" class="headerlink" title="2、代码压缩(gzip)"></a>2、代码压缩(gzip)</h3><p>这个是除了路由懒加载之外，优化效果其次明显的。我们找到nginx的配置文件<code>nginx.conf</code>,在http对象中加上以下代码</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">gzip <span class="hljs-keyword">on</span>; <br>gzip_comp_level <span class="hljs-number">5</span>; <br>gzip_types <span class="hljs-built_in">text</span>/plain <span class="hljs-built_in">application</span>/javascript <span class="hljs-built_in">application</span>/x-javascript <span class="hljs-built_in">text</span>/javascript <span class="hljs-built_in">text</span>/xml <span class="hljs-built_in">text</span>/css;<br></code></pre></td></tr></table></figure>
-
+<img src="/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181025211556.png" srcset="/img/loading.gif" lazyload class="">
 <p><strong>对比最开始的图，首屏加载时间从25.89s优化到12.64s，整整快了13s</strong></p>
 <h3 id="3、禁止vue打包生产map文件"><a href="#3、禁止vue打包生产map文件" class="headerlink" title="3、禁止vue打包生产map文件"></a>3、禁止vue打包生产map文件</h3><blockquote>
 <p>map文件的作用：项目打包后，代码都是经过压缩加密的，如果运行时报错，输出的错误信息无法准确得知是哪里的代码报错。有了map就可以像未加密的代码一样，准确的输出是哪一行哪一列有错。</p>
 </blockquote>
 <p>找到vue项目下的<code>config/index.js</code>文件，搜索到<code>productionSourceMap</code>,把后面的值改成false</p>
-
+<img src="/2018/10/24/vue%E9%A1%B9%E7%9B%AE%E6%89%93%E5%8C%85%E4%BC%98%E5%8C%96/TIM%E5%9B%BE%E7%89%8720181025220637.png" srcset="/img/loading.gif" lazyload class="">
 <p><strong>首屏加载时间从12.64s到6.97s</strong></p>
 
                 

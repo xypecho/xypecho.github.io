@@ -23,12 +23,14 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="&amp;#8194;&amp;#8194;看到的一个小测验，输出一个数组里面两两相加等于9的元素，遍历相加等于9很简单，如何只输出第一个就稍微有点难度了，当时想的是抛出异常强行结束循环或者直接截取第一个输出等等。今天看JS权威指南时偶然看到这个">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2018/01/05/%E5%A4%9A%E4%B8%AAfor%E5%BE%AA%E7%8E%AF%E6%97%B6%E5%A6%82%E4%BD%95%E8%B7%B3%E5%87%BA%E5%88%B0%E6%9C%80%E5%A4%96%E9%9D%A2/test.png">
 <meta property="article:published_time" content="2018-01-05T12:03:11.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.915Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta property="article:tag" content="break用法">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2018/01/05/%E5%A4%9A%E4%B8%AAfor%E5%BE%AA%E7%8E%AF%E6%97%B6%E5%A6%82%E4%BD%95%E8%B7%B3%E5%87%BA%E5%88%B0%E6%9C%80%E5%A4%96%E9%9D%A2/test.png">
   
   
   
@@ -300,7 +302,7 @@
             
               <div class="markdown-body">
                 
-                <p>&amp;#8194;&amp;#8194;看到的一个小测验，输出一个数组里面两两相加等于9的元素，遍历相加等于9很简单，如何只输出第一个就稍微有点难度了，当时想的是抛出异常强行结束循环或者直接截取第一个输出等等。今天看JS权威指南时偶然看到这个<span id="more"></span></p>
+                <p>&amp;#8194;&amp;#8194;看到的一个小测验，输出一个数组里面两两相加等于9的元素，遍历相加等于9很简单，如何只输出第一个就稍微有点难度了，当时想的是抛出异常强行结束循环或者直接截取第一个输出等等。今天看JS权威指南时偶然看到这个<span id="more"></span><img src="/2018/01/05/%E5%A4%9A%E4%B8%AAfor%E5%BE%AA%E7%8E%AF%E6%97%B6%E5%A6%82%E4%BD%95%E8%B7%B3%E5%87%BA%E5%88%B0%E6%9C%80%E5%A4%96%E9%9D%A2/test.png" srcset="/img/loading.gif" lazyload class="" title="This is an example image"></p>
 <figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">var</span> a=[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">5</span>,<span class="hljs-number">7</span>];<br><span class="hljs-keyword">var</span> b=<span class="hljs-number">9</span>;<br><span class="hljs-keyword">var</span> num_a;<br><span class="hljs-keyword">var</span> num_b;<br>test123:<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; a.length; i++) &#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>; j &lt; a.length; j++) &#123;<br>		<span class="hljs-keyword">if</span> (a[i]+a[j]==b) &#123;<br>			num_a=i;<br>			num_b=j;<br>			<span class="hljs-built_in">document</span>.writeln(num_a+<span class="hljs-string">&quot;:&quot;</span>+a[num_a]+<span class="hljs-string">&quot;===========&quot;</span>+num_b+<span class="hljs-string">&quot;:&quot;</span>+a[num_b]);<br>			<span class="hljs-keyword">break</span> test123;<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">document</span>.writeln(num_a+<span class="hljs-string">&quot;:&quot;</span>+a[num_a]+<span class="hljs-string">&quot;===========&quot;</span>+num_b+<span class="hljs-string">&quot;:&quot;</span>+a[num_b]);<br>	<span class="hljs-built_in">document</span>.writeln(<span class="hljs-string">&quot;&lt;br&gt;&quot;</span>);<br>&#125;	<br></code></pre></td></tr></table></figure>
 
                 
