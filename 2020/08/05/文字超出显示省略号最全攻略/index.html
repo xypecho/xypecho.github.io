@@ -19,7 +19,7 @@
     <meta name="description" content="单行文本溢出省略123overflow: hidden;text-overflow: ellipsis;white-space: nowrap;  优点：  无兼容问题 响应式截断 文本溢出范围才显示省略号，否则不显示省略号  缺点：  只支持单行文本截断  适用场景：  适用于单行文本溢出显示省略号的情况  多行文本溢出省略12345678910-webkit-line-clamp: 2;&#x2F;*">
 <meta property="og:type" content="article">
 <meta property="og:title" content="文字超出显示省略号最全攻略">
-<meta property="og:url" content="http://example.com/2020/08/05/%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7%E6%9C%80%E5%85%A8%E6%94%BB%E7%95%A5/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2020/08/05/%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7%E6%9C%80%E5%85%A8%E6%94%BB%E7%95%A5/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="单行文本溢出省略123overflow: hidden;text-overflow: ellipsis;white-space: nowrap;  优点：  无兼容问题 响应式截断 文本溢出范围才显示省略号，否则不显示省略号  缺点：  只支持单行文本截断  适用场景：  适用于单行文本溢出显示省略号的情况  多行文本溢出省略12345678910-webkit-line-clamp: 2;&#x2F;*">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -317,7 +317,7 @@
 </ol>
 <h3 id="多行文本溢出省略"><a href="#多行文本溢出省略" class="headerlink" title="多行文本溢出省略"></a>多行文本溢出省略</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs css">-webkit-line-clamp: <span class="hljs-number">2</span>;<br><span class="hljs-comment">/* （用来限制在一个块元素显示的文本的行数,2表示最多显示2行。 为了实现该效果，它需要组合其他的WebKit属性） */</span><br><span class="hljs-attribute">display</span>: -webkit-box;<br><span class="hljs-comment">/* （和1结合使用，将对象作为弹性伸缩盒子模型显示 ） */</span><br>-webkit-box-orient: vertical;<br><span class="hljs-comment">/* （和1结合使用 ，设置或检索伸缩盒对象的子元素的排列方式 ） */</span><br><span class="hljs-attribute">overflow</span>: hidden;<br><span class="hljs-comment">/* （文本溢出限定的宽度就隐藏内容） */</span><br><span class="hljs-attribute">text-overflow</span>: ellipsis;<br><span class="hljs-comment">/* （多行文本的情况下，用省略号“…”隐藏溢出范围的文本) */</span><br></code></pre></td></tr></table></figure>
 
-<p>查看<a target="_blank" rel="noopener" href="https://xypecho.github.io/test/ellipsis/demo1.html">示例</a></p>
+<p>查看<a href="https://xypecho.github.io/test/ellipsis/demo1.html">示例</a></p>
 <p>优点：</p>
 <ol>
 <li>响应式截断</li>
@@ -382,7 +382,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>文字超出显示省略号最全攻略</div>
-      <div>http://example.com/2020/08/05/文字超出显示省略号最全攻略/</div>
+      <div>https://xypecho.github.io/2020/08/05/文字超出显示省略号最全攻略/</div>
     </div>
     <div class="license-meta">
       

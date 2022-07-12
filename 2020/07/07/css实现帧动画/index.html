@@ -19,7 +19,7 @@
     <meta name="description" content="一般项目里面需要用的类似gif动效的地方，我都是让ui直接切好图片给我的，要是他们知道可以用css实现会不会打死我(逃… 话不多说，先上个demo，这两个动画都是纯css实现的哦，甚至没有js的参与，是不是如丝滑般流畅… 下面我们来分析一下如何实现css帧动画  巧妇难为无米之炊，我们需要类似这张的素材，当然还是需要ui小姐姐帮忙了  让他动起来的原理，利用 keyframes，修改背景图的 ba">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css实现帧动画">
-<meta property="og:url" content="http://example.com/2020/07/07/css%E5%AE%9E%E7%8E%B0%E5%B8%A7%E5%8A%A8%E7%94%BB/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2020/07/07/css%E5%AE%9E%E7%8E%B0%E5%B8%A7%E5%8A%A8%E7%94%BB/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="一般项目里面需要用的类似gif动效的地方，我都是让ui直接切好图片给我的，要是他们知道可以用css实现会不会打死我(逃… 话不多说，先上个demo，这两个动画都是纯css实现的哦，甚至没有js的参与，是不是如丝滑般流畅… 下面我们来分析一下如何实现css帧动画  巧妇难为无米之炊，我们需要类似这张的素材，当然还是需要ui小姐姐帮忙了  让他动起来的原理，利用 keyframes，修改背景图的 ba">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -300,10 +300,10 @@
               <div class="markdown-body">
                 
                 <p>一般项目里面需要用的类似gif动效的地方，我都是让ui直接切好图片给我的，要是他们知道可以用css实现会不会打死我(逃…</p>
-<p>话不多说，先上个<a target="_blank" rel="noopener" href="https://xypecho.github.io/test/css3Demo/animation.html">demo</a>，这两个动画都是纯css实现的哦，甚至没有js的参与，是不是如丝滑般流畅…</p>
+<p>话不多说，先上个<a href="https://xypecho.github.io/test/css3Demo/animation.html">demo</a>，这两个动画都是纯css实现的哦，甚至没有js的参与，是不是如丝滑般流畅…</p>
 <p>下面我们来分析一下如何实现css帧动画</p>
 <ol>
-<li><p>巧妇难为无米之炊，我们需要类似这张的<a target="_blank" rel="noopener" href="https://xypecho.github.io/test/css3Demo/guide.png">素材</a>，当然还是需要ui小姐姐帮忙了</p>
+<li><p>巧妇难为无米之炊，我们需要类似这张的<a href="https://xypecho.github.io/test/css3Demo/guide.png">素材</a>，当然还是需要ui小姐姐帮忙了</p>
 </li>
 <li><p>让他动起来的原理，利用 keyframes，修改背景图的 background-position</p>
 </li>
@@ -360,7 +360,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>css实现帧动画</div>
-      <div>http://example.com/2020/07/07/css实现帧动画/</div>
+      <div>https://xypecho.github.io/2020/07/07/css实现帧动画/</div>
     </div>
     <div class="license-meta">
       

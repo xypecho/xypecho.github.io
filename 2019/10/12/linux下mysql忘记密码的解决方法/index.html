@@ -19,18 +19,18 @@
     <meta name="description" content="最近自己写的一个demo项目接口经常报错500，发现原来是因为数据库密码太简单(123456~)估计被黑了，然后搜索了很久才成功重置了mysql密码，记录一下。 1、更改my.cnf配置文件 用命令编辑&#x2F;etc&#x2F;my.cnf配置文件，即：vim &#x2F;etc&#x2F;my.cnf 在[mysqld]下添加skip-grant-tables，然后保存并退出 重启mysql服务：service mysqld re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux下mysql忘记密码的解决方法">
-<meta property="og:url" content="http://example.com/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="最近自己写的一个demo项目接口经常报错500，发现原来是因为数据库密码太简单(123456~)估计被黑了，然后搜索了很久才成功重置了mysql密码，记录一下。 1、更改my.cnf配置文件 用命令编辑&#x2F;etc&#x2F;my.cnf配置文件，即：vim &#x2F;etc&#x2F;my.cnf 在[mysqld]下添加skip-grant-tables，然后保存并退出 重启mysql服务：service mysqld re">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/QQ图片20191012134230.png">
+<meta property="og:image" content="https://xypecho.github.io/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/QQ图片20191012134230.png">
 <meta property="article:published_time" content="2019-10-12T05:35:12.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.663Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="mysql">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/QQ图片20191012134230.png">
+<meta name="twitter:image" content="https://xypecho.github.io/2019/10/12/linux%E4%B8%8Bmysql%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/QQ图片20191012134230.png">
   
   
   
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -382,7 +382,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>linux下mysql忘记密码的解决方法</div>
-      <div>http://example.com/2019/10/12/linux下mysql忘记密码的解决方法/</div>
+      <div>https://xypecho.github.io/2019/10/12/linux下mysql忘记密码的解决方法/</div>
     </div>
     <div class="license-meta">
       

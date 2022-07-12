@@ -19,17 +19,17 @@
     <meta name="description" content="这是要实现的效果图,经常能看到这样一种效果，最初以为是用ps实现的后来发现了css3的一个关于背景图的属性background-clip,下面上实现的代码 123456789101112131415161718.demo-1 &amp;#123;  margin: 40px auto;  width: 200px;  height: 40px;  border-radius: 20px;  line">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css实现渐变色">
-<meta property="og:url" content="http://example.com/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="这是要实现的效果图,经常能看到这样一种效果，最初以为是用ps实现的后来发现了css3的一个关于背景图的属性background-clip,下面上实现的代码 123456789101112131415161718.demo-1 &amp;#123;  margin: 40px auto;  width: 200px;  height: 40px;  border-radius: 20px;  line">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_152264566613.png">
+<meta property="og:image" content="https://xypecho.github.io/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_152264566613.png">
 <meta property="article:published_time" content="2018-04-02T05:04:10.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.475Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="CSS相关">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_152264566613.png">
+<meta name="twitter:image" content="https://xypecho.github.io/2018/04/02/css%E5%AE%9E%E7%8E%B0%E6%B8%90%E5%8F%98%E8%89%B2/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_152264566613.png">
   
   
   
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -305,7 +305,7 @@
 <p>这是要实现的效果图,经常能看到这样一种效果，最初以为是用ps实现的后来发现了css3的一个关于背景图的属性<em>background-clip</em>,下面上实现的代码</p>
 <figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs maxima">.<span class="hljs-built_in">demo</span>-<span class="hljs-number">1</span> &#123;<br>  margin: 40px auto;<br>  <span class="hljs-built_in">width</span>: 200px;<br>  <span class="hljs-built_in">height</span>: 40px;<br>  <span class="hljs-built_in">border</span>-<span class="hljs-built_in">radius</span>: 20px;<br>  line-<span class="hljs-built_in">height</span>: 40px;<br>  text-align: <span class="hljs-built_in">center</span>;<br>  <span class="hljs-built_in">color</span>: white;<br>  <br>  <span class="hljs-built_in">background</span>-<span class="hljs-built_in">image</span>: <span class="hljs-built_in">linear</span>-gradient(<br>                    90deg,<br>                    #7e40ee <span class="hljs-number">0</span>,<br>                    #63d9ee <span class="hljs-number">100</span><span class="hljs-symbol">%</span><br>    );<br>&#125;<br>&lt;div class=<span class="hljs-string">&quot;demo-1&quot;</span>&gt;<br>  按钮<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
 
-<p>点击<a target="_blank" rel="noopener" href="https://xypecho.github.io/test/GradientColor.html">这里</a>看渐变色demo<br>参考链接<a target="_blank" rel="noopener" href="https://juejin.im/post/5abdf558518825557e7880bd?utm_source=gold_browser_extension">#每日一记#让我们玩起流行的渐变色</a></p>
+<p>点击<a href="https://xypecho.github.io/test/GradientColor.html">这里</a>看渐变色demo<br>参考链接<a target="_blank" rel="noopener" href="https://juejin.im/post/5abdf558518825557e7880bd?utm_source=gold_browser_extension">#每日一记#让我们玩起流行的渐变色</a></p>
 
                 
               </div>
@@ -352,7 +352,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>css实现渐变色</div>
-      <div>http://example.com/2018/04/02/css实现渐变色/</div>
+      <div>https://xypecho.github.io/2018/04/02/css实现渐变色/</div>
     </div>
     <div class="license-meta">
       

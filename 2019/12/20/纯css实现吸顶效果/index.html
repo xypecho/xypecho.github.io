@@ -19,17 +19,17 @@
     <meta name="description" content="今天写pad端顶部导航栏时遇到一个问题(其实也不能算问题,只是为了引出话题而已)，导航栏是不随着列表页滑动而滑动的，按照以往的思维直接给导航栏一个position:fixed，然后设置top:0就欧凯了。 不过这样会使导航栏脱离文档流，导致列表的第一条会有部分被导航栏遮挡住。问题不大，继续按照以外的思维给列表的外部容易来个margin-top，完美！ 如果是之前的话，这个需求肯定告一段落了，然后继">
 <meta property="og:type" content="article">
 <meta property="og:title" content="纯css实现吸顶效果">
-<meta property="og:url" content="http://example.com/2019/12/20/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E5%90%B8%E9%A1%B6%E6%95%88%E6%9E%9C/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2019/12/20/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E5%90%B8%E9%A1%B6%E6%95%88%E6%9E%9C/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="今天写pad端顶部导航栏时遇到一个问题(其实也不能算问题,只是为了引出话题而已)，导航栏是不随着列表页滑动而滑动的，按照以往的思维直接给导航栏一个position:fixed，然后设置top:0就欧凯了。 不过这样会使导航栏脱离文档流，导致列表的第一条会有部分被导航栏遮挡住。问题不大，继续按照以外的思维给列表的外部容易来个margin-top，完美！ 如果是之前的话，这个需求肯定告一段落了，然后继">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2019/12/20/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E5%90%B8%E9%A1%B6%E6%95%88%E6%9E%9C/QQ图片20191220173813.png">
+<meta property="og:image" content="https://xypecho.github.io/2019/12/20/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E5%90%B8%E9%A1%B6%E6%95%88%E6%9E%9C/QQ图片20191220173813.png">
 <meta property="article:published_time" content="2019-12-20T08:52:15.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:40.339Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="CSS相关">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2019/12/20/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E5%90%B8%E9%A1%B6%E6%95%88%E6%9E%9C/QQ图片20191220173813.png">
+<meta name="twitter:image" content="https://xypecho.github.io/2019/12/20/%E7%BA%AFcss%E5%AE%9E%E7%8E%B0%E5%90%B8%E9%A1%B6%E6%95%88%E6%9E%9C/QQ图片20191220173813.png">
   
   
   
@@ -71,7 +71,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -308,7 +308,7 @@
 <p>粘性定位可以被认为是相对定位和固定定位的混合。元素在跨越特定阈值前为相对定位，之后为固定定位</p>
 </blockquote>
 <p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/position#Sticky_positioning">上述来源于mdn关于黏性定位的介绍</a></p>
-<p>来一个<a target="_blank" rel="noopener" href="https://xypecho.github.io/test/sticky.html">demo看看</a></p>
+<p>来一个<a href="https://xypecho.github.io/test/sticky.html">demo看看</a></p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">section</span> &#123;<br>    <span class="hljs-attribute">border</span>: <span class="hljs-number">2px</span> solid green;<br>    <span class="hljs-attribute">margin-bottom</span>: <span class="hljs-number">40px</span>;<br>&#125;<br><br><span class="hljs-selector-tag">h2</span> &#123;<br>    <span class="hljs-attribute">position</span>: sticky;<br>    <span class="hljs-attribute">top</span>: <span class="hljs-number">0</span>;<br>    <span class="hljs-attribute">background-color</span>: red;<br>    <span class="hljs-attribute">color</span>: <span class="hljs-number">#fff</span>;<br>&#125;<br><br><span class="hljs-selector-tag">p</span> &#123;<br>    <span class="hljs-attribute">word-wrap</span>: break-word;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
@@ -370,7 +370,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>纯css实现吸顶效果</div>
-      <div>http://example.com/2019/12/20/纯css实现吸顶效果/</div>
+      <div>https://xypecho.github.io/2019/12/20/纯css实现吸顶效果/</div>
     </div>
     <div class="license-meta">
       

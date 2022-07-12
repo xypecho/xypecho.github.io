@@ -19,7 +19,7 @@
     <meta name="description" content="1、 前言有这么一个需求，页面上有两个计数器，交互逻辑完全一模一样，但是里面的数据是完全独立的，需要实现这么一个计数器。如果是之前的我，肯定会在这两个计数器的触发按钮上传参，来分别判断然后实现对应的交互，但是如果使用闭包的话就会简单很多。 123456789101112131415function counterCreator() &amp;#123;    var index &#x3D; 1;    funct">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搞懂Javascript闭包概念">
-<meta property="og:url" content="http://example.com/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="1、 前言有这么一个需求，页面上有两个计数器，交互逻辑完全一模一样，但是里面的数据是完全独立的，需要实现这么一个计数器。如果是之前的我，肯定会在这两个计数器的触发按钮上传参，来分别判断然后实现对应的交互，但是如果使用闭包的话就会简单很多。 123456789101112131415function counterCreator() &amp;#123;    var index &#x3D; 1;    funct">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -310,7 +310,7 @@
 <p>闭包的产生其实来自于js的变量作用域。在js中，变量的作用域属于函数作用域，当函数执行完成之后，作用域就会被清理，内存也就随之被回收。但是由于闭包函数是建立在函数内部的子函数，闭包函数又能够访问父函数的变量，所以就会导致当父函数执行完成时，其作用域不会销毁，该变量永久的保存在内存中直到闭包函数也不存在时才进行销毁。</p>
 </blockquote>
 <h3 id="3、-闭包的应用"><a href="#3、-闭包的应用" class="headerlink" title="3、 闭包的应用"></a>3、 闭包的应用</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://xypecho.github.io/2019/08/08/JavaScript%E7%9A%84%E5%87%BD%E6%95%B0%E8%8A%82%E6%B5%81/">防抖和节流</a></li>
+<li><a href="https://xypecho.github.io/2019/08/08/JavaScript%E7%9A%84%E5%87%BD%E6%95%B0%E8%8A%82%E6%B5%81/">防抖和节流</a></li>
 <li>柯里化</li>
 </ol>
 <h3 id="4、-常见的关于闭包的面试题"><a href="#4、-常见的关于闭包的面试题" class="headerlink" title="4、 常见的关于闭包的面试题"></a>4、 常见的关于闭包的面试题</h3><h4 id="4-1-for-循环中打印"><a href="#4-1-for-循环中打印" class="headerlink" title="4.1 for 循环中打印"></a>4.1 for 循环中打印</h4><p>请问输出内容是是什么？</p>
@@ -378,7 +378,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>搞懂Javascript闭包概念</div>
-      <div>http://example.com/2019/12/02/搞懂Javascript闭包概念/</div>
+      <div>https://xypecho.github.io/2019/12/02/搞懂Javascript闭包概念/</div>
     </div>
     <div class="license-meta">
       

@@ -19,7 +19,7 @@
     <meta name="description" content="通过 @keyframes 规则，您能够创建动画。创建动画的原理是，将一套 CSS 样式逐渐变化为另一套样式。在动画过程中，您能够多次改变这套 CSS 样式。以百分比来规定改变发生的时间，或者通过关键词 “from” 和 “to”，等价于 0% 和 100%。0% 是动画的开始时间，100% 动画的结束时间。为了获得最佳的浏览器支持，您应该始终定义 0% 和 100% 选择器。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="css实现图片自动旋转">
-<meta property="og:url" content="http://example.com/2018/01/21/css%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E6%97%8B%E8%BD%AC/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2018/01/21/css%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E6%97%8B%E8%BD%AC/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="通过 @keyframes 规则，您能够创建动画。创建动画的原理是，将一套 CSS 样式逐渐变化为另一套样式。在动画过程中，您能够多次改变这套 CSS 样式。以百分比来规定改变发生的时间，或者通过关键词 “from” 和 “to”，等价于 0% 和 100%。0% 是动画的开始时间，100% 动画的结束时间。为了获得最佳的浏览器支持，您应该始终定义 0% 和 100% 选择器。">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -306,7 +306,7 @@
 <p>&amp;#8194;&amp;#8194;CSS3里面多了很多动画特效方面的css，前几天项目里遇到一个需要，做一个ajax加载时的动画效果（一个圆圈在旋转显示加载中）,在网上搜索了一下找到了解决方案，在jquery的ajax方法里面加一个参数beforeSend,这个里面就是ajax发送前执行的函数，然后可以配合css3的图片旋转，让display:none的图片在这个时候显示display:block。<br>&amp;#8194;&amp;#8194;那么css3怎么实现图片不停旋转呢，开头引用的w3school里面的文档就很好的说明了。老规矩，先上代码</p>
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-comment">//css样式</span><br>		<span class="hljs-selector-class">.loading</span> img&#123;<br>		  <span class="hljs-attribute">display</span>: inline-block;<br>		  <span class="hljs-attribute">vertical-align</span>: middle;<br>		  <span class="hljs-attribute">animation</span>:rotating <span class="hljs-number">1.2s</span> linear infinite; <span class="hljs-comment">//第一个参数是规定需要绑定到选择器的 keyframe 名称;第二个是规定完成动画所花费的时间，以秒或毫秒计;第三个参数是规定动画的速度曲线(可选值看http://www.w3school.com.cn/cssref/pr_animation-timing-function.asp);</span><br>		  <span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;<br>		&#125;<br>		<span class="hljs-keyword">@keyframes</span> rotating&#123;<br>		from&#123;<span class="hljs-attribute">transform</span>:rotate(<span class="hljs-number">0</span>)&#125;<br>		to&#123;<span class="hljs-attribute">transform</span>:rotate(<span class="hljs-number">360deg</span>)&#125;<br>		&#125;<br><br><br><span class="hljs-comment">//一个div里面有一个图片</span><br>&lt;<span class="hljs-selector-tag">div</span> class=<span class="hljs-string">&quot;loading&quot;</span>&gt;<br>	&lt;<span class="hljs-selector-tag">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-string">&quot;http://pic9.nipic.com/20100916/2531170_131413079748_2.jpg&quot;</span>&gt;<br>&lt;/div&gt;<br></code></pre></td></tr></table></figure>
 
-<p>点这里看<a target="_blank" rel="noopener" href="https://xypecho.github.io/test/tese.html">demo</a>.</p>
+<p>点这里看<a href="https://xypecho.github.io/test/tese.html">demo</a>.</p>
 
                 
               </div>
@@ -353,7 +353,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>css实现图片自动旋转</div>
-      <div>http://example.com/2018/01/21/css实现图片自动旋转/</div>
+      <div>https://xypecho.github.io/2018/01/21/css实现图片自动旋转/</div>
     </div>
     <div class="license-meta">
       

@@ -19,18 +19,18 @@
     <meta name="description" content="在函数体内，局部变量优先级高于全局变量12345678910111213141516171819var scope &#x3D; &amp;#x27;global&amp;#x27;;function checkscope() &amp;#123;	var scope &#x3D; &amp;#x27;local&amp;#x27;;	return scope;&amp;#125;checkscope(); &#x2F;&#x2F;输出‘local’&#x2F;&#x2F;下面是局部作用域嵌套的例子va">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript权威指南笔记">
-<meta property="og:url" content="http://example.com/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="在函数体内，局部变量优先级高于全局变量12345678910111213141516171819var scope &#x3D; &amp;#x27;global&amp;#x27;;function checkscope() &amp;#123;	var scope &#x3D; &amp;#x27;local&amp;#x27;;	return scope;&amp;#125;checkscope(); &#x2F;&#x2F;输出‘local’&#x2F;&#x2F;下面是局部作用域嵌套的例子va">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530094624.png">
-<meta property="og:image" content="http://example.com/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530102003.png">
+<meta property="og:image" content="https://xypecho.github.io/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530094624.png">
+<meta property="og:image" content="https://xypecho.github.io/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530102003.png">
 <meta property="article:published_time" content="2018-03-27T04:55:30.000Z">
 <meta property="article:modified_time" content="2022-06-22T12:52:39.444Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JavaScript权威指南">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530094624.png">
+<meta name="twitter:image" content="https://xypecho.github.io/2018/03/27/JavaScript%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0/TIM%E5%9B%BE%E7%89%8720180530094624.png">
   
   
   
@@ -72,7 +72,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -397,7 +397,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>JavaScript权威指南笔记</div>
-      <div>http://example.com/2018/03/27/JavaScript权威指南笔记/</div>
+      <div>https://xypecho.github.io/2018/03/27/JavaScript权威指南笔记/</div>
     </div>
     <div class="license-meta">
       

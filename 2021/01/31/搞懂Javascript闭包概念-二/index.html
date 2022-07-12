@@ -19,7 +19,7 @@
     <meta name="description" content="这是闭包系列的第二章，第一章只是囫囵吞枣般的记笔记，根本没多深入理解，最近在看了MDN上关于闭包的文章以及B站几个闭包视频后有了些许理解，于是用小本本记下来。 首先我们先来理解几个概念作用域 作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。  123456789101112let a &#x3D; 1; &#x2F;&#x2F; 定义一个全局变量，全局变量在js文件任意位置">
 <meta property="og:type" content="article">
 <meta property="og:title" content="搞懂Javascript闭包概念(二)">
-<meta property="og:url" content="http://example.com/2021/01/31/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5-%E4%BA%8C/index.html">
+<meta property="og:url" content="https://xypecho.github.io/2021/01/31/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5-%E4%BA%8C/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="这是闭包系列的第二章，第一章只是囫囵吞枣般的记笔记，根本没多深入理解，最近在看了MDN上关于闭包的文章以及B站几个闭包视频后有了些许理解，于是用小本本记下来。 首先我们先来理解几个概念作用域 作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。  123456789101112let a &#x3D; 1; &#x2F;&#x2F; 定义一个全局变量，全局变量在js文件任意位置">
 <meta property="og:locale" content="zh_CN">
@@ -69,7 +69,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"xypecho.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":"https://hm.baidu.com/hm.js?ae7aed417e5df2a0aed9cd5b00f37fa8","google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -299,7 +299,7 @@
             
               <div class="markdown-body">
                 
-                <p>这是闭包系列的第二章，<a target="_blank" rel="noopener" href="https://xypecho.github.io/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/">第一章</a>只是囫囵吞枣般的记笔记，根本没多深入理解，最近在看了<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-cn/docs/Web/JavaScript/Closures">MDN上关于闭包的文章</a>以及<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YJ411R7ap?p=4">B站几个闭包视频</a>后有了些许理解，于是用小本本记下来。</p>
+                <p>这是闭包系列的第二章，<a href="https://xypecho.github.io/2019/12/02/%E6%90%9E%E6%87%82Javascript%E9%97%AD%E5%8C%85%E6%A6%82%E5%BF%B5/">第一章</a>只是囫囵吞枣般的记笔记，根本没多深入理解，最近在看了<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-cn/docs/Web/JavaScript/Closures">MDN上关于闭包的文章</a>以及<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1YJ411R7ap?p=4">B站几个闭包视频</a>后有了些许理解，于是用小本本记下来。</p>
 <h3 id="首先我们先来理解几个概念"><a href="#首先我们先来理解几个概念" class="headerlink" title="首先我们先来理解几个概念"></a>首先我们先来理解几个概念</h3><h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><blockquote>
 <p>作用域就是变量与函数的可访问范围。在JavaScript中，变量的作用域有全局作用域和局部作用域两种。</p>
 </blockquote>
@@ -410,7 +410,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>搞懂Javascript闭包概念(二)</div>
-      <div>http://example.com/2021/01/31/搞懂Javascript闭包概念-二/</div>
+      <div>https://xypecho.github.io/2021/01/31/搞懂Javascript闭包概念-二/</div>
     </div>
     <div class="license-meta">
       
