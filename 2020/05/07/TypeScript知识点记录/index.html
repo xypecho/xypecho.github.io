@@ -23,11 +23,13 @@
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
 <meta property="og:description" content="1、变量定义在ts中:(冒号)后面都是在声明类型，要牢记 1.1 定义基本数据类型12345678910111213141516171819202122let isone: boolean &#x3D; false;let age: number &#x3D; 18;let str: string &#x3D; &amp;#x27;str&amp;#x27;;let str1: string &#x3D; &#96;hello $&amp;#123;str&amp;#125;">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://xypecho.github.io/2020/05/07/TypeScript%E7%9F%A5%E8%AF%86%E7%82%B9%E8%AE%B0%E5%BD%95/db2b5a6255e64b4aa3ae63f88c2703aa_tplv-k3u1fbpfcp-watermark.jpg">
 <meta property="article:published_time" content="2020-05-07T13:35:33.000Z">
-<meta property="article:modified_time" content="2022-06-22T12:52:39.460Z">
+<meta property="article:modified_time" content="2022-08-22T13:44:47.645Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="TypeScript">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://xypecho.github.io/2020/05/07/TypeScript%E7%9F%A5%E8%AF%86%E7%82%B9%E8%AE%B0%E5%BD%95/db2b5a6255e64b4aa3ae63f88c2703aa_tplv-k3u1fbpfcp-watermark.jpg">
   
   
   
@@ -236,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          3.6k 字
+          5.1k 字
         
       </span>
     
@@ -248,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          30 分钟
+          43 分钟
         
       </span>
     
@@ -320,6 +322,36 @@
 
 <h4 id="1-7-定义void类型"><a href="#1-7-定义void类型" class="headerlink" title="1.7 定义void类型"></a>1.7 定义void类型</h4><p>用于定义没有返回值的函数</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs scss">function <span class="hljs-built_in">run</span>(): void &#123;<br>    console<span class="hljs-selector-class">.log</span>(&#x27;run&#x27;)<br>&#125;<br><span class="hljs-built_in">run</span>();<br></code></pre></td></tr></table></figure>
+
+<h4 id="定义特殊类型变量"><a href="#定义特殊类型变量" class="headerlink" title="定义特殊类型变量"></a>定义特殊类型变量</h4><p>关于宿主环境里的类型，TypeScript 全部都给我们提供了，我们可以直接在代码中书写：Window 是 window 的类型，HTMLElement 是 dom 元素类型，NodeList 是节点列表类型，MouseEvent 是鼠标点击事件的类型……<br><a target="_blank" rel="noopener" href="https://ts.xcatliu.com/basics/built-in-objects.html">查看更多类型</a></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">let</span> <span class="hljs-attr">w</span>:<span class="hljs-title class_">Window</span> = <span class="hljs-variable language_">window</span><br><span class="hljs-keyword">let</span> <span class="hljs-attr">ele</span>:<span class="hljs-title class_">HTMLElement</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">createElement</span>(<span class="hljs-string">&#x27;div&#x27;</span>)<br><span class="hljs-keyword">let</span> <span class="hljs-attr">allDiv</span>: <span class="hljs-title class_">NodeList</span> = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">querySelectorAll</span>(<span class="hljs-string">&#x27;div&#x27;</span>)<br><br>ele.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params">e:MouseEvent</span>)&#123;<br>    <span class="hljs-keyword">const</span> <span class="hljs-attr">args</span>:<span class="hljs-title class_">IArguments</span> = <span class="hljs-variable language_">arguments</span><br>    w.<span class="hljs-title function_">alert</span>(<span class="hljs-number">1</span>)<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(args)<br>&#125;,<span class="hljs-literal">false</span>)<br><br><br> <span class="hljs-keyword">import</span> &#123; ref , <span class="hljs-title class_">Ref</span>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Todo</span>&#123; <br>     <span class="hljs-attr">title</span>:<span class="hljs-built_in">string</span>,<br>      <span class="hljs-attr">done</span>:<span class="hljs-built_in">boolean</span><br> &#125;<br> <span class="hljs-keyword">let</span> <span class="hljs-attr">todos</span>:<span class="hljs-title class_">Ref</span> = <span class="hljs-title function_">ref</span>([&#123;<span class="hljs-attr">title</span>:<span class="hljs-string">&#x27;学习Vue&#x27;</span>,<span class="hljs-attr">done</span>:<span class="hljs-literal">false</span>&#125;])<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="extends-继承"><a href="#extends-继承" class="headerlink" title="extends 继承"></a>extends 继承</h4><p>user对象不加age属性会报错:Property ‘age’ is missing in type ‘{ name: string; }’ but required in type ‘User’</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">interface Name &#123;<br>  name: <span class="hljs-keyword">string</span><br>&#125;<br>interface <span class="hljs-keyword">User</span> <span class="hljs-title">extends</span> Name &#123;<br>  age: <span class="hljs-keyword">number</span><br>&#125;<br>const user: <span class="hljs-keyword">User</span> <span class="hljs-title">= &#123;</span><br><span class="hljs-title">  name</span>: <span class="hljs-string">&quot;sda&quot;</span>,<br>  age: <span class="hljs-number">213</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="interface-和-type-有什么区别"><a href="#interface-和-type-有什么区别" class="headerlink" title="interface 和 type 有什么区别"></a>interface 和 type 有什么区别</h4><p><strong>相同点</strong></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">// 都可以用来描述函数或者对象<br>interface <span class="hljs-keyword">User</span> <span class="hljs-title">&#123;</span><br><span class="hljs-title">  name</span>: <span class="hljs-keyword">string</span><br>  age: <span class="hljs-keyword">number</span><br>&#125;<br><br>interface SetUser &#123;<br>  (name: <span class="hljs-keyword">string</span>, age: <span class="hljs-keyword">number</span>): void<br>&#125;<br><br><br><span class="hljs-keyword">type</span> <span class="hljs-keyword">User</span> <span class="hljs-title">= &#123;</span><br><span class="hljs-title">  name</span>: <span class="hljs-keyword">string</span><br>  age: <span class="hljs-keyword">number</span><br>&#125;;<br><br><span class="hljs-keyword">type</span> SetUser = (name: <span class="hljs-keyword">string</span>, age: <span class="hljs-keyword">number</span>): void;<br></code></pre></td></tr></table></figure>
+
+<h4 id="keyof语法"><a href="#keyof语法" class="headerlink" title="keyof语法"></a>keyof语法</h4><p><code>keyof</code> 与 <code>Object.keys</code> 略有相似，只不过 <code>keyof</code> 取 <code>interface</code>或者<code>type</code> 的键。</p>
+<center>
+    <img 
+    src="db2b5a6255e64b4aa3ae63f88c2703aa_tplv-k3u1fbpfcp-watermark.jpg" srcset="/img/loading.gif" lazyload>
+</center>
+
+<p>实际应用:</p>
+<p>假设有一个 <code>object</code> 如下所示，我们需要使用 <code>typescript</code> 实现一个 <code>get</code> 函数来获取它的属性值</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">const</span> <span class="hljs-keyword">data</span> = &#123;<br>  a: <span class="hljs-number">3</span>,<br>  hello: <span class="hljs-string">&quot;world&quot;</span>,<br>&#125;<br><br>function <span class="hljs-keyword">get</span>(o: <span class="hljs-keyword">object</span>, name: string) &#123;<br>  <span class="hljs-keyword">return</span> o[name]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们刚开始可能会这么写，不过它有很多缺点</p>
+<ol>
+<li>无法确认返回类型：这将损失 ts 最大的类型校验功能</li>
+<li>无法对 key 做约束：可能会犯拼写错误的问题</li>
+</ol>
+<p>这时可以使用 <code>keyof</code> 来加强 <code>get</code> 函数的类型功能。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">// 代码解读</span><br><span class="hljs-comment">// T extends object，入参T必须为object 类型</span><br><span class="hljs-comment">// K extends keyof T，限制K的类型必须是T的属性之一</span><br>function get&lt;<span class="hljs-type">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-class"><span class="hljs-keyword">object</span>, <span class="hljs-title">K</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">keyof</span> <span class="hljs-title">T&gt;</span>(<span class="hljs-params">o: <span class="hljs-type">T</span>, name: <span class="hljs-type">K</span></span>)</span>: <span class="hljs-type">T</span>[<span class="hljs-type">K</span>] &#123;<br>  <span class="hljs-keyword">return</span> o[name]<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/type-challenges/type-challenges/blob/main/README.zh-CN.md">学习资料</a></p>
+
                 
               </div>
             
