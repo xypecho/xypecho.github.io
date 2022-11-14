@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xypecho.github.io/2021/01/26/%E4%B8%80%E4%BA%9B%E4%BC%98%E9%9B%85%E7%9A%84%E4%BB%A3%E7%A0%81/微信图片_20210310195633.png">
 <meta property="article:published_time" content="2021-01-26T14:25:55.000Z">
-<meta property="article:modified_time" content="2022-09-20T13:29:13.942Z">
+<meta property="article:modified_time" content="2022-11-14T13:39:51.203Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta name="twitter:card" content="summary_large_image">
@@ -238,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          5k 字
+          5.5k 字
         
       </span>
     
@@ -250,7 +250,7 @@
         
         
           <!-- compatible with older versions-->
-          42 分钟
+          47 分钟
         
       </span>
     
@@ -333,6 +333,11 @@
 <h4 id="统计页面一共有多少种HTML标签"><a href="#统计页面一共有多少种HTML标签" class="headerlink" title="统计页面一共有多少种HTML标签"></a>统计页面一共有多少种HTML标签</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart"><span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>([...<span class="hljs-built_in">document</span>.<span class="hljs-built_in">querySelectorAll</span>(<span class="hljs-string">&#x27;*&#x27;</span>)].map(n =&gt; n.nodeName)).size<br></code></pre></td></tr></table></figure>
 
 <h4 id="批量给对象中的value设为空"><a href="#批量给对象中的value设为空" class="headerlink" title="批量给对象中的value设为空"></a>批量给对象中的value设为空</h4><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">const obj = &#123;<br>    <span class="hljs-string">&quot;holiday&quot;</span>: <span class="hljs-string">&quot;true&quot;</span>,<br>    <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;元旦&quot;</span>,<br>    <span class="hljs-string">&quot;wage&quot;</span>: <span class="hljs-string">&quot;3&quot;</span>,<br>    <span class="hljs-string">&quot;date&quot;</span>: <span class="hljs-string">&quot;2022-01-01&quot;</span>,<br>    <span class="hljs-string">&quot;rest&quot;</span>: <span class="hljs-string">&quot;85&quot;</span><br>&#125;<br><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Object</span>.</span></span>keys(obj).<span class="hljs-keyword">for</span><span class="hljs-constructor">Each(<span class="hljs-params">item</span> =&gt; <span class="hljs-params">obj</span>[<span class="hljs-params">item</span>] = &#x27;&#x27;)</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="格式化时间"><a href="#格式化时间" class="headerlink" title="格式化时间"></a>格式化时间</h4><p>是的，几乎算是每个前端写的最多的代码了。但是最近看到微信小程序demo里面的代码，感慨其优雅。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const formatTime = <span class="hljs-function">(<span class="hljs-params"><span class="hljs-built_in">date</span></span>) =&gt;</span> &#123;<br>    const <span class="hljs-built_in">year</span> = <span class="hljs-built_in">date</span>.getFullYear()<br>    const <span class="hljs-built_in">month</span> = <span class="hljs-built_in">date</span>.getMonth() + <span class="hljs-number">1</span><br>    const <span class="hljs-built_in">day</span> = <span class="hljs-built_in">date</span>.getDate()<br>    const <span class="hljs-built_in">hour</span> = <span class="hljs-built_in">date</span>.getHours()<br>    const <span class="hljs-built_in">minute</span> = <span class="hljs-built_in">date</span>.getMinutes()<br>    const <span class="hljs-built_in">second</span> = <span class="hljs-built_in">date</span>.getSeconds()<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">`<span class="hljs-subst">$&#123;[<span class="hljs-built_in">year</span>, <span class="hljs-built_in">month</span>, <span class="hljs-built_in">day</span>].<span class="hljs-built_in">map</span>(formatNumber).join(<span class="hljs-string">&quot;-&quot;</span>)&#125;</span> <span class="hljs-subst">$&#123;[</span></span><br><span class="hljs-subst"><span class="hljs-string">        <span class="hljs-built_in">hour</span>,</span></span><br><span class="hljs-subst"><span class="hljs-string">        <span class="hljs-built_in">minute</span>,</span></span><br><span class="hljs-subst"><span class="hljs-string">        <span class="hljs-built_in">second</span>,</span></span><br><span class="hljs-subst"><span class="hljs-string">    ]</span></span><br><span class="hljs-subst"><span class="hljs-string">        .<span class="hljs-built_in">map</span>(formatNumber)</span></span><br><span class="hljs-subst"><span class="hljs-string">        .join(<span class="hljs-string">&quot;:&quot;</span>)&#125;</span>`</span><br>&#125;<br><br>const formatNumber = <span class="hljs-function">(<span class="hljs-params">n</span>) =&gt;</span> &#123;<br>    n = n.toString()<br>    <span class="hljs-keyword">return</span> n[<span class="hljs-number">1</span>] ? n : <span class="hljs-string">`0<span class="hljs-subst">$&#123;n&#125;</span>`</span><br>&#125;<br><br><span class="hljs-comment">// 2022-11-14 21:39:01</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>((formatTime(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>())));<br></code></pre></td></tr></table></figure>
+
+
                 
               </div>
             
