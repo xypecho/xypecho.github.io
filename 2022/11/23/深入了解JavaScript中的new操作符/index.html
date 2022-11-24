@@ -16,22 +16,22 @@
   <meta name="author" content="很青的青蛙">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在项目中经常会遇到这样的情况，要对对象下的属性进行操作，由于js里面访问undefined或者null的成员会报错，所以我们一般a &amp;&amp; a.b &amp;&amp; a.b.c这么实现。可是如果属性嵌套层级很多呢？一直写&amp;&amp;判断？显然，不，就是不优雅。 下面就是几种优雅的检查嵌套对象属性是否为空的方法~~~ 使用极为先进的Lodashlodash文档 123456">
+    <meta name="description" content="开头先用简单的一句话介绍一下new  new 运算符用于创建对象的实例  前言new操作符在执行过程中会改变this的指向，所以在了解new操作符之前，我们先熟悉一下this。 12345function Cat(name, age) &amp;#123;    this.name &#x3D; name;    this.age &#x3D; age;&amp;#125;console.log(new Cat(&amp;#x27;miao">
 <meta property="og:type" content="article">
-<meta property="og:title" content="检查嵌套对象属性是否为空的优雅方法">
-<meta property="og:url" content="https://xypecho.github.io/2020/10/15/%E6%A3%80%E6%9F%A5%E5%B5%8C%E5%A5%97%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%E7%9A%84%E4%BC%98%E9%9B%85%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:title" content="深入了解JavaScript中的new操作符">
+<meta property="og:url" content="https://xypecho.github.io/2022/11/23/%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3JavaScript%E4%B8%AD%E7%9A%84new%E6%93%8D%E4%BD%9C%E7%AC%A6/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
-<meta property="og:description" content="在项目中经常会遇到这样的情况，要对对象下的属性进行操作，由于js里面访问undefined或者null的成员会报错，所以我们一般a &amp;&amp; a.b &amp;&amp; a.b.c这么实现。可是如果属性嵌套层级很多呢？一直写&amp;&amp;判断？显然，不，就是不优雅。 下面就是几种优雅的检查嵌套对象属性是否为空的方法~~~ 使用极为先进的Lodashlodash文档 123456">
+<meta property="og:description" content="开头先用简单的一句话介绍一下new  new 运算符用于创建对象的实例  前言new操作符在执行过程中会改变this的指向，所以在了解new操作符之前，我们先熟悉一下this。 12345function Cat(name, age) &amp;#123;    this.name &#x3D; name;    this.age &#x3D; age;&amp;#125;console.log(new Cat(&amp;#x27;miao">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-10-15T14:25:34.000Z">
-<meta property="article:modified_time" content="2022-11-23T14:21:25.353Z">
+<meta property="article:published_time" content="2022-11-23T14:41:53.000Z">
+<meta property="article:modified_time" content="2022-11-24T14:40:31.073Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>检查嵌套对象属性是否为空的优雅方法 - 小小切图仔也有大大的梦想</title>
+  <title>深入了解JavaScript中的new操作符 - 小小切图仔也有大大的梦想</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -212,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="检查嵌套对象属性是否为空的优雅方法"></span>
+            <span id="subtitle" data-typed-text="深入了解JavaScript中的new操作符"></span>
           
         </div>
 
@@ -223,8 +223,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2020-10-15 22:25" pubdate>
-          2020-10-15 22:25:34 星期四
+        <time datetime="2022-11-23 22:41" pubdate>
+          2022-11-23 22:41:53 星期三
         </time>
       </span>
     
@@ -236,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.9k 字
+          1.3k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
           <!-- compatible with older versions-->
-          16 分钟
+          11 分钟
         
       </span>
     
@@ -294,31 +294,30 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">检查嵌套对象属性是否为空的优雅方法</h1>
+            <h1 style="display: none">深入了解JavaScript中的new操作符</h1>
             
             
               <div class="markdown-body">
                 
-                <p>在项目中经常会遇到这样的情况，要对对象下的属性进行操作，由于js里面访问undefined或者null的成员会报错，所以我们一般<code>a &amp;&amp; a.b &amp;&amp; a.b.c</code>这么实现。可是如果属性嵌套层级很多呢？一直写&amp;&amp;判断？显然，不，就是不优雅。</p>
-<p>下面就是几种优雅的检查嵌套对象属性是否为空的方法~~~</p>
-<h3 id="使用极为先进的Lodash"><a href="#使用极为先进的Lodash" class="headerlink" title="使用极为先进的Lodash"></a>使用极为先进的Lodash</h3><p><a target="_blank" rel="noopener" href="https://www.lodashjs.com/docs/lodash.get">lodash文档</a></p>
-<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-comment">// 引入lodash库</span><br><br>let <span class="hljs-built_in">object</span> = &#123;<br>    user: &#123;<br>        loc: &#123;<br>            lat: <span class="hljs-number">50</span>,<br>            long: <span class="hljs-number">9</span><br>        &#125;<br>    &#125;<br>&#125;<br>console.<span class="hljs-built_in">log</span>(_.<span class="hljs-built_in">get</span>(<span class="hljs-built_in">object</span>, <span class="hljs-string">&#x27;user.lat.loc&#x27;</span>))  <span class="hljs-comment">// 输出undefined</span><br><span class="hljs-comment">// 直接调用不存在的对象下的值也不会报错TypeError: Cannot read property &#x27;loc&#x27; of undefined</span><br>console.<span class="hljs-built_in">log</span>(_.<span class="hljs-built_in">get</span>(<span class="hljs-built_in">object</span>, <span class="hljs-string">&#x27;user.loc&#x27;</span>)) <span class="hljs-comment">//  &#123;lat: 50, long: 9&#125;</span><br>console.<span class="hljs-built_in">log</span>(_.<span class="hljs-built_in">get</span>(<span class="hljs-built_in">object</span>, <span class="hljs-string">&#x27;user.loc.lat&#x27;</span>)) <span class="hljs-comment">// 50</span><br>console.<span class="hljs-built_in">log</span>(_.<span class="hljs-built_in">get</span>(<span class="hljs-built_in">object</span>, <span class="hljs-string">&#x27;user.loc.lat1&#x27;</span>)) <span class="hljs-comment">// undefined </span><br>console.<span class="hljs-built_in">log</span>(_.<span class="hljs-built_in">get</span>(<span class="hljs-built_in">object</span>, <span class="hljs-string">&#x27;user.loc.lat1&#x27;</span>, <span class="hljs-string">&#x27;默认值&#x27;</span>)) <span class="hljs-comment">// 默认值</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="ES2020新语法-可选链-、-双问号"><a href="#ES2020新语法-可选链-、-双问号" class="headerlink" title="ES2020新语法[可选链]、[双问号]"></a>ES2020新语法[可选链]、[双问号]</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E5%8F%AF%E9%80%89%E9%93%BE">可选链操作符</a></p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">let</span> object = &#123;<br>    user: &#123;<br>        <span class="hljs-keyword">loc</span>: &#123;<br>            <span class="hljs-keyword">lat</span>: <span class="hljs-number">50</span>,<br>            long: <span class="hljs-number">9</span><br>        &#125;<br>    &#125;<br>&#125;<br>console.<span class="hljs-built_in">log</span>(object.<span class="hljs-keyword">lat</span>.<span class="hljs-keyword">loc</span>) <br>// Uncaught TypeError: Cannot <span class="hljs-keyword">read</span> property <span class="hljs-string">&#x27;loc&#x27;</span> of undefined<br>console.<span class="hljs-built_in">log</span>(object?.<span class="hljs-keyword">lat</span>?.<span class="hljs-keyword">loc</span>) // undefined<br></code></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator">双问号操作符</a></p>
-<p>双问号操作符其实就和lodash的get功能一样，可以设置默认值</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-keyword">let</span> object = &#123;<br>    user: &#123;<br>        <span class="hljs-keyword">loc</span>: &#123;<br>            <span class="hljs-keyword">lat</span>: <span class="hljs-number">50</span>,<br>            long: <span class="hljs-number">9</span><br>        &#125;<br>    &#125;<br>&#125;<br>console.<span class="hljs-built_in">log</span>(object?.<span class="hljs-keyword">lat</span>?.<span class="hljs-keyword">loc</span>) // undefined<br>console.<span class="hljs-built_in">log</span>(object?.<span class="hljs-keyword">lat</span>?.<span class="hljs-keyword">loc</span> ?? <span class="hljs-string">&#x27;默认值&#x27;</span>) // 默认值<br></code></pre></td></tr></table></figure>
-
-<h3 id="自己封装函数实现"><a href="#自己封装函数实现" class="headerlink" title="自己封装函数实现"></a>自己封装函数实现</h3><p>reduce的参数有点多，如果不是很了解，可以<a target="_blank" rel="noopener" href="https://aotu.io/notes/2016/04/14/js-reduce/index.html">康康这里</a></p>
-<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const getObjectValue = <span class="hljs-function">(<span class="hljs-params">object, key</span>) =&gt;</span> &#123;<br>    <span class="hljs-keyword">return</span> key.<span class="hljs-built_in">split</span>(<span class="hljs-string">&#x27;.&#x27;</span>).<span class="hljs-built_in">reduce</span>(<span class="hljs-function">(<span class="hljs-params">pre, current</span>) =&gt;</span> &#123;<br>        <span class="hljs-keyword">return</span> (<span class="hljs-built_in">typeof</span> pre === <span class="hljs-string">&#x27;undefined&#x27;</span> || pre === <span class="hljs-literal">null</span>) ? pre : pre[current];<br>    &#125;, object)<br>&#125;<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(getObjectValue(object, <span class="hljs-string">&#x27;user.loc.lat&#x27;</span>)) <span class="hljs-comment">// 50</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(getObjectValue(object, <span class="hljs-string">&#x27;user.loc.lat2&#x27;</span>)) <span class="hljs-comment">// undefined</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(getObjectValue(object, <span class="hljs-string">&#x27;user.loc2.lat&#x27;</span>))<span class="hljs-comment">// undefined</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="拓展题，检查对象是否为空"><a href="#拓展题，检查对象是否为空" class="headerlink" title="拓展题，检查对象是否为空"></a>拓展题，检查对象是否为空</h3><p>一般来说，我们都是直接<code>if(!x)&#123;&#125;</code>来判断对象是否为空，那么是否有正规的方法呢？</p>
+                <p>开头先用简单的一句话介绍一下new</p>
 <blockquote>
-<p>判断一个变量是否为空对象时，可以通过for…in语句遍历变量的属性，然后调用hasOwnProperty()函数，判断是否有自身存在的属性，如果存在则不为空对象，如果不存在自身的属性（不包括继承的属性），那么变量为空对象。</p>
+<p>new 运算符用于创建对象的实例</p>
 </blockquote>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> is<span class="hljs-constructor">Empty(<span class="hljs-params">obj</span>)</span> &#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> key <span class="hljs-keyword">in</span> obj) &#123;<br>        <span class="hljs-keyword">if</span> (obj.has<span class="hljs-constructor">OwnProperty(<span class="hljs-params">key</span>)</span>) &#123;<br>            return <span class="hljs-literal">false</span>;<br>        &#125;<br>    &#125;<br>    return <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>new操作符在执行过程中会改变this的指向，所以在了解new操作符之前，我们先熟悉一下this。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">function</span> Cat(<span class="hljs-type">name</span>, age) &#123;<br>    this.name = <span class="hljs-type">name</span>;<br>    this.age = age;<br>&#125;<br>console.log(<span class="hljs-built_in">new</span> Cat(<span class="hljs-string">&#x27;miaomiao&#x27;</span>, <span class="hljs-number">18</span>));  // Cat &#123;<span class="hljs-type">name</span>: &quot;miaomiao&quot;, age: <span class="hljs-number">18</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们并没有return任何信息，输出的结果中包含了name与age的信息。这就是this的作用了。<br><strong>在JavaScript中，如果函数没有return值，则默认return this。</strong>上面代码中的this实际为Cat空对象，后两句就相当于给Cat对象添加name和age属性。</p>
+<h3 id="new的时候发生了什么"><a href="#new的时候发生了什么" class="headerlink" title="new的时候发生了什么"></a>new的时候发生了什么</h3><p>我们先来看看下面这行简单的代码，该代码的作用是通过new操作符生成一个Cat对象的实例。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">const</span> <span class="hljs-keyword">cat</span> = new <span class="hljs-keyword">Cat</span>();<br></code></pre></td></tr></table></figure>
+
+<p>从表面上看这行代码的主要作用是创建一个Cat对象的实例，并将这个实例值赋予cat变量，cat变量就会包含Cat对象的属性和函数。其实，new操作符做了3件事情，如下代码所示：</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-comment">// 创建一个空对象</span><br><span class="hljs-keyword">var</span> <span class="hljs-keyword">cat</span> = &#123;&#125;;<br><span class="hljs-comment">// 将空对象的__proto__属性指向Cat对象的prototype属性</span><br><span class="hljs-keyword">cat</span>.__proto__ = <span class="hljs-keyword">Cat</span>.prototype;<br><span class="hljs-comment">// 将Cat()函数中的this指向cat变量</span><br><span class="hljs-keyword">Cat</span>.call(<span class="hljs-keyword">cat</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="手动实现一个new"><a href="#手动实现一个new" class="headerlink" title="手动实现一个new"></a>手动实现一个new</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">objectFactory</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> obj = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>(),<br>    <span class="hljs-comment">// 获取外部传入的构造器</span><br>        <span class="hljs-title class_">Constructor</span> = [].<span class="hljs-property">shift</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">arguments</span>);<br>        <span class="hljs-comment">// obj的原型指向构造器的prototype</span><br>        <span class="hljs-comment">// 因为构造器所有实例对象需要共享的属性和方法，都放在prototype里面</span><br>    obj.<span class="hljs-property">__proto__</span> = <span class="hljs-title class_">Constructor</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>;<br>    <span class="hljs-comment">// 传入的构造器中的this就指向obj对象，这样obj对象就具有了传入的构造器的属性</span><br>    <span class="hljs-keyword">var</span> ret = <span class="hljs-title class_">Constructor</span>.<span class="hljs-title function_">apply</span>(obj, <span class="hljs-variable language_">arguments</span>);<br>    <span class="hljs-comment">// 确保构造器总是返回一个对象</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> ret === <span class="hljs-string">&#x27;object&#x27;</span> ? ret : obj;<br>&#125;<br><br><span class="hljs-comment">// demo</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">Cat</span>(<span class="hljs-params">name, age</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">age</span> = age;<br>&#125;<br><span class="hljs-keyword">const</span> cat = <span class="hljs-title function_">objectFactory</span>(<span class="hljs-title class_">Cat</span>, <span class="hljs-string">&#x27;姓名&#x27;</span>, <span class="hljs-string">&#x27;18&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cat); <span class="hljs-comment">// Cat &#123;name: &#x27;姓名&#x27;, age: &#x27;18&#x27;&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/13">JavaScript深入之new的模拟实现</a></p>
+
                 
               </div>
             
@@ -363,8 +362,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>检查嵌套对象属性是否为空的优雅方法</div>
-      <div>https://xypecho.github.io/2020/10/15/检查嵌套对象属性是否为空的优雅方法/</div>
+      <div>深入了解JavaScript中的new操作符</div>
+      <div>https://xypecho.github.io/2022/11/23/深入了解JavaScript中的new操作符/</div>
     </div>
     <div class="license-meta">
       
@@ -376,7 +375,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2020年10月15日</div>
+          <div>2022年11月23日</div>
         </div>
       
       
@@ -406,18 +405,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2020/11/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8C%97/" title="小程序踩坑指北">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">小程序踩坑指北</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2020/08/26/css%E6%9C%80%E5%BC%BA%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%88-grid/" title="css最强布局方案-grid">
-                        <span class="hidden-mobile">css最强布局方案-grid</span>
+                      <a href="/2022/11/22/%E4%B8%80%E4%BA%9B%E7%AE%97%E6%B3%95%E9%A2%98/" title="一些算法题">
+                        <span class="hidden-mobile">一些算法题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://xypecho.github.io/2020/11/21/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E8%B8%A9%E5%9D%91%E6%8C%87%E5%8C%97/微信图片_20201121152323.jpg">
 <meta property="article:published_time" content="2020-11-21T07:01:22.000Z">
-<meta property="article:modified_time" content="2022-06-22T12:52:39.946Z">
+<meta property="article:modified_time" content="2022-11-24T13:37:52.689Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="小程序">
 <meta name="twitter:card" content="summary_large_image">
@@ -238,7 +238,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.2k 字
+          1.3k 字
         
       </span>
     
@@ -319,6 +319,7 @@
 
 <h4 id="解决方法2"><a href="#解决方法2" class="headerlink" title="解决方法2"></a>解决方法2</h4><p>给cover-view加上样式white-space: pre-wrap;不过这个有大部分情况下会引起更多问题。</p>
 <h3 id="组件内fixed无效的问题"><a href="#组件内fixed无效的问题" class="headerlink" title="组件内fixed无效的问题"></a>组件内fixed无效的问题</h3><p>封装了一个模态框组件，遮罩是用的<code>position:fixed;top:0;left:0;right:0;bottom:0</code>实现的，但是遮罩不能全屏展示。<br>逐级向上查找，去住父级的<code>transform</code>属性即可。</p>
+<h3 id="iOS时间格式化问题"><a href="#iOS时间格式化问题" class="headerlink" title="iOS时间格式化问题"></a>iOS时间格式化问题</h3><p>ios真机下，日期格式只能是<code>2022/09/21</code>像<code>2022-09-21</code>这种格式无法转时间戳会直接显示NaN</p>
 
                 
               </div>

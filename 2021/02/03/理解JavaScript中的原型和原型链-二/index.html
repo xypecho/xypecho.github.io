@@ -24,7 +24,7 @@
 <meta property="og:description" content="之前关于原型和原型链的笔记现在看来理解还是浮于表面，于是新开一章。 通俗易懂的介绍下原型和原型链刚毕业的小王没有自己的房子，但是可以住父母的房子，父母就可以看作是小王的原型，父母的爸爸妈妈也就是爷爷奶奶也有自己的房子(原型)。自己、父母、爷爷奶奶这一条链条就是原型链。 原型面试题：什么是原型每个对象在其内部初始化拥有的一个属性，就是原型(prototype)。对象以其原型为模板，从原型继承方法和属">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-03T12:30:08.000Z">
-<meta property="article:modified_time" content="2022-06-22T12:52:40.307Z">
+<meta property="article:modified_time" content="2022-11-24T14:45:19.523Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          847 字
+          994 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
           <!-- compatible with older versions-->
-          8 分钟
+          9 分钟
         
       </span>
     
@@ -307,7 +307,10 @@
 
 <h4 id="prototype-和-proto-区别"><a href="#prototype-和-proto-区别" class="headerlink" title="prototype 和 __proto__区别"></a>prototype 和 __proto__区别</h4><ol>
 <li>prototype是函数的属性,<code>__proto__</code>是对象的，除了字符串、数字、true、false、null和undefined外，JavaScript中的其他值都是对象，所以函数两个都有</li>
+<li>每个变量都会有一个__proto__属性，表示的是隐式原型。一个对象的隐式原型指向的是构造该对象的构造函数的原型。例子如下：</li>
 </ol>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">[].__proto__ <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> [].constructor.prototype<span class="hljs-comment">;  // true</span><br>[].__proto__ <span class="hljs-operator">=</span><span class="hljs-operator">=</span><span class="hljs-operator">=</span> Array.prototype<span class="hljs-comment">;  // true</span><br></code></pre></td></tr></table></figure>
+
 <h4 id="对象自身的方法和原型上的方法冲突了？"><a href="#对象自身的方法和原型上的方法冲突了？" class="headerlink" title="对象自身的方法和原型上的方法冲突了？"></a>对象自身的方法和原型上的方法冲突了？</h4><p>引用文章开头的例子，自己有房子了当然不需要住在父母的房子里了呀。</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> hd = &#123;<br>    <span class="hljs-title function_">show</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">1</span>)<br>    &#125;<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">dir</span>(hd)<br>hd.<span class="hljs-property">__proto__</span>.<span class="hljs-property">show</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>)<br>&#125;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">dir</span>(hd)<br>hd.<span class="hljs-title function_">show</span>() <span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
 
