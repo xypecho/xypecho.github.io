@@ -16,15 +16,15 @@
   <meta name="author" content="很青的青蛙">
   <meta name="keywords" content="">
   
-    <meta name="description" content="统计字符串中出现次数最多的字符及出现的次数 假如存在一个字符串’helloJavascripthellohtmlhellocss’，其中出现次数最多的字符是l，出现的次数是7次。  通过key-value形式的对象来存储字符串以及字符串出现的次数，然后逐个判断出现次数最大值，同时获取对应的字符 这个几乎最简单的也是最容易想到的解法 123456789101112131415161718192021">
+    <meta name="description" content="统计字符串中每个字符出现的次数 reduce()函数适合作为累加器，将initialValue设置为一个空对象，initialValue作为累加器accumulator的初始值，依次往后执行每个元素。如果执行的元素在accumulator中存在，则将其计数加1，否则将当前执行元素作为accumulator的key，其value为1。依次执行完所有元素后，最终返回的accumulator的值就包含了">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些算法题">
 <meta property="og:url" content="https://xypecho.github.io/2022/11/22/%E4%B8%80%E4%BA%9B%E7%AE%97%E6%B3%95%E9%A2%98/index.html">
 <meta property="og:site_name" content="小小切图仔也有大大的梦想">
-<meta property="og:description" content="统计字符串中出现次数最多的字符及出现的次数 假如存在一个字符串’helloJavascripthellohtmlhellocss’，其中出现次数最多的字符是l，出现的次数是7次。  通过key-value形式的对象来存储字符串以及字符串出现的次数，然后逐个判断出现次数最大值，同时获取对应的字符 这个几乎最简单的也是最容易想到的解法 123456789101112131415161718192021">
+<meta property="og:description" content="统计字符串中每个字符出现的次数 reduce()函数适合作为累加器，将initialValue设置为一个空对象，initialValue作为累加器accumulator的初始值，依次往后执行每个元素。如果执行的元素在accumulator中存在，则将其计数加1，否则将当前执行元素作为accumulator的key，其value为1。依次执行完所有元素后，最终返回的accumulator的值就包含了">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-11-22T13:42:55.000Z">
-<meta property="article:modified_time" content="2022-11-22T14:56:53.477Z">
+<meta property="article:modified_time" content="2022-11-28T13:16:53.892Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.5k 字
+          3.3k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
           <!-- compatible with older versions-->
-          21 分钟
+          28 分钟
         
       </span>
     
@@ -299,7 +299,12 @@
             
               <div class="markdown-body">
                 
-                <h3 id="统计字符串中出现次数最多的字符及出现的次数"><a href="#统计字符串中出现次数最多的字符及出现的次数" class="headerlink" title="统计字符串中出现次数最多的字符及出现的次数"></a>统计字符串中出现次数最多的字符及出现的次数</h3><blockquote>
+                <h3 id="统计字符串中每个字符出现的次数"><a href="#统计字符串中每个字符出现的次数" class="headerlink" title="统计字符串中每个字符出现的次数"></a>统计字符串中每个字符出现的次数</h3><blockquote>
+<p>reduce()函数适合作为累加器，将initialValue设置为一个空对象，initialValue作为累加器accumulator的初始值，依次往后执行每个元素。如果执行的元素在accumulator中存在，则将其计数加1，否则将当前执行元素作为accumulator的key，其value为1。依次执行完所有元素后，最终返回的accumulator的值就包含了每个元素出现的次数。</p>
+</blockquote>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> countOccurrences = <span class="hljs-function">(<span class="hljs-params">arr</span>) =&gt;</span> arr.<span class="hljs-built_in">reduce</span>(<span class="hljs-function">(<span class="hljs-params">accumulator, currentValue</span>) =&gt;</span> &#123;<br>    accumulator[currentValue] ? accumulator[currentValue]++ :<br>        accumulator[currentValue] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> accumulator;<br>&#125;, &#123;&#125;);<br>countOccurrences([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">1</span>]); <span class="hljs-comment">// &#123;1: 2, 2: 3, 3: 1, 5: 1&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="统计字符串中出现次数最多的字符及出现的次数"><a href="#统计字符串中出现次数最多的字符及出现的次数" class="headerlink" title="统计字符串中出现次数最多的字符及出现的次数"></a>统计字符串中出现次数最多的字符及出现的次数</h3><blockquote>
 <p>假如存在一个字符串’helloJavascripthellohtmlhellocss’，其中出现次数最多的字符是l，出现的次数是7次。</p>
 </blockquote>
 <p><strong>通过key-value形式的对象来存储字符串以及字符串出现的次数，然后逐个判断出现次数最大值，同时获取对应的字符</strong></p>
@@ -323,6 +328,12 @@
 
 <p><strong>将字符串按从前往后顺序的字符与按从后往前顺序的字符逐个进行比较，如果遇到不一样的值则直接返回“false”，否则返回“true”</strong></p>
 <figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">function</span> isPalindromicStr(str) &#123;<br>    <span class="hljs-keyword">if</span> (str.length === <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span><br>    &#125;<br>    str = str.toLowerCase().split(<span class="hljs-string">&#x27;&#x27;</span>)<br>    let start = <span class="hljs-number">0</span>, end = str.length - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> (<span class="hljs-keyword">start</span> &lt; <span class="hljs-keyword">end</span>) &#123;<br>        <span class="hljs-keyword">if</span> (str[<span class="hljs-keyword">start</span>] === str[<span class="hljs-keyword">end</span>]) &#123;<br>            <span class="hljs-keyword">start</span>++<br>            <span class="hljs-keyword">end</span><span class="hljs-comment">--</span><br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span><br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="求数组中的最大值和最小值"><a href="#求数组中的最大值和最小值" class="headerlink" title="求数组中的最大值和最小值"></a>求数组中的最大值和最小值</h3><p>最简单的方式当然是：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const values = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">1</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>];<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(Math.<span class="hljs-built_in">min</span>(...values));; <span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
+
+<p>问题肯定是不止一种解决方案的，今天我们来用<code>reduce()</code>解决，主要思想是reduce()函数不设置initialValue初始值，将数组的第一个元素直接作为回调函数的第一个参数，依次与后面的值进行比较。当需要找最大值时，每轮累加器返回当前比较中大的值；当需要找最小值时，每轮累加器返回当前比较中小的值。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">const <span class="hljs-built_in">Max</span> = <span class="hljs-function">(<span class="hljs-params">arr</span>) =&gt;</span> arr.<span class="hljs-built_in">reduce</span>(<span class="hljs-function">(<span class="hljs-params">preValue, curValue</span>) =&gt;</span> preValue &gt; curValue ? preValue : curValue)<br></code></pre></td></tr></table></figure>
                 
               </div>
             

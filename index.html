@@ -310,7 +310,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/11/22/%E4%B8%80%E4%BA%9B%E7%AE%97%E6%B3%95%E9%A2%98/" target="_blank">
         <div>
-          统计字符串中出现次数最多的字符及出现的次数 假如存在一个字符串’helloJavascripthellohtmlhellocss’，其中出现次数最多的字符是l，出现的次数是7次。  通过key-value形式的对象来存储字符串以及字符串出现的次数，然后逐个判断出现次数最大值，同时获取对应的字符 这个几乎最简单的也是最容易想到的解法 123456789101112131415161718192021
+          统计字符串中每个字符出现的次数 reduce()函数适合作为累加器，将initialValue设置为一个空对象，initialValue作为累加器accumulator的初始值，依次往后执行每个元素。如果执行的元素在accumulator中存在，则将其计数加1，否则将当前执行元素作为accumulator的key，其value为1。依次执行完所有元素后，最终返回的accumulator的值就包含了
         </div>
       </a>
 
