@@ -24,7 +24,7 @@
 <meta property="og:description" content="1、初始化项目12npm init &#x2F;&#x2F;初始化项目，生成package.json文件npm init -y &#x2F;&#x2F;生成的默认的package.json(无需一直按yes) 2、安装模块12345npm install &#x2F;&#x2F; 用于下载package.json里面的模块npm install vue vuex vue-router -S &#x2F;&#x2F; 同时下载多个包npm install -g express">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2018-05-18T13:18:06.000Z">
-<meta property="article:modified_time" content="2022-06-22T12:52:39.726Z">
+<meta property="article:modified_time" content="2022-12-26T15:08:15.629Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="npm">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          1.1k 字
+          1.3k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
           <!-- compatible with older versions-->
-          10 分钟
+          12 分钟
         
       </span>
     
@@ -309,6 +309,8 @@
 <h3 id="7、查看全局安装过的包"><a href="#7、查看全局安装过的包" class="headerlink" title="7、查看全局安装过的包"></a>7、查看全局安装过的包</h3><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">npm list -g <span class="hljs-comment">--depth 0</span><br></code></pre></td></tr></table></figure>
 <h3 id="8、查看哪些包有更新"><a href="#8、查看哪些包有更新" class="headerlink" title="8、查看哪些包有更新"></a>8、查看哪些包有更新</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">npm outdated <span class="hljs-regexp">//</span> 在项目所在文件夹执行的话，可以看到当前项目中的node_modules中的包，是否有更新<br>npm outdated -g --depth=<span class="hljs-number">0</span> <span class="hljs-regexp">//</span> 查看全局(-g)安装的包是否有更新<br></code></pre></td></tr></table></figure>
 <h3 id="9、查看全局安装的包的位置"><a href="#9、查看全局安装的包的位置" class="headerlink" title="9、查看全局安装的包的位置"></a>9、查看全局安装的包的位置</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">npm root -g  <span class="hljs-regexp">//</span> 输出C:\Program Files\nodejs\node_modules<br></code></pre></td></tr></table></figure>
+<h3 id="10、设置代理"><a href="#10、设置代理" class="headerlink" title="10、设置代理"></a>10、设置代理</h3><p>因为众所周知的原因，有时候install很慢那我们就需要设置代理来加速安装。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 临时使用，<br>npm --registry=https:<span class="hljs-regexp">//</span>registry.npm.taobao.org install xxx<br><br><span class="hljs-regexp">//</span> 持久使用<br>npm config set registry https:<span class="hljs-regexp">//</span>registry.npm.taobao.org<br><span class="hljs-regexp">//</span> 配置后可通过下面方式来验证是否成功 <br>npm config get registry<br></code></pre></td></tr></table></figure>
                 
               </div>
             
