@@ -24,7 +24,7 @@
 <meta property="og:description" content="面试时经常被问到，记录一下数组的所有遍历方法(持续更新中…) 截止目前(2020年2月28日)，数组的遍历方法共15个： 1234ES5：    for、forEach、every 、some、 filter、map、reduce、reduceRight、for...inES6：    find、findIndex、keys、values、entries、for...of   经典遍历方法for1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-02-28T06:51:13.000Z">
-<meta property="article:modified_time" content="2022-11-28T13:41:09.644Z">
+<meta property="article:modified_time" content="2023-01-09T13:56:19.528Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta property="article:tag" content="数组">
@@ -237,7 +237,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          4.2k 字
+          4.4k 字
         
       </span>
     
@@ -249,7 +249,7 @@
         
         
           <!-- compatible with older versions-->
-          36 分钟
+          37 分钟
         
       </span>
     
@@ -353,7 +353,7 @@
 <p>ps:<strong>for…of不能循环普通的对象</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">let</span> arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> iterator <span class="hljs-keyword">of</span> arr) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(iterator) <span class="hljs-comment">// 1 2 3</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p>*是否修改原数组是指：在该方法的遍历中做操作，是否会影响原数组</p>
+<h3 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h3><p>*是否修改原数组是指：在该方法的遍历中做操作，是否会影响原数组<br>*ps：此处的原数组值均为基本数据类型即数字、字符串数组<br>*pps：对象数组会修改里面的内容<br>*ppps：Object对象的真实数据存储在堆内存中，它在栈内存中存储的是变量名和堆内存的位置。 在循环方法里操作的obj对象，实际操作的是该对象在堆内存的地址，由于是对该地址所在的对象进行字段值修改，所以数组里的obj对象相应改变。</p>
 <table>
 <thead>
 <tr>
