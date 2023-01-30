@@ -24,7 +24,7 @@
 <meta property="og:description" content="记录一下常见的关于数组的操作 1、 数组降维(数组扁平化)1.1 flat直接上大招 flat()是es6提供的一个新的关于数组的方法，该方法会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回。 12345678910111213141516var arr1 &#x3D; [1, 2, [3, 4]];arr1.flat(); &#x2F;&#x2F; [1, 2, 3, 4]var">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-12-04T08:48:03.000Z">
-<meta property="article:modified_time" content="2022-11-28T13:47:42.539Z">
+<meta property="article:modified_time" content="2023-01-30T14:23:38.641Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta property="article:tag" content="数组">
@@ -237,7 +237,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6.3k 字
+          6.4k 字
         
       </span>
     
@@ -249,7 +249,7 @@
         
         
           <!-- compatible with older versions-->
-          53 分钟
+          54 分钟
         
       </span>
     
@@ -373,6 +373,9 @@
 
 <h4 id="再次拓展：对比两个数组对象是否相同"><a href="#再次拓展：对比两个数组对象是否相同" class="headerlink" title="再次拓展：对比两个数组对象是否相同"></a>再次拓展：对比两个数组对象是否相同</h4><p>我们可以借用上面定义的<code>deepEqual</code>方法</p>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> arrays<span class="hljs-constructor">Equal(<span class="hljs-params">a1</span>, <span class="hljs-params">a2</span>)</span> &#123;<br>    return a1.length<span class="hljs-operator"> === </span>a2.length<span class="hljs-operator"> &amp;&amp; </span>a1.every((item, index) =&gt; deep<span class="hljs-constructor">Equal(<span class="hljs-params">item</span>, <span class="hljs-params">a2</span>[<span class="hljs-params">index</span>])</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="8、-创建包含0-10数字数组"><a href="#8、-创建包含0-10数字数组" class="headerlink" title="8、 创建包含0-10数字数组"></a>8、 创建包含0-10数字数组</h3><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">Array</span>.<span class="hljs-keyword">from</span>(<span class="hljs-built_in">Array</span>(<span class="hljs-number">10</span>).keys())<br><br>[...<span class="hljs-built_in">Array</span>(<span class="hljs-number">10</span>).keys()]<br></code></pre></td></tr></table></figure>
+
 
 
 
