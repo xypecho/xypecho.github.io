@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>局部容器滚动时父容器不触发滚动</title>
+    <link href="/2023/01/31/%E5%B1%80%E9%83%A8%E5%AE%B9%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%97%B6%E7%88%B6%E5%AE%B9%E5%99%A8%E4%B8%8D%E8%A7%A6%E5%8F%91%E6%BB%9A%E5%8A%A8/"/>
+    <url>/2023/01/31/%E5%B1%80%E9%83%A8%E5%AE%B9%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%97%B6%E7%88%B6%E5%AE%B9%E5%99%A8%E4%B8%8D%E8%A7%A6%E5%8F%91%E6%BB%9A%E5%8A%A8/</url>
+    
+    <content type="html"><![CDATA[<p>在网页开发中，嵌套滚动还是很常见的，见下面示例。</p><div style="width: 80%; height: 200px; margin: 0 auto;">    <iframe src="https://xypecho.github.io/demo/scroll-behavior.html" style="width: 100%; height: 100%; Left: 0; top: 0;" ></iframe></div><p>子容器滚动到底部后继续滑动鼠标滚轮，这时候会触发父级容器的滚动。如何取消这个feature呢？<code>overscroll-behavior</code>闪亮登场。</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">overscroll-behavior: auto;     <span class="hljs-regexp">/* 默认的滚动行为 */</span><br>overscroll-behavior: contain;  <span class="hljs-regexp">/* 滚动只会发生在当前容器 */</span><br></code></pre></td></tr></table></figure><p>参考资料：<br><a href="https://www.zhangxinxu.com/wordpress/2020/01/css-overscroll-behavior/">CSS overscroll-behavior让滚动嵌套时父滚动不触发</a></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>CSS相关</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CSS相关</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>2022年终总结</title>
     <link href="/2022/12/31/2022%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
     <url>/2022/12/31/2022%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</url>
@@ -1040,9 +1065,9 @@
     
     <tags>
       
-      <tag>CSS相关</tag>
-      
       <tag>JS技巧</tag>
+      
+      <tag>CSS相关</tag>
       
     </tags>
     
@@ -1266,9 +1291,9 @@
     
     <tags>
       
-      <tag>CSS相关</tag>
-      
       <tag>JS技巧</tag>
+      
+      <tag>CSS相关</tag>
       
       <tag>canvas</tag>
       
@@ -2807,9 +2832,9 @@
     
     <tags>
       
-      <tag>CSS相关</tag>
-      
       <tag>JS技巧</tag>
+      
+      <tag>CSS相关</tag>
       
     </tags>
     
