@@ -24,7 +24,7 @@
 <meta property="og:description" content="面试官：谈谈性能优化问题答：巴拉巴拉以下省略800字…减少重绘和回流面试官：那简答说说什么是重绘和回流那么问题来了，什么是重绘和回流 什么是重绘和回流重绘（Repaint）：当页面中元素样式的改变并不影响它在文档流中的位置时（例如：color、background-color、visibility等），浏览器会将新样式赋予给元素并重新绘制它，这个过程称为重绘。重排&#x2F;回流（Reflow）：">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-01-31T14:09:48.000Z">
-<meta property="article:modified_time" content="2023-01-31T14:53:49.402Z">
+<meta property="article:modified_time" content="2023-07-26T02:34:19.625Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="JS技巧">
 <meta property="article:tag" content="性能优化">
@@ -237,7 +237,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          964 字
+          1.3k 字
         
       </span>
     
@@ -249,7 +249,7 @@
         
         
           <!-- compatible with older versions-->
-          9 分钟
+          12 分钟
         
       </span>
     
@@ -326,6 +326,15 @@
 </ul>
 <p>一些常用且会导致回流的属性和方法：</p>
 <p><code>clientWidth</code>、<code>clientHeight</code>、<code>clientTop</code>、<code>clientLeft</code><br><code>offsetWidth</code>、<code>offsetHeight</code>、<code>offsetTop</code>、<code>offsetLeft</code><br><code>scrollWidth</code>、<code>scrollHeight</code>、<code>scrollTop</code>、<code>scrollLeft</code><br><code>scrollIntoView()</code>、<code>scrollIntoViewIfNeeded()</code><br><code>getComputedStyle()</code><br><code>getBoundingClientRect()</code><br><code>scrollTo()</code></p>
+<h3 id="减少重绘和回流"><a href="#减少重绘和回流" class="headerlink" title="减少重绘和回流"></a>减少重绘和回流</h3><ol>
+<li>visibility 代替 display:none ,前者引起重绘，后者引起回流</li>
+<li>不要使用table布局，小改动会引发整个table回流</li>
+<li>将多个样式修改放到一个class中或者通过classText一次性修改</li>
+</ol>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs nsis">//bad<br><span class="hljs-keyword">var</span> <span class="hljs-variable">left</span> = <span class="hljs-number">1</span><span class="hljs-comment">;</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable">top</span> = <span class="hljs-number">1</span><span class="hljs-comment">;</span><br>el.style.<span class="hljs-literal">left</span> = <span class="hljs-literal">left</span> + <span class="hljs-string">&#x27;px&#x27;</span><span class="hljs-comment">;</span><br>el.style.<span class="hljs-literal">top</span> = <span class="hljs-literal">top</span> + <span class="hljs-string">&#x27;px&#x27;</span><span class="hljs-comment">;</span><br><br>//good<br>el.className = <span class="hljs-string">&#x27;className1&#x27;</span><span class="hljs-comment">;</span><br><br>//good<br>el.style.cssText += <span class="hljs-string">&#x27;left:&#x27;</span>+ <span class="hljs-literal">left</span> + <span class="hljs-string">&#x27;px;top:&#x27;</span> + <span class="hljs-literal">top</span> + <span class="hljs-string">&#x27;px;&#x27;</span><br><br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>动画效果应用到脱离文档流的元素上</li>
+</ol>
 <p>参考资料：<br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7159155955987382309">前端面试 第四篇 重绘和重排（回流）</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903569087266823">浏览器的回流与重绘 (Reflow &amp; Repaint)</a></p>
 
                 

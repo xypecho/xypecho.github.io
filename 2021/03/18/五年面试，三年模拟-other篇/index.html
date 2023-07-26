@@ -24,7 +24,7 @@
 <meta property="og:description" content="什么是同源策略 为保护用户信息安全，防止恶意网站窃取用户数据，浏览器限制本域中的脚本只能访问本域中的资源，这就是同源策略。  下表给出了与 URL http:&#x2F;&#x2F;store.company.com&#x2F;dir&#x2F;page.html 的源进行对比的示例:    URL 结果 原因    http:&#x2F;&#x2F;store.company.com&#x2F;dir2&#x2F;other.html 同源 只有路径不同   http:&#x2F;&#x2F;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-18T15:34:38.000Z">
-<meta property="article:modified_time" content="2022-06-22T12:52:39.852Z">
+<meta property="article:modified_time" content="2023-07-26T06:55:59.054Z">
 <meta property="article:author" content="很青的青蛙">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary_large_image">
@@ -236,7 +236,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          2.2k 字
+          2.6k 字
         
       </span>
     
@@ -248,7 +248,7 @@
         
         
           <!-- compatible with older versions-->
-          19 分钟
+          22 分钟
         
       </span>
     
@@ -354,7 +354,17 @@
 <h3 id="import-require区别"><a href="#import-require区别" class="headerlink" title="import require区别"></a>import require区别</h3><h4 id="require-x2F-exports-和-import-x2F-export-遵循的规范不同"><a href="#require-x2F-exports-和-import-x2F-export-遵循的规范不同" class="headerlink" title="require&#x2F;exports 和 import&#x2F;export 遵循的规范不同"></a>require&#x2F;exports 和 import&#x2F;export 遵循的规范不同</h4><p>import&#x2F;export是ES2015的模块<br>require&#x2F;exports是CommonJS(在Node中实现)</p>
 <h4 id="require-x2F-exports-和-import-x2F-export-语法不一样"><a href="#require-x2F-exports-和-import-x2F-export-语法不一样" class="headerlink" title="require&#x2F;exports 和 import&#x2F;export 语法不一样"></a>require&#x2F;exports 和 import&#x2F;export 语法不一样</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// require/exports 的用法只有以下三种简单的写法：</span><br><br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>)<br><span class="hljs-built_in">exports</span>.<span class="hljs-property">fs</span> = fs<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = fs<br><br><span class="hljs-comment">// import/export 的写法</span><br><span class="hljs-keyword">import</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span><br><span class="hljs-keyword">import</span> &#123;<span class="hljs-keyword">default</span> <span class="hljs-keyword">as</span> fs&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span><br><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span><br><span class="hljs-keyword">import</span> &#123;readFile&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span><br><span class="hljs-keyword">import</span> &#123;readFile <span class="hljs-keyword">as</span> read&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span><br><span class="hljs-keyword">import</span> fs, &#123;readFile&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span><br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> fs<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> fs<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> readFile<br><span class="hljs-keyword">export</span> &#123;readFile, read&#125;<br><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;fs&#x27;</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="开放性问题"><a href="#开放性问题" class="headerlink" title="开放性问题"></a>开放性问题</h3><h4 id="有什么问面试官的吗"><a href="#有什么问面试官的吗" class="headerlink" title="有什么问面试官的吗"></a>有什么问面试官的吗</h4><p>根据我今天的表现，面试官对我有什么建议？</p>
+<h3 id="git和svn区别"><a href="#git和svn区别" class="headerlink" title="git和svn区别"></a>git和svn区别</h3><p>1.git是分布式的，而svn不是</p>
+<p>2.git可以离线提交，而svn不可以</p>
+<h3 id="浏览器输入网址到完成请求的整个过程"><a href="#浏览器输入网址到完成请求的整个过程" class="headerlink" title="浏览器输入网址到完成请求的整个过程"></a>浏览器输入网址到完成请求的整个过程</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-number">1.</span>DNS域名解析（获得<span class="hljs-built_in">IP</span>地址，访问服务器）<br><br><span class="hljs-number">2</span>.建立TCP连接（三次握手）<br><br><span class="hljs-number">3</span>.发送HTTP请求<br><br><span class="hljs-number">4</span>.服务器得到并处理请求，返回HTTP报文<br><br><span class="hljs-number">5</span>.浏览器下载web服务器返回的数据及解析html源文件<br><br><span class="hljs-number">6</span>.生成DOM树，解析css和<span class="hljs-keyword">js</span>，渲染页面，直至显示完成<br></code></pre></td></tr></table></figure>
+
+<h3 id="前端性能优化方式"><a href="#前端性能优化方式" class="headerlink" title="前端性能优化方式"></a>前端性能优化方式</h3><p>1.使用CDN(网站上静态资源即css、js、图片全都使用cdn分发)</p>
+<p>2.使用gzip压缩内容</p>
+<p>3.把CSS放到顶部、把JS放到底部(加载js时会对后续的资源造成阻塞，必须得等js加载完才去加载后续的文件)</p>
+<p>4.接口缓存(如请求数据字典)</p>
+<h3 id="get和post请求的区别"><a href="#get和post请求的区别" class="headerlink" title="get和post请求的区别"></a>get和post请求的区别</h3><p>1.get把请求的数据放在url上,post把数据放在HTTP的包体内</p>
+<p>2.get请示的参数的数据长度是有限制，而post请求的数据长度没有限制</p>
+<p>3.从语义上来说：get是从服务器获取数据，post是向服务器提交数据</p>
 
                 
               </div>
