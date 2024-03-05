@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        textarea {
+            width: calc(100% - 200px);
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <hr>
+    <button>计算</button>
+    <hr>
+    <div id="myDiv"></div>
+
+</body>
+<script>
+    const btn = document.querySelector('button');
+    btn.addEventListener('click', function () {
+        const value = document.querySelector('textarea').value;
+        const res = extracNumberAndCalcSum(value);
+        console.log(res);
+        const data = res.res.sort((a, b) => b.num - a.num);
+        let str ='';
+        console.log(data);
+        for (let i = 0; i <=10; i++) {
+            str+=`<li>${data[i].word} --- ${data[i].num}</li>`
+        }
+        const divElement = document.getElementById("myDiv");
+        divElement.innerHTML = `
+        <p>总开销为   ${res.sum}</p>
+        <div>前十的开销分别为:</div>
+        <ul>${str}</ul>
+        `
+    })
+    function extracNumberAndCalcSum(str) {
+        const regex = /(\S+)\s+([\d.]+)/g;
+        const matches = str.matchAll(regex);
+        const res = [];
+        let sum = 0;
+        for (const match of matches) {
+            const word = match[1];
+            const num = parseFloat(match[2]);
+            if (!isNaN(num)) {
+                res.push({ word, num });
+                sum += num
+            }
+        }
+        return { res, sum }
+    }
+</script>
+
+</html>
