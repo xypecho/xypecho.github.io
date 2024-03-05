@@ -39,7 +39,7 @@
         const data = res.res.sort((a, b) => b.num - a.num);
         let str ='';
         console.log(data);
-        for (let i = 0; i <=10; i++) {
+        for (let i = 0; i <data.length; i++) {
             str+=`<li>${data[i].word} --- ${data[i].num}</li>`
         }
         const divElement = document.getElementById("myDiv");
