@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>可爱开销计算器</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* 基础颜色定义 */
+      :root {
+        --primary: #ff85a2; /* 可爱粉色 */
+        --secondary: #a3d9ff; /* 浅蓝色 */
+        --accent: #ffd166; /* 柔和黄色 */
+        --light: #f9f7f7; /* 浅灰色背景 */
+        --dark: #4a4a4a; /* 文字颜色 */
+        --yellow-light: #fff3cd;
+        --yellow-border: #ffe69c;
+        --yellow-icon: #ffd700;
+        --gray-light: #f8f9fa;
+        --gray-border: #dee2e6;
+        --gray-icon: #6c757d;
+        --orange-light: #fff3cd;
+        --orange-border: #ffe69c;
+        --orange-icon: #fd7e14;
+        --green-success: #4caf50;
+      }
+
+      /* 全局样式重置 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Comic Sans MS', 'Marker Felt', Arial, sans-serif;
+        background: linear-gradient(135deg, var(--light), rgba(163, 217, 255, 0.3));
+        color: var(--dark);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      /* 标题样式 */
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: bold;
+        color: var(--primary);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 0.5rem;
+      }
+
+      header p {
+        color: #666;
+      }
+
+      /* 卡片通用样式 */
+      .card {
+        background: white;
+        border-radius: 2rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 16px rgba(255, 133, 162, 0.15);
+        transition: transform 0.3s ease;
+      }
+
+      .card:hover {
+        transform: scale(1.01);
+      }
+
+      /* 输入区域样式 */
+      label {
+        display: block;
+        text-align: left;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--primary);
+      }
+
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid rgba(163, 217, 255, 0.5);
+        border-radius: 1.5rem;
+        resize: none;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(255, 133, 162, 0.3);
+      }
+
+      textarea.border-primary {
+        border-color: var(--primary);
+      }
+
+      textarea.border-green-400 {
+        border-color: var(--green-success);
+      }
+
+      /* 按钮样式 */
+      .btn {
+        margin-top: 1rem;
+        background: var(--primary);
+        color: white;
+        font-weight: bold;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 2rem;
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        transition: transform 0.2s ease;
+      }
+
+      .btn:hover {
+        background: rgba(255, 133, 162, 0.9);
+        transform: translateY(-3px);
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .btn-secondary {
+        background: rgba(163, 217, 255, 0.7);
+        padding: 0.5rem 1.5rem;
+        font-size: 0.875rem;
+      }
+
+      .btn-secondary:hover {
+        background: var(--secondary);
+      }
+
+      /* 结果区域样式 */
+      #resultArea {
+        opacity: 0;
+        transform: translateY(1rem);
+        transition: all 0.5s ease;
+      }
+
+      #resultArea.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      h2 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: var(--primary);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .total-section {
+        background: rgba(255, 209, 102, 0.2);
+        padding: 1rem;
+        border-radius: 1.5rem;
+        border: 1px solid rgba(255, 209, 102, 0.3);
+        margin-bottom: 1.5rem;
+      }
+
+      .total-section p:first-child {
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+
+      .total-section p:first-child span {
+        color: var(--primary);
+        font-size: 1.25rem;
+      }
+
+      .total-section p:last-child {
+        font-size: 0.875rem;
+        color: #666;
+        margin-top: 0.25rem;
+      }
+
+      h3 {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        color: var(--dark);
+      }
+
+      ul {
+        list-style: none;
+        margin-bottom: 1rem;
+      }
+
+      li {
+        padding: 0.75rem;
+        border-radius: 1rem;
+        border: 1px solid #eee;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      li:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      li span:first-child {
+        font-weight: 500;
+      }
+
+      li span:last-child {
+        color: var(--primary);
+        font-weight: bold;
+      }
+
+      .rank-1 {
+        background-color: var(--yellow-light);
+        border-color: var(--yellow-border);
+      }
+
+      .rank-2 {
+        background-color: var(--gray-light);
+        border-color: var(--gray-border);
+      }
+
+      .rank-3 {
+        background-color: var(--orange-light);
+        border-color: var(--orange-border);
+      }
+
+      .text-yellow-500 {
+        color: var(--yellow-icon);
+        margin-right: 0.5rem;
+      }
+
+      .text-gray-400 {
+        color: var(--gray-icon);
+        margin-right: 0.5rem;
+      }
+
+      .text-orange-600 {
+        color: var(--orange-icon);
+        margin-right: 0.5rem;
+      }
+
+      .text-secondary {
+        color: var(--secondary);
+        margin-right: 0.5rem;
+      }
+
+      .text-gray-500 {
+        color: #666;
+        font-style: italic;
+        text-align: center;
+        padding: 0.5rem;
+      }
+
+      .space-y-2 > * {
+        margin-bottom: 0.5rem;
+      }
+
+      .space-y-6 > * {
+        margin-bottom: 1.5rem;
+      }
+
+      .mr-1 {
+        margin-right: 0.25rem;
+      }
+
+      .mr-2 {
+        margin-right: 0.5rem;
+      }
+
+      .mr-3 {
+        margin-right: 0.75rem;
+      }
+
+      .mt-1 {
+        margin-top: 0.25rem;
+      }
+
+      .mt-2 {
+        margin-top: 0.5rem;
+      }
+
+      .mt-4 {
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- 标题区域 -->
+      <header>
+        <h1>
+          <i class="fa fa-calculator mr-3"></i>
+          开销小管家
+        </h1>
+        <p>输入你的开销，让我帮你算一算吧～</p>
+      </header>
+
+      <!-- 输入区域 -->
+      <div class="card">
+        <label for="expenses">
+          <i class="fa fa-pencil-square-o mr-2"></i>
+          请输入开销（格式：项目 金额）
+        </label>
+        <textarea
+          id="expenses"
+          cols="30"
+          rows="6"
+          placeholder="例如：
+奶茶 15.5
+电影票 45
+零食 20.8
+书 32"
+        ></textarea>
+
+        <button id="calculateBtn" class="btn">
+          <i class="fa fa-calculator mr-2"></i>
+          开始计算
+        </button>
+      </div>
+
+      <!-- 结果展示区域 -->
+      <div id="resultArea" class="card">
+        <h2>
+          <i class="fa fa-star mr-2"></i>
+          计算结果
+        </h2>
+
+        <div id="myDiv" class="space-y-6">
+          <!-- 结果将在这里显示 -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const btn = document.getElementById('calculateBtn');
+      const resultArea = document.getElementById('resultArea');
+      let showAllItems = false; // 跟踪是否显示所有项目
+      let currentData = []; // 存储当前计算的数据
+
+      btn.addEventListener('click', function () {
+        const textarea = document.querySelector('textarea');
+        const value = textarea.value;
+        const res = extracNumberAndCalcSum(value);
+
+        // 重置显示全部的状态
+        showAllItems = false;
+        // 存储当前数据
+        currentData = res.res.sort((a, b) => b.num - a.num);
+
+        // 显示结果区域并添加动画
+        resultArea.classList.add('show');
+
+        // 生成结果HTML
+        updateResultDisplay();
+
+        // 添加输入框动画反馈
+        textarea.classList.add('border-green-400');
+        setTimeout(() => {
+          textarea.classList.remove('border-green-400');
+        }, 1000);
+      });
+
+      // 切换显示全部/部分项目
+      function toggleShowAll() {
+        showAllItems = !showAllItems;
+        updateResultDisplay();
+      }
+
+      // 更新结果显示
+      function updateResultDisplay() {
+        // 确定要显示的项目数量
+        const displayCount = showAllItems ? currentData.length : Math.min(10, currentData.length);
+
+        // 生成项目HTML
+        let itemsHtml = '';
+        for (let i = 0; i < displayCount; i++) {
+          // 为前三名添加特殊样式
+          let specialClass = '';
+          let medalIcon = '';
+
+          if (i === 0) {
+            specialClass = 'rank-1';
+            medalIcon = '<i class="fa fa-trophy text-yellow-500"></i>';
+          } else if (i === 1) {
+            specialClass = 'rank-2';
+            medalIcon = '<i class="fa fa-trophy text-gray-400"></i>';
+          } else if (i === 2) {
+            specialClass = 'rank-3';
+            medalIcon = '<i class="fa fa-trophy text-orange-600"></i>';
+          }
+
+          itemsHtml += `
+                    <li class="${specialClass}">
+                        <span>${medalIcon} ${currentData[i].word}</span>
+                        <span>¥${currentData[i].num.toFixed(2)}</span>
+                    </li>
+                `;
+        }
+
+        // 计算总和
+        const sum = currentData.reduce((total, item) => total + item.num, 0);
+
+        // 生成显示全部/折叠按钮
+        let toggleButton = '';
+        if (currentData.length > 10) {
+          const buttonText = showAllItems ? '只看前10项' : '展示全部项';
+          const buttonIcon = showAllItems ? 'fa-chevron-up' : 'fa-chevron-down';
+
+          toggleButton = `
+                    <button onclick="toggleShowAll()" class="btn btn-secondary">
+                        <i class="fa ${buttonIcon} mr-1"></i>${buttonText}
+                    </button>
+                `;
+        }
+
+        // 更新结果区域
+        const divElement = document.getElementById('myDiv');
+        divElement.innerHTML = `
+                <div class="total-section">
+                    <p>总开销 <span>¥${sum.toFixed(2)}</span></p>
+                    <p class="mt-1">共计算了 ${currentData.length} 项开销</p>
+                </div>
+                
+                <div>
+                    <h3>
+                        <i class="fa fa-list-ol text-secondary"></i>开销排行 ${
+                          showAllItems ? '(全部)' : `(前${displayCount}名)`
+                        }
+                    </h3>
+                    <ul class="space-y-2">
+                        ${itemsHtml}
+                    </ul>
+                    ${toggleButton}
+                </div>
+            `;
+      }
+
+      function extracNumberAndCalcSum(str) {
+        // 匹配项目和金额的正则表达式，考虑可能的空格和换行
+        const regex = /(\S+)\s+([\d.]+)/g;
+        const matches = str.matchAll(regex);
+        const res = [];
+        let sumCents = 0; // 用分作为单位存储，避免小数精度问题
+
+        for (const match of matches) {
+          const word = match[1];
+          const num = parseFloat(match[2]);
+          if (!isNaN(num) && num >= 0) {
+            // 确保是有效的非负数字
+            res.push({ word, num });
+            // 转换为分（四舍五入到整数）
+            sumCents += Math.round(num * 100);
+          }
+        }
+
+        // 转换回元，确保两位小数精度
+        const sum = sumCents / 100;
+
+        return { res, sum };
+      }
+
+      // 为文本区域添加输入提示动画
+      const textarea = document.querySelector('textarea');
+      textarea.addEventListener('focus', function () {
+        this.classList.add('border-primary');
+      });
+
+      textarea.addEventListener('blur', function () {
+        this.classList.remove('border-primary');
+      });
+    </script>
+  </body>
+</html>
